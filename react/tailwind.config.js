@@ -31,11 +31,17 @@ module.exports = {
       },
       colors: {
         background: "hsl(var(--background))",
+        brand: {
+          50: "#f5f9ff",
+          400: "#5b8def",
+          500: "#3b82f6", // ví dụ: xanh dương
+        },
         foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

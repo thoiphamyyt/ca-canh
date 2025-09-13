@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { fetchUser } from "@/lib/fetchUser";
+import config from "@/config";
 
 const UserContext = createContext(null);
 
@@ -17,16 +18,24 @@ function UserProvider({ children }) {
         console.error("Failed to fetch user:", error);
         logout();
       } finally {
-        setLoading(false); // ✅ luôn set false khi xong
+        setLoading(false);
       }
     }
     loadUser();
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_expiry");
-    setUser(null); // ✅ clear user trong context
+  const logout = async () => {
+    try {
+      // gọi API Laravel để xoá cookie access_token
+      await fetch(`${config.NEXT_PUBLIC_API}/api/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("Logout failed:", err);
+    } finally {
+      setUser(null);
+    }
   };
   return (
     <UserContext.Provider value={{ user, loading, setUser, logout }}>
@@ -39,4 +48,4 @@ export function useUser() {
   return useContext(UserContext);
 }
 
-export default UserProvider; // ✅ export default
+export default UserProvider;

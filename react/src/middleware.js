@@ -1,31 +1,69 @@
 import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-export function middleware(req) {
+export async function middleware(req) {
   const token = req.cookies.get("access_token")?.value;
+  const { pathname } = req.nextUrl;
+  const host = req.headers.get("host");
+  const protocol = req.headers.get("x-forwarded-proto") || "http";
 
-  // Các route yêu cầu login
+  const origin = `${protocol}://${host}`;
+
+  // Các route public (không cần login)
   const publicRoutes = [
     "/login",
-    "/regiser",
+    "/register",
     "/home",
-    "/",
     "/product",
     "/detail-product",
     "/news",
   ];
 
-  if (publicRoutes.some((path) => req.nextUrl.pathname.startsWith(path))) {
+  // Nếu là route public -> cho qua
+
+  if (
+    pathname === "/" ||
+    publicRoutes.some((path) => pathname.startsWith(path))
+  ) {
     return NextResponse.next();
-  } else {
+  }
+
+  const customerProtectedRoutes = ["/cart", "/checkout", "/profile"];
+  const isCustomerProtected = customerProtectedRoutes.some((path) =>
+    pathname.startsWith(path)
+  );
+  const isAdminProtected = pathname.startsWith("/admin");
+
+  if (isCustomerProtected || isAdminProtected) {
     if (!token) {
-      // Nếu chưa đăng nhập thì redirect về /login
-      const loginUrl = new URL("/login", req.url);
+      console.log(host, origin);
+
+      const loginUrl = new URL("/login", origin);
       loginUrl.searchParams.set("error", "unauthorized");
       const res = NextResponse.redirect(loginUrl);
       res.cookies.delete("access_token");
+      return res;
+    }
+
+    try {
+      // Verify JWT bằng jose
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const { payload } = await jwtVerify(token, secret);
+
+      // Check admin
+      if (isAdminProtected && payload.role !== "admin") {
+        return NextResponse.redirect(new URL("/", origin));
+      }
+
+      return NextResponse.next();
+    } catch (error) {
+      console.error("Invalid token", error);
+      const loginUrl = new URL("/login", origin);
+      loginUrl.searchParams.set("error", "invalid_token");
       return NextResponse.redirect(loginUrl);
     }
   }
+
   return NextResponse.next();
 }
 
