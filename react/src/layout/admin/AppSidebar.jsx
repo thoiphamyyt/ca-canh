@@ -18,19 +18,25 @@ import {
   UserCircleIcon,
 } from "@/icons/index";
 import SidebarWidget from "./SidebarWidget";
+import path from "path";
 
 const navItems = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    name: "Trang chủ",
   },
   {
-    name: "Product",
-    icon: <TableIcon />,
+    name: "Quản lý sản phẩm",
+    icon: <ListIcon />,
     subItems: [
-      { name: "List Product", path: "/admin/product-manager", pro: false },
+      { name: "Danh mục", path: "/admin/category-manager", pro: false },
+      { name: "Sản phẩm", path: "/admin/product-manager", pro: false },
     ],
+  },
+  {
+    name: "Quản lý khách hàng",
+    icon: <UserCircleIcon />,
+    path: "/admin/customer-manager",
   },
   {
     icon: <CalenderIcon />,
@@ -42,13 +48,7 @@ const navItems = [
     name: "User Profile",
     path: "/profile",
   },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [
-      { name: "Form Elements", path: "/admin/product-manager", pro: false },
-    ],
-  },
+
   {
     name: "Tables",
     icon: <TableIcon />,

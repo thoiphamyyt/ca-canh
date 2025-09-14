@@ -1,8 +1,8 @@
 "use client";
 // // app/page.js
-import Hero from "../../layout/user/hero";
-import Product from "../../layout/user/product";
-import Sale from "../../layout/user/sale";
+import Hero from "../../layout/user/Hero";
+import Product from "../../layout/user/Product";
+import Sale from "../../layout/user/Sale";
 import { useRouter } from "next/navigation";
 import { useIdleLogout } from "hooks/useIdleLogout";
 

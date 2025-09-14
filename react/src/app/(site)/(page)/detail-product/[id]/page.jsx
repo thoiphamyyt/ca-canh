@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Star } from "lucide-react";
-import ZoomImage from "@/app/Components/zoomImage";
+import ZoomImage from "@/components/image/zoomImage";
 import ProductRelated from "@/app/(site)/(page)/detail-product/[id]/product-related";
 import Image from "next/image";
 import { fetchDetailProduct } from "@/lib/fetchProduct";

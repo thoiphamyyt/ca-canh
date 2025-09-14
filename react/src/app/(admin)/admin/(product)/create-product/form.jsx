@@ -18,8 +18,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import Input from "@/components/form/input/InputField";
-import TextArea from "@/components/form/input/TextArea";
+import Input from "@/components/form/form-elements/InputField";
+import TextArea from "@/components/form/form-elements/TextArea";
 import Select from "@/components/form/Select";
 import { fetchCategory } from "@/lib/fetchProduct";
 import { Progress } from "@/components/ui/progress";
@@ -197,6 +197,7 @@ export default function FormCreateProduct({
         {
           method: "POST",
           body: formData,
+          credentials: "include",
         }
       );
       const data = await response.json();

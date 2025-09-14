@@ -1,11 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import { link_public_api } from "@/lib/contants";
 import { formatVND } from "@/lib/utils";
 import Link from "next/link";
-
-export const columns = [
+import { Button } from "@/components/ui/button";
+export const columns = (onOpenDialog) => [
   {
     accessorKey: "stt",
     header: "STT",
@@ -18,21 +16,29 @@ export const columns = [
   {
     accessorKey: "quantity",
     header: "Số lượng",
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.quantity}</div>
+    ),
   },
   {
     accessorKey: "price",
     header: "Đơn giá",
-    cell: ({ row }) => formatVND(row.original.price),
+    cell: ({ row }) => (
+      <div className="text-center">{formatVND(row.original.price)}</div>
+    ),
   },
   {
     accessorKey: "category_name",
     header: "Loại sản phẩm",
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.category_name}</div>
+    ),
   },
   {
     accessorKey: "image",
     header: "Hình ảnh",
     cell: ({ row }) => (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center justify-center gap-3">
         <div className="w-13 h-13 overflow-hidden">
           <Image
             width={50}
@@ -53,16 +59,17 @@ export const columns = [
     accessorKey: "actions",
     header: "Thao tác",
     cell: ({ row }) => (
-      <div className="flex justify-start gap-2">
+      <div className="flex justify-center gap-2 text-center">
         <Link href={`/admin/update-product/${row.original.id}`}>
-          <button className="px-3 py-1 border rounded-md text-sm">Sửa</button>
+          <Button size="sm">Sửa</Button>
         </Link>
-        <button
-          // onClick={() => askDelete(row.original.id)}
-          className="px-3 py-1 bg-red-600 text-white rounded-md text-sm"
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => onOpenDialog(row.original)}
         >
           Xóa
-        </button>
+        </Button>
       </div>
     ),
   },

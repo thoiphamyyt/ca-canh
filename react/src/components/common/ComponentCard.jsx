@@ -7,6 +7,7 @@ const ComponentCard = ({
   className = "",
   desc = "",
   actionCreate = false,
+  urlCreate = "",
 }) => {
   return (
     <div
@@ -18,7 +19,7 @@ const ComponentCard = ({
           {title}
         </h3>
         {actionCreate && (
-          <Link href="/admin/create-product">
+          <Link href={urlCreate}>
             <button className="px-3 py-1 rounded-md bg-green-600 hover:bg-green-900">
               Thêm mới
             </button>

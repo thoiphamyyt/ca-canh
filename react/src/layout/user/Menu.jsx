@@ -1,7 +1,7 @@
 "use client";
 import { fetchCategory } from "@/lib/fetchProduct";
 import { useState, useEffect } from "react";
-import SkeletionCard from "@/app/Components/shadcn/skeletonCard";
+import SkeletionCard from "@/components/shadcn/skeletonCard";
 import { useRouter, useSearchParams } from "next/navigation";
 const MenuLeft = () => {
   const [category, setCategory] = useState([]);

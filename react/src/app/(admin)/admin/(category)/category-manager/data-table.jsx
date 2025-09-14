@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -16,12 +14,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useState, useEffect } from "react";
-import { fetchProduct } from "@/lib/fetchProduct";
+import React, { useState, useEffect } from "react";
+import { fetchCategory } from "@/lib/fetchProduct";
 
-export function DataTable({ columns }) {
+export function DataTable({ columns, isReload = false }) {
   const [loading, setLoading] = useState(true);
-  const [data, setProduct] = useState([]);
+  const [data, setCategory] = useState([]);
   const table = useReactTable({
     data,
     columns,
@@ -29,19 +27,19 @@ export function DataTable({ columns }) {
   });
 
   useEffect(() => {
-    async function loadProduct() {
+    async function loadCategory() {
       setLoading(true);
       try {
-        const data = await fetchProduct({});
-        setProduct(data);
+        const data = await fetchCategory({});
+        setCategory(data);
       } catch (error) {
-        console.error("Failed to fetch product:", error);
+        console.error("Không thể lấy danh sách loại sản phẩm:", error);
       } finally {
         setLoading(false);
       }
     }
-    loadProduct();
-  }, []);
+    loadCategory();
+  }, [isReload]);
 
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
