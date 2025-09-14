@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -42,44 +43,79 @@ class AuthController extends Controller
             'address' => $formData['address'] ?? null,
             'phone' => $formData['phone'] ?? null,
             'password' => Hash::make($request->password),
+            'role' => 'user', // Mặc định role là user
         ]);
 
         return response()->json(['message' => 'User registered successfully', 'user' => $user, 'success' => true], 201);
     }
 
+
     public function login(Request $request)
     {
-        $formData = $request->all();
-        $valid = Validator::make($formData, [
+        $credentials = $request->only('userName', 'password');
+
+        $valid = Validator::make($credentials, [
             'userName' => 'required|string|min:6',
             'password' => 'required|string|min:6',
         ]);
+
         if ($valid->fails()) {
             return response()->json(['errors' => $valid->errors()], 422);
         }
-        $user = User::where('userName', $formData['userName'])->first();
 
-        if ($user && Hash::check($formData['password'], $user->password)) {
-            $token = $user->createToken('auth_token')->plainTextToken;
-            $info = [
-                'name' => $user->name,
-                'userName' => $user->userName,
-                'email' => $user->email,
-                'phone' => $user->phone,
-                'address' => $user->address,
-            ];
-            return response()->json(['message' => 'Đăng nhập thành công.', 'success' => true, '_token' => $token, 'user' => $info], 201);
+        // Thử xác thực user bằng JWT
+        if (!$token = JWTAuth::attempt(['userName' => $credentials['userName'], 'password' => $credentials['password']])) {
+            return response()->json([
+                'message' => 'Tên đăng nhập hoặc mật khẩu không chính xác, vui lòng kiểm tra lại.',
+                'success' => false
+            ], 401);
         }
 
-        return response()->json(['message' => 'Tên đăng nhập hoặc mật khẩu không chính xác, vui lòng kiểm tra lại.', 'success' => false], 201);
+        $user = auth()->user();
+
+        $info = [
+            'name' => $user->name,
+            'userName' => $user->userName,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'address' => $user->address,
+            'role' => $user->role,
+        ];
+
+        return response()
+            ->json([
+                'success' => true,
+                'message' => 'Đăng nhập thành công',
+                'user' => $info,
+            ])
+            ->cookie(
+                'access_token',  // tên cookie
+                $token,          // JWT token
+                60,              // thời gian sống (phút)
+                '/',             // path
+                null,            // domain (null = auto theo backend host, localhost ok)
+                false,           // secure = false khi chạy localhost
+                true,            // httponly
+                false,           // raw
+                'Lax'            // SameSite = Lax để tránh bị drop
+            );
     }
+
+    public function userMe()
+    {
+        return response()->json(['success' => true, 'user' => auth('api')->user()], 200);
+    }
+
 
     public function logout(Request $request)
     {
-        // Nếu bạn dùng Sanctum hoặc Passport thì revoke token
-        $request->user()->currentAccessToken()->delete();
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+        } catch (\Exception $e) {
+        }
 
-        return response()->json(['message' => 'Logged out successfully']);
+        return response()->json(['message' => 'Logged out'])
+            ->cookie('access_token', null, -1, '/');
     }
 
     public function update(Request $request)

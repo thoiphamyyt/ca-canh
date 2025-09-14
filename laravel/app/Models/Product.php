@@ -9,18 +9,23 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'key_product',
         'product',
         'price',
-        'oldPrice',
+        'old_price',
         'quantity',
         'rating',
         'description',
         'image',
-        'id_category'
+        'id_category',
     ];
 
     public function getImageUrlAttribute()
     {
         return $this->image ? asset('storage/' . $this->image) : null;
     }
+
+    protected $casts = [
+        'image' => 'array', // tự động cast JSON -> array khi query
+    ];
 }

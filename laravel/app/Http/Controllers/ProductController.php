@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use GuzzleHttp\Handler\Proxy;
-use Illuminate\Support\Facades\Hash;
+use Exception;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -16,8 +14,8 @@ class ProductController extends Controller
     public function getAll(Request $request)
     {
         $formData = $request->all();
-        $query = Product::query();
-
+        $query = Product::join('categories as c', 'products.id_category', '=', 'c.id')
+            ->select('products.*', 'c.name as category_name');
         if (!empty($formData['product'])) {
             $query->where('product', 'like', "%{$formData['product']}%");
         }
@@ -31,6 +29,7 @@ class ProductController extends Controller
             return response()->json(['success' => true, 'data' => $product]);
         }
     }
+
     public function getDetail($id)
     {
         $product = Product::find($id);
@@ -40,14 +39,116 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'message' => 'no data']);
         }
     }
-
-    public function getCategory()
+    public function create(Request $request)
     {
-        $product = Category::orderBy('name', 'asc')->get();
-        if (empty($product)) {
-            return response()->json(['success' => false, 'message' => 'no data']);
-        } else {
-            return response()->json(['success' => true, 'data' => $product]);
+        try {
+            $formData = $request->all();
+            $valid = Validator::make($formData, [
+                'key_product' => 'required|string',
+                'product' => 'required|string',
+                'quantity' => 'required|string',
+                'price' => 'required|string',
+                'description' => 'nullable|string',
+                'images' => 'nullable|array',
+                'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+            ]);
+            if ($valid->fails()) {
+                return response()->json(['errors' => $valid->errors()], 422);
+            }
+            $getProduct = Product::where('key_product', $formData['key_product'])->first();
+            if ($getProduct) {
+                return response()->json(['message' => 'Mã sản phẩm đã tồn tại.', 'success' => false], 409);
+            }
+            $listImage = [];
+            if ($request->hasFile('images')) {
+                $listFiles = $request->file('images');
+                foreach ($listFiles as $value) {
+                    $listImage[] = "storage/" . $value->store('product', 'public');
+                }
+            }
+
+            $product = Product::create([
+                'key_product' => $formData['key_product'],
+                'id_category' => $formData['id_category'],
+                'product' => $formData['product'],
+                'rating' => 0,
+                'quantity' => @$formData['quantity'],
+                'price' => $formData['price'] ?? null,
+                'old_price' => $formData['old_price'] !== "undefined" ? $formData['old_price'] : 0,
+                'description' => $formData['description'] ?? null,
+                'image' => $listImage ?? null,
+            ]);
+
+            return response()->json(['message' => 'Thêm sản phẩm thành công', 'product' => $product, 'success' => true], 201);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Lỗi hệ thống, vui lòng thử lại sau.', 'success' => false], 500);
+        }
+    }
+    public function update(Request $request, $id)
+    {
+        try {
+            $formData = $request->all();
+            $valid = Validator::make($formData, [
+                'key_product' => 'required|string',
+                'product' => 'required|string',
+                'quantity' => 'required|string',
+                'price' => 'required|string',
+                'description' => 'nullable|string',
+                'images' => 'nullable|array',
+                'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+            ]);
+            if ($valid->fails()) {
+                return response()->json(['errors' => $valid->errors()], 422);
+            }
+            $product = Product::find($id);
+            if (!$product) {
+                return response()->json(['message' => 'Không tìm thấy sản phẩm.', 'success' => false], 409);
+            }
+            $listImage = [];
+            if ($request->hasFile('images')) {
+                $listFiles = $request->file('images');
+                foreach ($listFiles as $value) {
+                    $listImage[] = "storage/" . $value->store('product', 'public');
+                }
+                $product->image = $listImage;
+            }
+            if (isset($formData['product'])) {
+                $product->product = $formData['product'];
+            }
+            if (isset($formData['id_category'])) {
+                $product->id_category = $formData['id_category'];
+            }
+            if (isset($formData['quantity'])) {
+                $product->quantity = $formData['quantity'];
+            }
+            if (isset($formData['price'])) {
+                $product->price = $formData['price'];
+            }
+            if (isset($formData['old_price'])) {
+                $product->old_price = $formData['old_price'];
+            }
+            if (isset($formData['description'])) {
+                $product->description = $formData['description'];
+            }
+            $product->save();
+
+            return response()->json(['message' => 'Cập nhật sản phẩm thành công', 'product' => $product, 'success' => true], 201);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Lỗi hệ thống, vui lòng thử lại sau.', 'success' => false], 500);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $product = Product::find($id);
+            if (!$product) {
+                return response()->json(['message' => 'Không tìm thấy sản phẩm.', 'success' => false], 409);
+            }
+            $product->delete();
+            return response()->json(['message' => 'Xóa sản phẩm thành công', 'success' => true], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Lỗi hệ thống, vui lòng thử lại sau.', 'success' => false], 500);
         }
     }
 }
