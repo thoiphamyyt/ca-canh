@@ -18,7 +18,7 @@ class RoleMiddleware
     {
         $user = auth('api')->user();
         if (!$user || $user->role !== $role) {
-            return response()->json(['error' => 'Forbidden'], 403);
+            return response()->json(['error' => 'Account without permission'], 403);
         }
         return $next($request);
     }

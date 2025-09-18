@@ -154,12 +154,11 @@ class AuthController extends Controller
             $user->password = Hash::make($formData['password']);
         }
         if ($request->hasFile('avatar')) {
-            if ($user->avatar && Storage::disk('public/user')->exists($user->avatar)) {
-                Storage::disk('public/user')->delete($user->avatar);
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
             }
-            // Lưu ảnh mới vào storage/app/public/avatars
             $path = $request->file('avatar')->store('user', 'public');
-            $user->avatar = $path; // VD: avatars/abc123.jpg
+            $user->avatar = $path;
         }
 
         $user->save();

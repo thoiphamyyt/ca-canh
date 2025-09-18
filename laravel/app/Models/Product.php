@@ -16,16 +16,25 @@ class Product extends Model
         'quantity',
         'rating',
         'description',
-        'image',
+        'images',
         'id_category',
     ];
 
-    public function getImageUrlAttribute()
+
+    protected $appends = ['images_url'];
+
+    public function getImagesUrlAttribute()
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        if (!$this->images) {
+            return [];
+        }
+
+        return array_map(function ($images) {
+            return asset('storage/' . $images);
+        }, $this->images);
     }
 
     protected $casts = [
-        'image' => 'array', // tự động cast JSON -> array khi query
+        'images' => 'array', // tự động cast JSON -> array khi query
     ];
 }
