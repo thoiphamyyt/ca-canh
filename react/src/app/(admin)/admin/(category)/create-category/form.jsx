@@ -45,7 +45,6 @@ export default function FormCreateCategory({
     },
   });
 
-  // 4. Nếu là update thì load dữ liệu sản phẩm
   useEffect(() => {
     if (isUpdate && categoryId) {
       loadDetailCategory();
@@ -56,25 +55,22 @@ export default function FormCreateCategory({
     if (!categoryId) return;
     try {
       setLoadingData(true);
-      setProgress(30); // bắt đầu 30%
+      setProgress(30);
       const res = await fetch(
         `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-category/${categoryId}`,
         { method: "GET", credentials: "include" }
       );
-      setProgress(70); // đang tải 70%
+      setProgress(70);
       const data = await res.json();
 
       if (res.ok && data.success) {
         const category = data.data;
-        console.log(category);
-
-        // Đổ dữ liệu vào form
         form.reset({
           name: category.name ?? "",
           description: category.description || "",
         });
       }
-      setProgress(100); // hoàn tất
+      setProgress(100);
     } catch (err) {
       toast({
         variant: "destructive",
@@ -82,11 +78,10 @@ export default function FormCreateCategory({
         description: "Không tải được dữ liệu danh mục sản phẩm.",
       });
     } finally {
-      setTimeout(() => setLoadingData(false), 500); // delay 1 chút để thấy progress full
+      setTimeout(() => setLoadingData(false), 500);
     }
   };
 
-  // 2. Define a submit handler.
   async function onSubmit(values) {
     const formData = new FormData();
 
@@ -146,7 +141,7 @@ export default function FormCreateCategory({
   return (
     <ComponentCard
       title={
-        isUpdate ? "Cập nhật danh mục sản phẩm" : "Thêm mới danh mục sản phẩm"
+        isUpdate ? "Thông tin danh mục sản phẩm" : "Thêm mới danh mục sản phẩm"
       }
     >
       {isUpdate && loadingData ? (

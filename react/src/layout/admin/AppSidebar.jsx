@@ -17,8 +17,6 @@ import {
   TableIcon,
   UserCircleIcon,
 } from "@/icons/index";
-import SidebarWidget from "./SidebarWidget";
-import path from "path";
 
 const navItems = [
   {
@@ -40,8 +38,8 @@ const navItems = [
   },
   {
     icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    name: "Quản lý bản tin",
+    path: "/admin/news-manager",
   },
   {
     icon: <UserCircleIcon />,
@@ -363,7 +361,6 @@ const AppSidebar = () => {
             </div>
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
       </div>
     </aside>
   );

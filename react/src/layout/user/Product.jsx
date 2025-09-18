@@ -33,10 +33,11 @@ export default function ProductList() {
   return (
     <section className="container mx-auto py-12">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold">Popular Products</h2>
+        <h2 className="text-3xl font-bold">Danh mục sản phẩm</h2>
         <p className="text-gray-500 mt-2">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore.
+          Chúng tôi đem đến cho bạn những sản phẩm tốt nhất, mới nhất và đa dạng
+          nhất. Với nhiều loại cá đẹp, độc lạ, bạn sẽ tìm thấy những người bạn
+          tuyệt vời cho bể cá của mình.
         </p>
       </div>
 
@@ -58,8 +59,8 @@ export default function ProductList() {
                 <div className="bg-gray-100 rounded-md overflow-hidden">
                   <Image
                     src={
-                      item.image && item.image.length
-                        ? `${link_public_api}/${item.image[0]}`
+                      item.images_url && item.images_url.length
+                        ? item.images_url[0]
                         : "/images/product/product-default.png"
                     }
                     unoptimized

@@ -56,8 +56,8 @@ export default function ProductList() {
                 <div className="bg-gray-100 rounded-md overflow-hidden">
                   <Image
                     src={
-                      item.image && item.image.length
-                        ? `${link_public_api}/${item.image[0]}`
+                      item.images_url && item.images_url.length
+                        ? item.images_url[0]
                         : "/images/product/product-default.png"
                     }
                     unoptimized

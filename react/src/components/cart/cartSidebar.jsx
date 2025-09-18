@@ -72,8 +72,8 @@ export default function CartSidebar() {
                     <div className="flex items-center gap-3">
                       <img
                         src={
-                          item.image
-                            ? `${link_public_api}/${item.image[0]}`
+                          item.images_url && item.images_url.length
+                            ? item.images_url[0]
                             : "/images/product/product-default.png"
                         }
                         className="w-[60px] h-[60px] object-cover"

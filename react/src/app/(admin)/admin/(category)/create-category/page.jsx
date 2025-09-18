@@ -1,12 +1,11 @@
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import Form from "./form";
 import React from "react";
-import { title } from "@/lib/contants";
+import { title, description } from "@/lib/contants";
 
 export const metadata = {
   title: `${title} | Thêm mới danh mục sản phẩm`,
-  description:
-    "This is Next.js Form Elements page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
+  description: description,
 };
 
 export default function FormElements() {

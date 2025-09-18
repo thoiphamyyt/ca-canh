@@ -56,8 +56,8 @@ export default function ProducRelated({ id_category }) {
                     <div className="bg-gray-100 rounded-md overflow-hidden">
                       <Image
                         src={
-                          item.image && item.image.length
-                            ? `${link_public_api}/${item.image[0]}`
+                          item.images_url && item.images_url.length
+                            ? item.images_url[0]
                             : "/images/product/product-default.png"
                         }
                         unoptimized
@@ -72,7 +72,7 @@ export default function ProducRelated({ id_category }) {
                         <button className="p-3 rounded-full bg-lime-400 hover:bg-green-500 shadow-md dark:bg-green-600 dark:hover:bg-green-900">
                           <ShoppingCart className="w-5 h-5 text-white" />
                         </button>
-                        <Link href={"/detail-product"}>
+                        <Link href={"/detail-product/" + item.id}>
                           <button className="p-3 rounded-full shadow-md bg-yellow-300 hover:bg-yellow-500 dark:bg-amber-600 dark:hover:bg-orange-700">
                             <Eye className="w-5 h-5 text-white" />
                           </button>

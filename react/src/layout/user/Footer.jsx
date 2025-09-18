@@ -3,12 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Send, Twitter, ArrowUp } from "lucide-react";
+import { fetchCategory } from "@/lib/fetchProduct";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Hiện nút khi scroll xuống
   useEffect(() => {
@@ -23,9 +27,31 @@ export default function Footer() {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
+  useEffect(() => {
+    const loadCategory = async () => {
+      try {
+        const data = await fetchCategory();
+        setCategories(data);
+      } catch (error) {
+        console.error("Failed to load categories:", error);
+      }
+    };
+    loadCategory();
+  }, []);
+
   // Scroll lên đầu
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleClick = (category) => {
+    const params = new URLSearchParams(searchParams);
+    if (category === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", category);
+    }
+    router.push("/product?" + params.toString());
   };
 
   return (
@@ -35,72 +61,74 @@ export default function Footer() {
         <div className="text-base">
           <div className="flex items-center gap-2">
             {/* <Image src="/logo.png" alt="Carrot Logo" width={30} height={30} /> */}
-            <h2 className="text-2xl font-bold">Carrot</h2>
+            <h2 className="text-2xl font-bold">CaCanhTV</h2>
           </div>
           <p className="mt-4 text-gray-600 text-sm md:text-base">
-            Carrot is the biggest market of grocery products. Get your daily
-            needs from our store.
+            CaCanhTV chuyên cung cấp các loại cá cảnh đẹp, độc lạ với giá cả hợp
+            lý. Chúng tôi cam kết mang đến cho khách hàng những sản phẩm và dịch
+            vụ tốt nhất.
+          </p>
+          <p className="mt-4 text-gray-600 font-semibold">
+            Liên hệ với chúng tôi
           </p>
           <ul className="mt-4 space-y-2 text-gray-600 text-sm md:text-base">
             <li className="flex gap-2">
-              📍 51 Green St.Huntington ohio beach ontario, NY 11746 KY 4783,
-              USA.
+              📍 Ấp Tân Thành Tây, xã Tân Hòa, Tỉnh Vĩnh Long.
             </li>
-            <li className="flex gap-2">✉️ example@email.com</li>
+            <li className="flex gap-2">✉️ cacanhTV@gmail.com</li>
             <li className="flex gap-2">📞 +91 123 4567890</li>
           </ul>
         </div>
 
         {/* Company */}
         <div>
-          <h3 className="font-semibold text-xl md:text-2xl mb-4">Company</h3>
+          <h3 className="font-semibold text-xl md:text-2xl mb-4">
+            Về chúng tôi
+          </h3>
           <ul className="space-y-2 text-sm md:text-base text-gray-600">
             <li>
-              <Link href="#">About Us</Link>
+              <Link href="#">Giới thiệu</Link>
             </li>
             <li>
-              <Link href="#">Delivery Information</Link>
+              <Link href="#">Tin tức</Link>
             </li>
             <li>
-              <Link href="#">Privacy Policy</Link>
+              <Link href="#">Chính sách vận chuyển</Link>
             </li>
             <li>
-              <Link href="#">Terms & Conditions</Link>
+              <Link href="#">Chính sách đổi trả</Link>
             </li>
             <li>
-              <Link href="#">Contact Us</Link>
-            </li>
-            <li>
-              <Link href="#">Support Center</Link>
+              <Link href="#">Liên hệ</Link>
             </li>
           </ul>
         </div>
 
         {/* Category */}
         <div>
-          <h3 className="font-semibold text-xl md:text-2xl mb-4">Category</h3>
-          <ul className="space-y-2 text-sm md:text-base text-gray-600">
-            <li>Dairy & Bakery</li>
-            <li>Fruits & Vegetable</li>
-            <li>Snack & Spice</li>
-            <li>Juice & Drinks</li>
-            <li>Chicken & Meat</li>
-            <li>Fast Food</li>
-          </ul>
+          <h3 className="font-semibold text-xl md:text-2xl mb-4">
+            Danh mục sản phẩm
+          </h3>
+          {categories.length === 0 ? (
+            <p>Đang tải dữ liệu...</p>
+          ) : (
+            <ul className="space-y-2 text-sm md:text-base text-gray-600">
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <Link onClick={() => handleClick(category.id)} href="#">
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Newsletter */}
         <div>
           <h3 className="font-semibold text-xl md:text-2xl mb-4">
-            Subscribe Our Newsletter
+            Theo dõi chúng tôi
           </h3>
-          <div className="flex flex-col sm:flex-row items-stretch gap-2">
-            <Input placeholder="Enter your email..." className="flex-1" />
-            <Button size="icon" className="sm:w-auto">
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-
           {/* Social icons */}
           <div className="flex gap-3 mt-4 flex-wrap">
             <Button variant="outline" size="icon">

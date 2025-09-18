@@ -202,7 +202,7 @@ export default function Header() {
       </div>
 
       {/* Desktop Nav */}
-      <nav className="hidden lg:flex container mx-auto justify-center gap-12 py-3 text-lg font-medium">
+      <nav className="hidden lg:flex container mx-auto justify-center gap-12 py-5 text-lg font-medium">
         <Link href="/">Trang chủ </Link>
         <Link href="#">Giới thiệu</Link>
         <DropdownMenu>

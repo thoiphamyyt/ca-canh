@@ -41,21 +41,6 @@ export default function FormLogin() {
     },
   });
 
-  function setToken(token, expiresInMinutes = 60) {
-    // Set cookie httpOnly
-    const inOneHour = new Date(
-      new Date().getTime() + expiresInMinutes * 60 * 1000
-    );
-    localStorage.setItem("auth_token", token);
-    localStorage.setItem("time_auth_token", inOneHour.getTime());
-    Cookies.set("access_token", access_token, {
-      expires: inOneHour,
-      path: "/",
-      secure: false,
-      sameSite: "Lax",
-    });
-  }
-
   // 2. Define a submit handler.
   async function onSubmit(values) {
     const formData = new FormData();
@@ -154,7 +139,7 @@ export default function FormLogin() {
           >
             {loadingProcess ? (
               <>
-                <span className="inline-block w-4 h-4 border-2 border-t-blue-500 border-gray-200 rounded-full animate-spin mr-2"></span>
+                <span className="inline-block w-4 h-4 bg-green-600 border-2 border-t-blue-500 border-gray-200 rounded-full animate-spin mr-2"></span>
                 Đang xử lý...
               </>
             ) : (

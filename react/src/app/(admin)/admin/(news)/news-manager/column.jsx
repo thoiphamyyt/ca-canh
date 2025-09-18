@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { link_public_api } from "@/lib/contants";
-import { formatVND } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 export const columns = (onOpenDialog) => [
@@ -10,36 +8,17 @@ export const columns = (onOpenDialog) => [
     cell: ({ row }) => <div className="text-center">{row.index + 1}</div>, // tự đánh số
   },
   {
-    accessorKey: "key_product",
-    header: "Mã sản phẩm",
-    cell: ({ row }) => (
-      <div className="text-center">{row.original.key_product}</div>
-    ),
+    accessorKey: "title",
+    header: "Tiêu đề",
   },
   {
-    accessorKey: "product",
-    header: "Tên sản phẩm",
+    accessorKey: "status",
+    header: "Trạng thái",
+    cell: ({ row }) => <div className="text-center">{row.original.status}</div>,
   },
   {
-    accessorKey: "price",
-    header: "Đơn giá",
-    cell: ({ row }) => (
-      <div className="text-center">{formatVND(row.original.price)}</div>
-    ),
-  },
-  {
-    accessorKey: "quantity",
-    header: "Số lượng",
-    cell: ({ row }) => (
-      <div className="text-center">{row.original.quantity || 0}</div>
-    ),
-  },
-  {
-    accessorKey: "category_name",
-    header: "Loại sản phẩm",
-    cell: ({ row }) => (
-      <div className="text-center">{row.original.category_name || ""}</div>
-    ),
+    accessorKey: "content",
+    header: "Nội dung",
   },
   {
     accessorKey: "avatar",
@@ -52,11 +31,11 @@ export const columns = (onOpenDialog) => [
             height={50}
             className="w-[50px] h-[50px] object-cover"
             src={
-              row.original.images_url && row.original.images_url.length > 0
-                ? row.original.images_url[0]
+              row.original.image
+                ? row.original.image[0]
                 : "/images/product/product-default.png"
             }
-            alt={row.original.product}
+            alt={row.original.title}
           />
         </div>
       </div>

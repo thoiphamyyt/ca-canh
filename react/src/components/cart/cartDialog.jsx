@@ -14,7 +14,6 @@ import { formatVND } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/context/cartContext";
 import Link from "next/link";
-import { link_public_api } from "@/lib/contants";
 
 export default function CartDialog({ dataProduct }) {
   const [quantity, setQuantity] = useState(1);
@@ -44,8 +43,8 @@ export default function CartDialog({ dataProduct }) {
         <div className="flex gap-4 items-center border-b pb-4">
           <img
             src={
-              dataProduct.image
-                ? `${link_public_api}/${dataProduct.image[0]}`
+              dataProduct.images_url && dataProduct.images_url.length
+                ? dataProduct.images_url[0]
                 : "/images/product/product-default.png"
             }
             alt="Coconut Cake"

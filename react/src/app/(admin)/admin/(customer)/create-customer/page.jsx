@@ -12,7 +12,7 @@ export const metadata = {
 export default function FormElements() {
   return (
     <div>
-      <PageBreadcrumb pageTitle="Thêm mới sản phẩm" />
+      <PageBreadcrumb pageTitle="Thêm mới khách hàng" />
       <Form />
     </div>
   );

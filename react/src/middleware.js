@@ -17,6 +17,7 @@ export async function middleware(req) {
     "/product",
     "/detail-product",
     "/news",
+    "/cart",
   ];
 
   // Nếu là route public -> cho qua
@@ -28,7 +29,7 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
-  const customerProtectedRoutes = ["/cart", "/checkout", "/profile"];
+  const customerProtectedRoutes = ["/checkout", "/profile"];
   const isCustomerProtected = customerProtectedRoutes.some((path) =>
     pathname.startsWith(path)
   );
@@ -36,8 +37,6 @@ export async function middleware(req) {
 
   if (isCustomerProtected || isAdminProtected) {
     if (!token) {
-      console.log(host, origin);
-
       const loginUrl = new URL("/login", origin);
       loginUrl.searchParams.set("error", "unauthorized");
       const res = NextResponse.redirect(loginUrl);

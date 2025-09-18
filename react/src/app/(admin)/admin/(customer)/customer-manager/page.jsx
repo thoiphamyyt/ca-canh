@@ -1,17 +1,15 @@
-import LayoutProduct from "./layout";
+import LayoutCustomer from "./layout";
 import React from "react";
-import { title } from "@/lib/contants";
+import { title, description } from "@/lib/contants";
 
 export const metadata = {
-  title: `${title} | Danh sách sản phẩm`,
-  description:
-    "This is Next.js Basic Table  page for TailAdmin  Tailwind CSS Admin Dashboard Template",
-  // other metadata
+  title: `${title} | Danh sách khách hàng`,
+  description: description,
 };
 export default function BasicTables() {
   return (
     <div>
-      <LayoutProduct />
+      <LayoutCustomer />
     </div>
   );
 }

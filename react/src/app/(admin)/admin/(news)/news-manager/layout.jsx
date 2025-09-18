@@ -7,24 +7,25 @@ import React from "react";
 import { useState } from "react";
 import AlertConfirm from "@/components/shadcn/alertConfirm";
 import { useToast } from "@/hooks/use-toast";
+import config from "@/config";
 
-export default function LayoutCustomer() {
+export default function LayoutNews() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedNews, setSelectedNews] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const { toast } = useToast();
 
-  const handleOpenDialog = (customer) => {
-    setSelectedCustomer(customer);
+  const handleOpenDialog = (news) => {
+    setSelectedNews(news);
     setIsOpenDialog(true);
   };
 
   const handleDelete = async () => {
-    if (!selectedCustomer) return;
+    if (!selectedNews) return;
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/ca-canh/create-customer/${selectedCustomer.id}`,
+        `${config.NEXT_PUBLIC_API}/api/ca-canh/delete-news/${selectedNews.id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -35,12 +36,12 @@ export default function LayoutCustomer() {
         toast({
           variant: "destructive",
           title: "Thất bại",
-          description: data.message || "Xóa tài khoản thất bại!",
+          description: data.message || "Xóa bản tin thất bại!",
         });
       } else {
         toast({
           title: "Thành công",
-          description: "Xóa tài khoản thành công!",
+          description: "Xóa bản tin thành công!",
           variant: "success",
         });
         setIsReload(!isReload); // trigger reload data table
@@ -57,20 +58,20 @@ export default function LayoutCustomer() {
   };
   return (
     <div>
-      <PageBreadcrumb pageTitle="Khách hàng" />
+      <PageBreadcrumb pageTitle="Bản tin" />
       <div className="space-y-6">
         <ComponentCard
-          title="Danh sách khách hàng"
+          title="Danh sách bản tin"
           actionCreate={true}
-          urlCreate="/admin/create-customer"
+          urlCreate="/admin/create-news"
         >
           <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
           {/* <BasicTableOne /> */}
         </ComponentCard>
         <AlertConfirm
           open={isOpenDialog}
-          title="Xoá khách hàng"
-          message={`Bạn có chắc chắn muốn xoá khách hàng ${selectedCustomer?.name}?`}
+          title="Xoá bản tin"
+          message={`Bạn có chắc chắn muốn xoá bản tin ${selectedNews?.title}?`}
           actionText="Xoá"
           onConfirm={handleDelete}
           onCancel={() => setIsOpenDialog(false)}

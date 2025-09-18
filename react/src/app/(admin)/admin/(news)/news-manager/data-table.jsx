@@ -17,30 +17,32 @@ import {
 } from "@/components/ui/table";
 
 import { useState, useEffect } from "react";
-import { fetchCustomer } from "@/lib/fetchUser";
+import { fetchNews } from "@/lib/fetchApi";
 
 export function DataTable({ columns, isReload = false }) {
   const [loading, setLoading] = useState(true);
-  const [data, setCustomer] = useState([]);
+  const [data, setNews] = useState([]);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
   useEffect(() => {
-    async function loadCustomer() {
+    async function loadNews() {
       setLoading(true);
       try {
-        const data = await fetchCustomer();
+        const data = await fetchNews({});
+        console.log(data, 22222222);
 
-        setCustomer(data);
+        setNews(data);
       } catch (error) {
-        console.error("Không thể lấy dữ liệu:", error);
+        console.error("Failed to fetch News:", error);
       } finally {
         setLoading(false);
       }
     }
-    loadCustomer();
+    loadNews();
   }, [isReload]);
 
   return (

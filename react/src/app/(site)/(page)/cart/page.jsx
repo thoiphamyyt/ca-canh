@@ -32,12 +32,12 @@ export default function CartPage() {
       </h1>
 
       {cart.length === 0 ? (
-        <p>Giỏ hàng trống.</p>
+        <p>Giỏ hàng chưa có sản phẩm.</p>
       ) : (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50px]">#</TableHead>
+              <TableHead className="w-[50px]">STT</TableHead>
               <TableHead>Tên sản phẩm</TableHead>
               <TableHead>Giá</TableHead>
               <TableHead className="text-center">Số lượng</TableHead>
@@ -52,8 +52,8 @@ export default function CartPage() {
                 <TableCell className="font-medium h-[200px] flex items-center space-x-5">
                   <img
                     src={
-                      item.image
-                        ? `${link_public_api}/${item.image[0]}`
+                      item.images_url
+                        ? item.images_url[0]
                         : "/images/product/product-default.png"
                     }
                     className="h-[170px] w-[170px] object-cover"

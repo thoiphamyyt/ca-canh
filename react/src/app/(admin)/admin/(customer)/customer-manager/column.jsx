@@ -10,49 +10,29 @@ export const columns = (onOpenDialog) => [
     cell: ({ row }) => <div className="text-center">{row.index + 1}</div>, // tự đánh số
   },
   {
-    accessorKey: "product",
-    header: "Sản phẩm",
-  },
-  {
-    accessorKey: "quantity",
-    header: "Số lượng",
+    accessorKey: "userName",
+    header: "Tài khoản",
     cell: ({ row }) => (
-      <div className="text-center">{row.original.quantity}</div>
+      <div className="text-center">{row.original.userName}</div>
     ),
   },
   {
-    accessorKey: "price",
-    header: "Đơn giá",
-    cell: ({ row }) => (
-      <div className="text-center">{formatVND(row.original.price)}</div>
-    ),
+    accessorKey: "name",
+    header: "Họ và tên",
   },
   {
-    accessorKey: "category_name",
-    header: "Loại sản phẩm",
-    cell: ({ row }) => (
-      <div className="text-center">{row.original.category_name}</div>
-    ),
+    accessorKey: "email",
+    header: "Email",
   },
   {
-    accessorKey: "image",
-    header: "Hình ảnh",
+    accessorKey: "address",
+    header: "Địa chỉ",
+  },
+  {
+    accessorKey: "phone",
+    header: "Số điện thoại",
     cell: ({ row }) => (
-      <div className="flex items-center justify-center gap-3">
-        <div className="w-13 h-13 overflow-hidden">
-          <Image
-            width={50}
-            height={50}
-            className="w-[50px] h-[50px] object-cover"
-            src={
-              row.original.image && row.original.image
-                ? `${link_public_api}/${row.original.image[0]}`
-                : "/images/product/product-default.png"
-            }
-            alt={row.original.product}
-          />
-        </div>
-      </div>
+      <div className="text-center">{row.original.phone || ""}</div>
     ),
   },
   {
@@ -60,7 +40,7 @@ export const columns = (onOpenDialog) => [
     header: "Thao tác",
     cell: ({ row }) => (
       <div className="flex justify-center gap-2 text-center">
-        <Link href={`/admin/update-product/${row.original.id}`}>
+        <Link href={`/admin/update-customer/${row.original.id}`}>
           <Button size="sm">Sửa</Button>
         </Link>
         <Button

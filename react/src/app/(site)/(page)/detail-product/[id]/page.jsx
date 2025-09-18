@@ -94,8 +94,8 @@ export default function ProductDetail({ params }) {
                 {/* Main image */}
                 <ZoomImage
                   src={
-                    dataDetail.image
-                      ? `${link_public_api}/${dataDetail.image[0]}`
+                    dataDetail.images_url && dataDetail.images_url.length > 0
+                      ? dataDetail.images_url[0]
                       : "/images/product/product-default.png"
                   }
                   alt={dataDetail.product}
@@ -104,15 +104,15 @@ export default function ProductDetail({ params }) {
 
               {/* Thumbnails */}
               <div className="flex flex-col gap-y-4 items-center">
-                {dataDetail.image &&
-                  dataDetail.image.map((src, i) => (
+                {dataDetail.images_url &&
+                  dataDetail.images_url.map((src, i) => (
                     <button
                       key={i}
                       className="rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition flex items-center justify-center w-28 h-24"
                       aria-label={`Thumbnail ${i + 1}`}
                     >
                       <img
-                        src={`${link_public_api}/${src}`}
+                        src={src}
                         alt={`${dataDetail.product} ${i + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -123,7 +123,7 @@ export default function ProductDetail({ params }) {
           </Card>
 
           {/* Small gallery or related cards */}
-          <div className="mt-4 grid grid-cols-3 gap-3">
+          {/* <div className="mt-4 grid grid-cols-3 gap-3">
             <img
               src="/images/product/product1.jpg"
               alt="thumb"
@@ -139,7 +139,7 @@ export default function ProductDetail({ params }) {
               alt="thumb"
               className="w-full h-24 object-cover rounded-md"
             />
-          </div>
+          </div> */}
 
           <Separator className="my-6" />
           <Tabs defaultValue="description">

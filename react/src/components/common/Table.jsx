@@ -89,8 +89,8 @@ export default function BasicTableOne() {
                             width={40}
                             height={40}
                             src={
-                              item.image
-                                ? item.image
+                              item.images_url && item.images_url.length
+                                ? item.images_url[0]
                                 : "/images/product/product-default.png"
                             }
                             alt={item.product}

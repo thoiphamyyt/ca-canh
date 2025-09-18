@@ -19,12 +19,15 @@ export default function UserUpdateDialog() {
   const { user, setUser } = useUser();
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
+  const [loadingProcess, setLoadingProcess] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
     phone: user?.phone || "",
     address: user?.address || "",
     avatar: user?.avatar || null, // đường dẫn ảnh hoặc file upload
+    avatar_url: user?.avatar_url || null, // đường dẫn ảnh hoặc file upload
+    avatarPreview: null, // để hiện preview ảnh khi chọn file mới
   });
 
   function handleChange(e) {
@@ -58,15 +61,14 @@ export default function UserUpdateDialog() {
       if (formData.avatar instanceof File) {
         form.append("avatar", formData.avatar);
       }
+      setLoadingProcess(true);
       const res = await fetch(`${config.NEXT_PUBLIC_API}/api/user-update`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-        },
+        credentials: "include",
         body: form,
       });
       const data = await res.json();
-
+      setLoadingProcess(false);
       if (!res.ok) throw new Error(data.message || "Cập nhật thất bại");
       if (data.success) {
         toast({
@@ -85,7 +87,11 @@ export default function UserUpdateDialog() {
         });
       }
     } catch (err) {
-      alert(err.message, 121212);
+      toast({
+        title: "Thất bại",
+        description: err.message,
+        variant: "error",
+      });
     }
   }
 
@@ -107,8 +113,8 @@ export default function UserUpdateDialog() {
             <img
               src={
                 formData.avatarPreview ||
-                (typeof formData.avatar === "string"
-                  ? `${link_public_api}/${formData.avatar}`
+                (typeof formData.avatar_url === "string"
+                  ? `${formData.avatar_url}`
                   : "/images/user-default.jpg")
               }
               alt="avatar"
@@ -159,7 +165,14 @@ export default function UserUpdateDialog() {
           </div>
 
           <Button type="submit" className="w-full">
-            Lưu thay đổi
+            {loadingProcess ? (
+              <>
+                <span className="inline-block w-4 h-4 border-2 border-t-blue-500 border-gray-200 rounded-full animate-spin mr-2"></span>
+                Đang lưu...
+              </>
+            ) : (
+              "Lưu thay đổi"
+            )}
           </Button>
         </form>
       </DialogContent>

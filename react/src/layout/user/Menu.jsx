@@ -53,7 +53,7 @@ const MenuLeft = () => {
             <button
               key={index}
               onClick={() => handleClick(item.id)}
-              className={`w-full flex justify-between items-center p-3 border rounded-md hover:bg-green-50 ${
+              className={`w-full flex justify-between items-center p-3 border rounded-md hover:bg-green-200 ${
                 item.id === activeId
                   ? "text-green-600 font-semibold"
                   : "text-gray-600"
