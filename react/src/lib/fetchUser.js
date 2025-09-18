@@ -47,7 +47,7 @@ const fetchCustomer = async () => {
     }
 
     const data = await res.json();
-    return data ? data.data : [];
+    return data && data.success ? data.data : [];
   } catch (error) {
     console.error("Không thể lấy dữ liệu", error);
     return null;

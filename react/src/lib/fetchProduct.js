@@ -18,7 +18,7 @@ const fetchProduct = async (params = {}) => {
     }
 
     const data = await res.json();
-    return data ? data.data : null;
+    return data && data.success ? data.data : null;
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;
@@ -41,7 +41,7 @@ const fetchDetailProduct = async (id) => {
     }
 
     const data = await res.json();
-    return data ? data.data : null;
+    return data && data.success ? data.data : null;
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;
@@ -62,7 +62,7 @@ const fetchCategory = async (params = {}) => {
     }
 
     const data = await res.json();
-    return data ? data.data : null;
+    return data && data.success ? data.data : null;
   } catch (error) {
     console.error("Error fetching category:", error);
     return null;
