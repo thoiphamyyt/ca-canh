@@ -33,8 +33,6 @@ export function DataTable({ columns, isReload = false }) {
       setLoading(true);
       try {
         const data = await fetchNews({});
-        console.log(data, 22222222);
-
         setNews(data);
       } catch (error) {
         console.error("Failed to fetch News:", error);
@@ -97,7 +95,7 @@ export function DataTable({ columns, isReload = false }) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không có dữ liệu.
                 </TableCell>
               </TableRow>
             )}

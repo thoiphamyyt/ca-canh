@@ -32,7 +32,6 @@ export function DataTable({ columns, isReload = false }) {
       setLoading(true);
       try {
         const data = await fetchCustomer();
-
         setCustomer(data);
       } catch (error) {
         console.error("Không thể lấy dữ liệu:", error);
@@ -95,7 +94,7 @@ export function DataTable({ columns, isReload = false }) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không có dữ liệu.
                 </TableCell>
               </TableRow>
             )}

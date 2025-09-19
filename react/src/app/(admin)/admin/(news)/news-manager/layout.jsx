@@ -1,6 +1,5 @@
 "use client";
 import ComponentCard from "@/components/common/ComponentCard";
-import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { columns } from "./column";
 import { DataTable } from "./data-table";
 import React from "react";
@@ -57,26 +56,23 @@ export default function LayoutNews() {
     }
   };
   return (
-    <div>
-      <PageBreadcrumb pageTitle="Bản tin" />
-      <div className="space-y-6">
-        <ComponentCard
-          title="Danh sách bản tin"
-          actionCreate={true}
-          urlCreate="/admin/create-news"
-        >
-          <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-          {/* <BasicTableOne /> */}
-        </ComponentCard>
-        <AlertConfirm
-          open={isOpenDialog}
-          title="Xoá bản tin"
-          message={`Bạn có chắc chắn muốn xoá bản tin ${selectedNews?.title}?`}
-          actionText="Xoá"
-          onConfirm={handleDelete}
-          onCancel={() => setIsOpenDialog(false)}
-        />
-      </div>
+    <div className="space-y-6">
+      <ComponentCard
+        title="Danh sách bản tin"
+        actionCreate={true}
+        urlCreate="/admin/create-news"
+      >
+        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
+        {/* <BasicTableOne /> */}
+      </ComponentCard>
+      <AlertConfirm
+        open={isOpenDialog}
+        title="Xoá bản tin"
+        message={`Bạn có chắc chắn muốn xoá bản tin ${selectedNews?.title}?`}
+        actionText="Xoá"
+        onConfirm={handleDelete}
+        onCancel={() => setIsOpenDialog(false)}
+      />
     </div>
   );
 }

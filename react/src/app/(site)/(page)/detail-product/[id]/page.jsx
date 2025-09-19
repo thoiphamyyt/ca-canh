@@ -13,7 +13,6 @@ import { fetchDetailProduct } from "@/lib/fetchProduct";
 import { formatVND } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCart } from "@/context/cartContext";
-import { link_public_api } from "@/lib/contants";
 
 export default function ProductDetail({ params }) {
   const { id } = use(params);
@@ -121,26 +120,6 @@ export default function ProductDetail({ params }) {
               </div>
             </div>
           </Card>
-
-          {/* Small gallery or related cards */}
-          {/* <div className="mt-4 grid grid-cols-3 gap-3">
-            <img
-              src="/images/product/product1.jpg"
-              alt="thumb"
-              className="w-full h-24 object-cover rounded-md"
-            />
-            <img
-              src="/images/product/product2.jpg"
-              alt="thumb"
-              className="w-full h-24 object-cover rounded-md"
-            />
-            <img
-              src="/images/product/product3.jpg"
-              alt="thumb"
-              className="w-full h-24 object-cover rounded-md"
-            />
-          </div> */}
-
           <Separator className="my-6" />
           <Tabs defaultValue="description">
             <TabsList>

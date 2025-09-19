@@ -1,6 +1,5 @@
 "use client";
 import ComponentCard from "@/components/common/ComponentCard";
-import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { columns } from "./column";
 import { DataTable } from "./data-table";
 import React from "react";
@@ -56,26 +55,23 @@ export default function LayoutCustomer() {
     }
   };
   return (
-    <div>
-      <PageBreadcrumb pageTitle="Khách hàng" />
-      <div className="space-y-6">
-        <ComponentCard
-          title="Danh sách khách hàng"
-          actionCreate={true}
-          urlCreate="/admin/create-customer"
-        >
-          <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-          {/* <BasicTableOne /> */}
-        </ComponentCard>
-        <AlertConfirm
-          open={isOpenDialog}
-          title="Xoá khách hàng"
-          message={`Bạn có chắc chắn muốn xoá khách hàng ${selectedCustomer?.name}?`}
-          actionText="Xoá"
-          onConfirm={handleDelete}
-          onCancel={() => setIsOpenDialog(false)}
-        />
-      </div>
+    <div className="space-y-6">
+      <ComponentCard
+        title="Danh sách khách hàng"
+        actionCreate={true}
+        urlCreate="/admin/create-customer"
+      >
+        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
+        {/* <BasicTableOne /> */}
+      </ComponentCard>
+      <AlertConfirm
+        open={isOpenDialog}
+        title="Xoá khách hàng"
+        message={`Bạn có chắc chắn muốn xoá khách hàng ${selectedCustomer?.name}?`}
+        actionText="Xoá"
+        onConfirm={handleDelete}
+        onCancel={() => setIsOpenDialog(false)}
+      />
     </div>
   );
 }

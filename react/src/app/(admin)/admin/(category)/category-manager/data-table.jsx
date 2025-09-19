@@ -93,7 +93,7 @@ export function DataTable({ columns, isReload = false }) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không có dữ liệu.
                 </TableCell>
               </TableRow>
             )}

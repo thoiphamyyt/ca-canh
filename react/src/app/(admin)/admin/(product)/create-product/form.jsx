@@ -98,7 +98,6 @@ export default function FormCreateProduct({
   const handleRemoveImage = (id) => {
     if (isUpdate) {
       const img = images.find((img) => img.id === id);
-      console.log(img);
 
       if (img && !img.file) {
         setImageRemoved((prev) => [...prev, img.path]);
@@ -206,7 +205,6 @@ export default function FormCreateProduct({
         formData.append("images_removed[]", url);
       });
     }
-    console.log({ imageRemoved });
 
     try {
       setLoadingProcess(true);

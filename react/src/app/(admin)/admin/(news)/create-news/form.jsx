@@ -21,61 +21,40 @@ import {
 import Input from "@/components/form/form-elements/InputField";
 import TextArea from "@/components/form/form-elements/TextArea";
 import Select from "@/components/form/Select";
-import { fetchCategory } from "@/lib/fetchProduct";
 import { Progress } from "@/components/ui/progress";
 
-export default function FormCreateProduct({
-  isUpdate = false,
-  productId = null,
-}) {
+export default function FormCreateNews({ isUpdate = false, newsId = null }) {
   const { toast } = useToast();
   const [images, setImages] = useState([]);
-  const [category, setCategory] = useState([]);
   const [loadingProcess, setLoadingProcess] = useState(false);
   const [loadingData, setLoadingData] = useState(isUpdate ? true : false);
   const [progress, setProgress] = useState(0);
   const [imageRemoved, setImageRemoved] = useState([]);
+  const listStatus = [
+    { value: "draft", label: "Nháp" },
+    { value: "published", label: "Đăng tải" },
+  ];
   const formSchema = z.object({
-    key_product: z
-      .string()
-      .min(1, { message: "Mã sản phẩm không được trống." }),
-    product: z.string().min(1, { message: "Sản phẩm không được trống." }),
-    id_category: z
-      .string()
-      .min(1, { message: "Loại sản phẩm không được trống." }),
-    price: z.coerce
-      .number({
-        required_error: "Đơn giá không được trống.",
-        invalid_type_error: "Đơn giá phải là số.",
+    title: z.string().min(1, { message: "Tiêu đề không được trống." }),
+    status: z
+      .string({
+        required_error: "Vui lòng chọn trạng thái",
       })
-      .int("Đơn giá phải là số nguyên.")
-      .min(1, { message: "Đơn giá phải > 0." }),
-    old_price: z
-      .union([
-        z.literal(""),
-        z.coerce.number().int("Đơn giá cũ phải là số nguyên."),
-      ])
-      .optional(),
-    quantity: z.coerce
-      .number({
-        required_error: "Số lượng không được trống.",
-        invalid_type_error: "Số lượng phải là số.",
-      })
-      .int("Số lượng phải là số nguyên.")
-      .min(1, { message: "Số lượng phải > 0." }),
-    description: z.string().optional(),
+      .refine((val) => ["draft", "published"].includes(val), {
+        message: "Vui lòng chọn trạng thái hợp lệ",
+      }),
+    content: z.string().optional(),
+    slug: z.string().optional(),
     images: z.any().optional(),
+    link: z.string().optional(),
   });
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product: "",
-      key_product: "",
-      quantity: "",
-      price: "",
-      old_price: "",
-      description: "",
-      id_category: "",
+      title: "",
+      content: "",
+      status: "",
+      link: "",
       images: [],
     },
   });
@@ -98,7 +77,6 @@ export default function FormCreateProduct({
   const handleRemoveImage = (id) => {
     if (isUpdate) {
       const img = images.find((img) => img.id === id);
-      console.log(img);
 
       if (img && !img.file) {
         setImageRemoved((prev) => [...prev, img.path]);
@@ -109,64 +87,41 @@ export default function FormCreateProduct({
   };
 
   useEffect(() => {
-    async function loadCategory(params) {
-      try {
-        const data = await fetchCategory();
-        setCategory(
-          data.map((item) => {
-            return {
-              value: item.id,
-              label: item.name,
-            };
-          })
-        );
-      } catch {}
+    if (isUpdate && newsId) {
+      loadDetailNews();
     }
-    loadCategory();
-  }, []);
+  }, [isUpdate, newsId]);
 
-  useEffect(() => {
-    if (isUpdate && productId) {
-      loadDetailProduct();
-    }
-  }, [isUpdate, productId]);
-
-  const loadDetailProduct = async () => {
-    if (!productId) return;
+  const loadDetailNews = async () => {
+    if (!newsId) return;
     try {
       setLoadingData(true);
       setProgress(30);
       const res = await fetch(
-        `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-product/${productId}`
+        `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-news/${newsId}`
       );
       setProgress(70);
       const data = await res.json();
 
       if (res.ok && data.success) {
-        const product = data.data;
+        const news = data.data;
 
         form.reset({
-          key_product: String(product.key_product ?? ""),
-          product: product.product || "",
-          quantity: product.quantity || "",
-          price: product.price || "",
-          old_price: product.old_price || "",
-          description: product.description || "",
-          id_category: product.id_category?.toString() || "",
-          images: [],
+          title: news.title ?? "",
+          content: news.content || "",
+          status: news.status || "",
+          link: news.link || "",
+          image: [],
         });
 
-        if (product.images_url && Array.isArray(product.images_url)) {
+        if (news.images_url && Array.isArray(news.images_url)) {
           setImages(
-            product.images_url.map((url, idx) => ({
+            news.images_url.map((url, idx) => ({
               id: idx,
               name: url.split("/").pop(),
               url: url,
               file: null,
-              path:
-                product.images && product.images[idx]
-                  ? product.images[idx]
-                  : url,
+              path: news.images && news.images[idx] ? news.images[idx] : url,
             }))
           );
         }
@@ -185,17 +140,12 @@ export default function FormCreateProduct({
   };
 
   async function onSubmit(values) {
-    console.log(values);
-
     const formData = new FormData();
 
-    formData.append("key_product", values.key_product);
-    formData.append("product", values.product);
-    formData.append("quantity", values.quantity);
-    formData.append("old_price", values.old_price);
-    formData.append("price", values.price);
-    formData.append("description", values.description);
-    formData.append("id_category", values.id_category);
+    formData.append("title", values.title);
+    formData.append("content", values.content);
+    formData.append("status", values.status);
+    formData.append("link", values.link);
     if (values.images && values.images.length > 0) {
       values.images.forEach((file) => {
         formData.append("images[]", file);
@@ -206,11 +156,9 @@ export default function FormCreateProduct({
         formData.append("images_removed[]", url);
       });
     }
-    console.log({ imageRemoved });
-
     try {
       setLoadingProcess(true);
-      let action = isUpdate ? `update-product/${productId}` : "create-product";
+      let action = isUpdate ? `update-news/${newsId}` : "create-news";
       const response = await fetch(
         `${config.NEXT_PUBLIC_API}/api/ca-canh/${action}`,
         {
@@ -235,17 +183,14 @@ export default function FormCreateProduct({
           variant: "success",
         });
         if (isUpdate) {
-          loadDetailProduct();
+          loadDetailNews();
         } else {
           form.reset({
-            product: "",
-            key_product: "",
-            quantity: "",
-            price: "",
-            old_price: "",
-            description: "",
-            id_category: "",
-            images: [],
+            title: "",
+            content: "",
+            status: "",
+            link: "",
+            image: null,
           });
           setImages([]);
         }
@@ -263,9 +208,7 @@ export default function FormCreateProduct({
   }
 
   return (
-    <ComponentCard
-      title={isUpdate ? "Thông tin sản phẩm" : "Thêm mới sản phẩm"}
-    >
+    <ComponentCard title={isUpdate ? "Nội dung bản tin" : "Thêm mới bản tin"}>
       {isUpdate && loadingData ? (
         <Progress value={progress} className="w-full h-1" />
       ) : (
@@ -275,23 +218,10 @@ export default function FormCreateProduct({
               <div className="space-y-6">
                 <FormField
                   control={form.control}
-                  name="key_product"
+                  name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Mã sản phẩm</Label>
-                      <FormControl>
-                        <Input disabled={!!isUpdate} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="product"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label>Tên sản phẩm</Label>
+                      <Label>Tiêu đề</Label>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -301,12 +231,12 @@ export default function FormCreateProduct({
                 />
                 <FormField
                   control={form.control}
-                  name="quantity"
+                  name="content"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Số lượng</Label>
+                      <Label>Nội dung</Label>
                       <FormControl>
-                        <Input {...field} />
+                        <TextArea rows={6} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -314,23 +244,10 @@ export default function FormCreateProduct({
                 />
                 <FormField
                   control={form.control}
-                  name="price"
+                  name="link"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Đơn giá (Vnđ)</Label>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="old_price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label>Đơn giá cũ (Vnđ)</Label>
+                      <Label>Nguồn</Label>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -342,36 +259,24 @@ export default function FormCreateProduct({
               <div className="space-y-6">
                 <FormField
                   control={form.control}
-                  name="id_category"
+                  name="status"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Loại sản phẩm</Label>
+                      <Label>Trạng thái</Label>
                       <FormControl>
                         <Select
-                          options={category}
-                          placeholder="Chọn loại sản phẩm"
+                          options={listStatus}
+                          placeholder="Chọn trạng thái"
                           className="dark:bg-dark-900"
+                          onChange={(option) => field.onChange(option?.value)} // lấy value
                           {...field}
                         />
-                        {/* <Select {...field} /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label>Mô tả sản phẩm </Label>
-                      <FormControl>
-                        <TextArea rows={6} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <FormField
                   control={form.control}
                   name="images"
@@ -381,8 +286,8 @@ export default function FormCreateProduct({
                       <FormControl>
                         <input
                           type="file"
-                          accept="image/png, image/jpg, image/jpeg"
                           multiple
+                          accept="image/png, image/jpg, image/jpeg"
                           onChange={handleFileChange}
                           className="focus:border-ring-brand-300 h-11 w-full overflow-hidden rounded-lg border border-gray-300 bg-transparent text-sm text-gray-500 shadow-theme-xs transition-colors file:mr-5 file:border-collapse file:cursor-pointer file:rounded-l-lg file:border-0 file:border-r file:border-solid file:border-gray-200 file:bg-gray-50 file:py-3 file:pl-3.5 file:pr-3 file:text-sm file:text-gray-700 placeholder:text-gray-400 hover:file:bg-gray-100 focus:outline-hidden focus:file:ring-brand-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 dark:text-white/90 dark:file:border-gray-800 dark:file:bg-white/[0.03] dark:file:text-gray-400 dark:placeholder:text-gray-400"
                         />
@@ -434,7 +339,7 @@ export default function FormCreateProduct({
                   "Lưu lại"
                 )}
               </button>
-              <Link href="/admin/product-manager">
+              <Link href="/admin/news-manager">
                 <button className="bg-gray-400 px-3 py-1 rounded-md">
                   Quay về
                 </button>

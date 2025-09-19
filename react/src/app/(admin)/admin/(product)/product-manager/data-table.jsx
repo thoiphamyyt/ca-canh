@@ -5,6 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -16,6 +17,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { DataTablePagination } from "@/components/common/DataTablePagination";
+
 import { useState, useEffect } from "react";
 import { fetchProduct } from "@/lib/fetchProduct";
 
@@ -26,6 +29,12 @@ export function DataTable({ columns, isReload = false }) {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10, // mặc định 15 dòng
+      },
+    },
   });
 
   useEffect(() => {
@@ -95,13 +104,14 @@ export function DataTable({ columns, isReload = false }) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không có dữ liệu.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} />
     </div>
   );
 }

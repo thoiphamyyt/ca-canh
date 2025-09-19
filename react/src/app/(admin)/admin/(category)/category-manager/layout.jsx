@@ -1,6 +1,5 @@
 "use client";
 import ComponentCard from "@/components/common/ComponentCard";
-import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { columns } from "./column";
 import { DataTable } from "./data-table";
 import React from "react";
@@ -56,26 +55,23 @@ export default function LayoutProduct() {
     }
   };
   return (
-    <div>
-      <PageBreadcrumb pageTitle="Danh mục sản phẩm" />
-      <div className="space-y-6">
-        <ComponentCard
-          title="Danh mục sản phẩm"
-          actionCreate={true}
-          urlCreate="/admin/create-category"
-        >
-          <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-          {/* <BasicTableOne /> */}
-        </ComponentCard>
-        <AlertConfirm
-          open={isOpenDialog}
-          title="Xoá loai sản phẩm"
-          message={`Bạn có chắc chắn muốn xoá loại sản phẩm ${selectedCategory?.name}?`}
-          actionText="Xoá"
-          onConfirm={handleDelete}
-          onCancel={() => setIsOpenDialog(false)}
-        />
-      </div>
+    <div className="space-y-6">
+      <ComponentCard
+        title="Danh mục sản phẩm"
+        actionCreate={true}
+        urlCreate="/admin/create-category"
+      >
+        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
+        {/* <BasicTableOne /> */}
+      </ComponentCard>
+      <AlertConfirm
+        open={isOpenDialog}
+        title="Xoá loai sản phẩm"
+        message={`Bạn có chắc chắn muốn xoá loại sản phẩm ${selectedCategory?.name}?`}
+        actionText="Xoá"
+        onConfirm={handleDelete}
+        onCancel={() => setIsOpenDialog(false)}
+      />
     </div>
   );
 }
