@@ -14,10 +14,10 @@ class CustomerController extends Controller
     {
         $data = User::all();
         return response()->json([
-            'status' => 200,
+            'success' => true,
             'message' => 'Lấy danh sách khách hàng thành công',
             'data' => $data
-        ]);
+        ], 200);
     }
 
     public function getDetail($id)

@@ -12,15 +12,27 @@ class News extends Model
         'title',
         'slug',
         'content',
-        'image',
+        'images',
         'status',
+        'published_at',
+        'link'
     ];
 
 
-    protected $appends = ['image_url'];
+    protected $appends = ['images_url'];
 
-    public function getImageUrlAttribute()
+    public function getImagesUrlAttribute()
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        if (!$this->images) {
+            return [];
+        }
+
+        return array_map(function ($images) {
+            return asset('storage/' . $images);
+        }, $this->images);
     }
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 }
