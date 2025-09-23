@@ -22,6 +22,8 @@ import Input from "@/components/form/form-elements/InputField";
 import TextArea from "@/components/form/form-elements/TextArea";
 import Select from "@/components/form/Select";
 import { Progress } from "@/components/ui/progress";
+import EditorDemo from "./editor";
+import TipTap from "@/components/tiptap/Tiptap";
 
 export default function FormCreateNews({ isUpdate = false, newsId = null }) {
   const { toast } = useToast();
@@ -255,6 +257,8 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                     </FormItem>
                   )}
                 />
+                <TipTap />
+                {/* <EditorDemo /> */}
               </div>
               <div className="space-y-6">
                 <FormField

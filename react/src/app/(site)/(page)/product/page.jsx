@@ -12,7 +12,6 @@ import { ShoppingCart, Eye } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import CartDialog from "@/components/cart/cartDialog";
-import { link_public_api } from "@/lib/contants";
 
 export default function ProductList() {
   const [products, setProduct] = useState(null);

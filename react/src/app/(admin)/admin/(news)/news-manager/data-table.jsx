@@ -5,6 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DataTablePagination } from "@/components/common/DataTablePagination";
 
 import { useState, useEffect } from "react";
 import { fetchNews } from "@/lib/fetchApi";
@@ -26,6 +28,12 @@ export function DataTable({ columns, isReload = false }) {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10, // mặc định 15 dòng
+      },
+    },
   });
 
   useEffect(() => {
@@ -102,6 +110,7 @@ export function DataTable({ columns, isReload = false }) {
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} />
     </div>
   );
 }

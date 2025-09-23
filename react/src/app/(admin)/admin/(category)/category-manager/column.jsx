@@ -21,6 +21,13 @@ export const columns = (onOpenDialog) => [
     header: "Mô tả",
   },
   {
+    accessorKey: "products_count",
+    header: "Số lượng sản phẩm",
+    cell: ({ row }) => (
+      <div className="w-[200px] text-center">{row.original.products_count}</div>
+    ),
+  },
+  {
     accessorKey: "actions",
     header: "Thao tác",
     cell: ({ row }) => (

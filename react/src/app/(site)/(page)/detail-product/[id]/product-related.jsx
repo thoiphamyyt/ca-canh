@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import { formatVND } from "@/lib/utils";
-import { link_public_api } from "@/lib/contants";
+import CartDialog from "@/components/cart/cartDialog";
 
 export default function ProducRelated({ id_category }) {
   const [product, setProduct] = useState(null);
@@ -69,9 +69,8 @@ export default function ProducRelated({ id_category }) {
 
                       {/* Hover Action Icons */}
                       <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                        <button className="p-3 rounded-full bg-lime-400 hover:bg-green-500 shadow-md dark:bg-green-600 dark:hover:bg-green-900">
-                          <ShoppingCart className="w-5 h-5 text-white" />
-                        </button>
+                        <CartDialog dataProduct={item} />
+
                         <Link href={"/detail-product/" + item.id}>
                           <button className="p-3 rounded-full shadow-md bg-yellow-300 hover:bg-yellow-500 dark:bg-amber-600 dark:hover:bg-orange-700">
                             <Eye className="w-5 h-5 text-white" />
