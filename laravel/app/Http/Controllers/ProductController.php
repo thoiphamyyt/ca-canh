@@ -21,7 +21,7 @@ class ProductController extends Controller
         if (!empty($formData['id_category'])) {
             $query->where('id_category', $formData['id_category']);
         }
-        $product = $query->get();
+        $product = $query->orderBy('products.created_at', 'desc')->get();
         if (empty($product)) {
             return response()->json(['success' => false, 'message' => 'no data']);
         } else {

@@ -13,7 +13,12 @@ class NewsController extends Controller
 {
     public function getAll(Request $request)
     {
-        $getNews = News::all();
+        $formData = $request->all();
+        $query = News::query();
+        if (!empty($formData['status'])) {
+            $query->where('status', $formData['status']);
+        }
+        $getNews = $query->get();
         if ($getNews->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'no data']);
         } else {
@@ -24,6 +29,19 @@ class NewsController extends Controller
     {
         $news = News::find($id);
         if ($news) {
+            return response()->json(['success' => true, 'data' => $news]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'no data']);
+        }
+    }
+    public function getDetailBySlug($slug)
+    {
+        $news = News::where('slug', $slug)->first();
+        $dataNew = News::orderBy('created_at', 'desc')->where('status', 'published')->whereNotIn('slug', [$slug])
+            ->take(6)
+            ->get();
+        if ($news) {
+            $news['recentPosts'] = $dataNew;
             return response()->json(['success' => true, 'data' => $news]);
         } else {
             return response()->json(['success' => false, 'message' => 'no data']);

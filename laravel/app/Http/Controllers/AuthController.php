@@ -13,12 +13,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    public function index()
-    {
-
-        $users = DB::table('users')->get()->toArray();
-        return view('welcome');
-    }
     public function register(Request $request)
     {
         $formData = $request->all();

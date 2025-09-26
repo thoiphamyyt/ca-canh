@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
+
 {
     public function getAll()
     {
-        $category = Category::orderBy('name', 'asc')->get();
+        // $category = Category::orderBy('name', 'asc')->get();
+        $category = Category::withCount('products')->get();
         if (empty($category)) {
             return response()->json(['success' => false, 'message' => 'no data']);
         } else {
@@ -30,37 +33,37 @@ class CategoryController extends Controller
     }
     public function save($formData, $idUpdate = null)
     {
-        // try {
-        $valid = Validator::make($formData, [
-            'name' => 'required|string',
-        ]);
-        if ($valid->fails()) {
-            return response()->json(['errors' => $valid->errors()], 422);
-        }
-        if ($idUpdate) {
-            $category = Category::find($idUpdate);
-            if (!$category) {
-                return response()->json(['message' => 'Không tìm thấy loại sản phẩm.', 'success' => false], 409);
-            }
-            if (isset($formData['name'])) {
-                $category->name = $formData['name'];
-            }
-            if (isset($formData['description'])) {
-                $category->description = $formData['description'];
-            }
-
-            $category->save();
-            return response()->json(['message' => 'Cập nhật loại sản phẩm thành công', 'category' => $category, 'success' => true], 201);
-        } else {
-            $category = Category::create([
-                'name' => $formData['name'],
-                'description' => $formData['description'] ?? null,
+        try {
+            $valid = Validator::make($formData, [
+                'name' => 'required|string',
             ]);
-            return response()->json(['message' => 'Thêm loại sản phẩm thành công', 'category' => $category, 'success' => true], 201);
+            if ($valid->fails()) {
+                return response()->json(['errors' => $valid->errors()], 422);
+            }
+            if ($idUpdate) {
+                $category = Category::find($idUpdate);
+                if (!$category) {
+                    return response()->json(['message' => 'Không tìm thấy loại sản phẩm.', 'success' => false], 409);
+                }
+                if (isset($formData['name'])) {
+                    $category->name = $formData['name'];
+                }
+                if (isset($formData['description'])) {
+                    $category->description = $formData['description'];
+                }
+
+                $category->save();
+                return response()->json(['message' => 'Cập nhật loại sản phẩm thành công', 'category' => $category, 'success' => true], 201);
+            } else {
+                $category = Category::create([
+                    'name' => $formData['name'],
+                    'description' => $formData['description'] ?? null,
+                ]);
+                return response()->json(['message' => 'Thêm loại sản phẩm thành công', 'category' => $category, 'success' => true], 201);
+            }
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Lỗi hệ thống, vui lòng thử lại sau.', 'success' => false], 500);
         }
-        // } catch (Exception $e) {
-        //     return response()->json(['message' => 'Lỗi hệ thống, vui lòng thử lại sau.', 'success' => false], 500);
-        // }
     }
     public function create(Request $request)
     {

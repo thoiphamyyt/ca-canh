@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,17 +43,22 @@ Route::prefix('ca-canh')->middleware(['auth:api', 'checkRole:admin'])->group(fun
 
     Route::post('create-news', [NewsController::class, 'create']);
     Route::post('update-news/{id}', [NewsController::class, 'update']);
+    Route::get('detail-news/{slug}', [NewsController::class, 'getDetail']);
+
     Route::delete('delete-news/{id}', [NewsController::class, 'delete']);
 });
 Route::prefix('ca-canh')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
 
     //Product 
-    Route::get('/products', [ProductController::class, 'getAll']);
-    Route::get('/detail-product/{id}', [ProductController::class, 'getDetail']);
-    Route::get('/category', [CategoryController::class, 'getAll']);
+    Route::get('products', [ProductController::class, 'getAll']);
+    Route::get('detail-product/{id}', [ProductController::class, 'getDetail']);
+    Route::get('category', [CategoryController::class, 'getAll']);
 
     Route::get('news', [NewsController::class, 'getAll']);
-    Route::get('detail-news/{id}', [NewsController::class, 'getDetail']);
+    Route::get('detail-news-by-slug/{slug}', [NewsController::class, 'getDetailBySlug']);
+
+
+    Route::post('save-store', [OrderController::class, 'store']);
 });
