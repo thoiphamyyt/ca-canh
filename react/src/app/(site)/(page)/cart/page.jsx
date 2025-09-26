@@ -15,9 +15,11 @@ import {
 import Link from "next/link";
 import { useUser } from "@/context/userContext";
 import { useRouter } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CartPage() {
-  const { cart, updateCart, deleteItemCart } = useCart();
+  const { cart, updateCart, deleteItemCart, loadingCart } = useCart();
   const { user } = useUser();
   const router = useRouter();
 
@@ -31,10 +33,8 @@ export default function CartPage() {
   );
   const handleCheckout = () => {
     if (!user) {
-      // Nếu chưa login thì đưa về trang login
       router.push("/login");
     } else {
-      // Nếu đã login thì cho sang trang checkout
       router.push("/checkout-cart");
     }
   };
@@ -45,8 +45,47 @@ export default function CartPage() {
         🛒 Giỏ hàng của bạn
       </h1>
 
-      {cart.length === 0 ? (
-        <p>Giỏ hàng chưa có sản phẩm.</p>
+      {loadingCart ? (
+        <div className="space-y-6">
+          {/* Skeleton bảng */}
+          <div className="space-y-4">
+            {[...Array(3)].map((_, idx) => (
+              <div
+                key={idx}
+                className="flex items-center space-x-4 border-b pb-4"
+              >
+                <Skeleton className="h-[120px] w-[120px] rounded-md" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-6 w-2/3" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-4 w-1/3" />
+                </div>
+                <Skeleton className="h-6 w-16" />
+              </div>
+            ))}
+          </div>
+
+          {/* Skeleton tổng cộng */}
+          <div className="flex justify-end">
+            <Skeleton className="h-8 w-40" />
+          </div>
+
+          {/* Skeleton nút */}
+          <div className="flex justify-end space-x-2">
+            <Skeleton className="h-12 w-32 rounded-lg" />
+            <Skeleton className="h-12 w-32 rounded-lg" />
+          </div>
+        </div>
+      ) : cart.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-10">
+          <ShoppingCart className="w-20 h-20 text-gray-400 mb-4" />
+          <h2 className="text-lg font-semibold text-gray-700">
+            Giỏ hàng trống
+          </h2>
+          <p className="text-gray-500 mt-2">
+            Hãy thêm sản phẩm để bắt đầu mua sắm nhé!
+          </p>
+        </div>
       ) : (
         <>
           <Table>
@@ -72,7 +111,8 @@ export default function CartPage() {
                           : "/images/product/product-default.png"
                       }
                       className="h-[170px] w-[170px] object-cover"
-                    ></img>
+                      alt={item.product}
+                    />
                     <p>{item.product}</p>
                   </TableCell>
                   <TableCell>{formatVND(item.price)}</TableCell>
@@ -129,6 +169,7 @@ export default function CartPage() {
               </TableRow>
             </TableBody>
           </Table>
+
           <div className="flex justify-end mt-6 space-x-2">
             <Button
               size="lg"

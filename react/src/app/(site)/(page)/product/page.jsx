@@ -42,9 +42,32 @@ export default function ProductList() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <MenuLeft />
         {loading ? (
-          Array.from({ length: 3 }).map((_, index) => (
-            <Skeleton key={index} className="h-[350px] w-full rounded-xl" />
-          ))
+          <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <Card
+                key={index}
+                className="p-4 h-[500px] flex flex-col animate-pulse"
+              >
+                <Skeleton className="w-full h-[210px] rounded-md" />
+                <Skeleton className="mt-4 h-4 w-24 mx-auto" />
+                <div className="flex justify-center gap-1 mt-2">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Skeleton key={i} className="h-4 w-4 rounded-full" />
+                  ))}
+                </div>
+                <Skeleton className="mt-3 h-5 w-3/4 mx-auto" />
+                <div className="flex justify-center gap-3 mt-2">
+                  <Skeleton className="h-5 w-16" />
+                  <Skeleton className="h-4 w-12" />
+                </div>
+                <div className="mt-3 space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6" />
+                  <Skeleton className="h-4 w-4/6" />
+                </div>
+              </Card>
+            ))}
+          </div>
         ) : products && products.length ? (
           <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
             {products.map((item) => (

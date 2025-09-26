@@ -7,6 +7,7 @@ import CheckoutUserInfo from "./CheckoutUserInfo";
 import { Skeleton } from "@/components/ui/skeleton";
 import config from "@/config";
 import { useToast } from "@/hooks/use-toast";
+import { ShoppingCart } from "lucide-react";
 
 export default function Checkout() {
   const { toast } = useToast();
@@ -194,7 +195,15 @@ export default function Checkout() {
             </button>
           </>
         ) : (
-          <div>Không có sản phẩm nào trong giỏ hàng</div>
+          <div className="flex flex-col items-center justify-center py-10">
+            <ShoppingCart className="w-20 h-20 text-gray-400 mb-4" />
+            <h2 className="text-lg font-semibold text-gray-700">
+              Giỏ hàng trống
+            </h2>
+            <p className="text-gray-500 mt-2">
+              Hãy thêm sản phẩm để bắt đầu mua sắm nhé!
+            </p>
+          </div>
         )}
       </div>
     </div>
