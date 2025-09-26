@@ -4,8 +4,9 @@ import { useEffect, useState, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { detailNews } from "@/lib/fetchApi";
+import { newsBySlug } from "@/lib/fetchApi";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
 export default function DetailNew({ params }) {
   const { id } = use(params);
@@ -15,7 +16,9 @@ export default function DetailNew({ params }) {
   useEffect(() => {
     async function getDetail() {
       try {
-        const data = await detailNews(id);
+        const data = await newsBySlug(id);
+        console.log(data);
+
         setDataDetail(data);
       } catch {
         console.error("Failed to fetch news:", error);
@@ -55,16 +58,6 @@ export default function DetailNew({ params }) {
                   📅 {formatDate(dataDetail.created_at, "dd:MM:yyyy")}
                 </span>
               </div>
-
-              {/* Image */}
-              {dataDetail.images_url && (
-                <img
-                  src={dataDetail.images_url[0]}
-                  alt={dataDetail.title}
-                  className="w-full rounded-lg object-cover"
-                />
-              )}
-
               {/* Content */}
               <div className="prose max-w-none dark:prose-invert text-justify">
                 {typeof dataDetail.content === "string" ? (
@@ -107,8 +100,12 @@ export default function DetailNew({ params }) {
                             alt={item.title}
                             className="w-[100px] h-[100px] object-cover"
                           />
-                          <div className="p-2">
-                            <div className="font-medium">{item.title}</div>
+                          <div className="p-2 space-y-2">
+                            <div className="font-medium">
+                              <Link href={`/detail-news/${item.slug}`}>
+                                {item.title}
+                              </Link>
+                            </div>
                             <div className="text-xs text-slate-500">
                               {formatDate(item.created_at, "dd/MM/yyyy")}
                             </div>
@@ -123,7 +120,9 @@ export default function DetailNew({ params }) {
           </div>
         </main>
       ) : (
-        <div className="container mx-auto p-6">Chưa có dữ liệu</div>
+        <div className="container mx-auto p-6 text-center text-lg">
+          Không tìm thấy thông tin bài viết
+        </div>
       )}
     </div>
   );

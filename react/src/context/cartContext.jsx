@@ -6,13 +6,23 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
+  const [loadingCart, setLoadingCart] = useState(true);
   const [isOpen, setIsOpen] = useState(false); // mở/đóng sidebar giỏ hàng
-  // 🔹 Lấy dữ liệu từ localStorage khi load trang
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
+    const fetchCart = () => {
+      try {
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+          setCart(JSON.parse(savedCart));
+        }
+      } catch (err) {
+        console.error("Lỗi khi đọc cart từ localStorage:", err);
+      } finally {
+        setTimeout(() => setLoadingCart(false), 1000);
+      }
+    };
+
+    fetchCart();
   }, []);
 
   // 🔹 Lưu cart vào localStorage mỗi khi thay đổi
@@ -46,10 +56,22 @@ export function CartProvider({ children }) {
   const deleteItemCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
+  const removeCart = () => {
+    localStorage.removeItem("cart");
+  };
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, updateCart, deleteItemCart, isOpen, setIsOpen }}
+      value={{
+        cart,
+        addToCart,
+        updateCart,
+        deleteItemCart,
+        isOpen,
+        setIsOpen,
+        loadingCart,
+        removeCart,
+      }}
     >
       {children}
     </CartContext.Provider>

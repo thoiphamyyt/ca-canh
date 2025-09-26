@@ -136,7 +136,8 @@ export default function FormCreateProduct({
       setLoadingData(true);
       setProgress(30);
       const res = await fetch(
-        `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-product/${productId}`
+        `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-product/${productId}`,
+        { method: "GET", credentials: "include" }
       );
       setProgress(70);
       const data = await res.json();

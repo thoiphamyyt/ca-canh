@@ -14,12 +14,13 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/userContext";
 import { useToast } from "@/hooks/use-toast";
 import config from "@/config";
-import { link_public_api } from "@/lib/contants";
-export default function UserUpdateDialog() {
+export default function UserUpdateDialog({ title = "Cập nhật", trigger }) {
   const { user, setUser } = useUser();
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const [loadingProcess, setLoadingProcess] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -30,6 +31,16 @@ export default function UserUpdateDialog() {
     avatarPreview: null, // để hiện preview ảnh khi chọn file mới
   });
 
+  //check validate email and phone
+  function isValidEmail(email) {
+    // Regex chuẩn cơ bản
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    // Cho phép số Việt Nam: 09, 03, 07, 08, 05 + 8 số sau
+    return /^(0[3|5|7|8|9])+([0-9]{8})\b/.test(phone);
+  }
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -53,6 +64,20 @@ export default function UserUpdateDialog() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      let newErrors = {};
+      if (!formData.name.trim()) newErrors.name = "Họ tên không được để trống";
+      if (!isValidEmail(formData.email)) newErrors.email = "Email không hợp lệ";
+      if (!isValidPhone(formData.phone))
+        newErrors.phone = "Số điện thoại không hợp lệ";
+      if (!formData.address.trim())
+        newErrors.address = "Địa chỉ không được để trống";
+
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+      setErrors({}); // clear errors nếu hợp lệ
+
       const form = new FormData();
       form.append("name", formData.name);
       form.append("email", formData.email);
@@ -102,7 +127,11 @@ export default function UserUpdateDialog() {
       onInteractOutside={(e) => e.preventDefault()}
     >
       <DialogTrigger asChild>
-        <Button className="w-full sm:w-auto">Cập nhật</Button>
+        {trigger ? (
+          trigger({ open, setOpen })
+        ) : (
+          <Button className="w-full sm:w-auto">{title}</Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -146,6 +175,9 @@ export default function UserUpdateDialog() {
               value={formData.email}
               onChange={handleChange}
             />
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+            )}
           </div>
           <div>
             <Label>Điện thoại</Label>
@@ -154,6 +186,9 @@ export default function UserUpdateDialog() {
               value={formData.phone}
               onChange={handleChange}
             />
+            {errors.phone && (
+              <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+            )}
           </div>
           <div>
             <Label>Địa chỉ</Label>

@@ -22,7 +22,6 @@ import Input from "@/components/form/form-elements/InputField";
 import TextArea from "@/components/form/form-elements/TextArea";
 import Select from "@/components/form/Select";
 import { Progress } from "@/components/ui/progress";
-import EditorDemo from "./editor";
 import TipTap from "@/components/tiptap/Tiptap";
 
 export default function FormCreateNews({ isUpdate = false, newsId = null }) {
@@ -100,7 +99,8 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
       setLoadingData(true);
       setProgress(30);
       const res = await fetch(
-        `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-news/${newsId}`
+        `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-news/${newsId}`,
+        { method: "GET", credentials: "include" }
       );
       setProgress(70);
       const data = await res.json();
@@ -134,7 +134,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
       toast({
         variant: "destructive",
         title: "Lỗi",
-        description: "Không tải được dữ liệu sản phẩm.",
+        description: "Không tải được dữ liệu bài viết.",
       });
     } finally {
       setTimeout(() => setLoadingData(false), 500);
@@ -176,12 +176,12 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
           title: "Thất bại",
           description:
             data.message ||
-            `${isUpdate ? "Cập nhật" : "Thêm"} sản phẩm thất bại!`,
+            `${isUpdate ? "Cập nhật" : "Thêm"} bài viết thất bại!`,
         });
       } else {
         toast({
           title: "Thành công",
-          description: `${isUpdate ? "Cập nhật" : "Thêm"} sản phẩm thành công!`,
+          description: `${isUpdate ? "Cập nhật" : "Thêm"} bài viết thành công!`,
           variant: "success",
         });
         if (isUpdate) {
@@ -233,19 +233,6 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                 />
                 <FormField
                   control={form.control}
-                  name="content"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label>Nội dung</Label>
-                      <FormControl>
-                        <TextArea rows={6} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
                   name="link"
                   render={({ field }) => (
                     <FormItem>
@@ -257,7 +244,21 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                     </FormItem>
                   )}
                 />
-                <TipTap />
+
+                <FormField
+                  control={form.control}
+                  name="content"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Nội dung</Label>
+                      <FormControl>
+                        <TipTap value={field.value} onChange={field.onChange} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 {/* <EditorDemo /> */}
               </div>
               <div className="space-y-6">

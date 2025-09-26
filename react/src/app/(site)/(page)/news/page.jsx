@@ -66,9 +66,7 @@ export default function AquariumNewsPage() {
   useEffect(() => {
     async function loadDataNews() {
       try {
-        const data = await fetchNews();
-        console.log(data);
-
+        const data = await fetchNews({ status: "published" });
         setNews(data);
       } catch {
         console.error("Failed to fetch product:", error);
@@ -157,14 +155,24 @@ export default function AquariumNewsPage() {
                         />
                       </div>
                       <CardContent className="p-4">
-                        <CardHeader className="p-0 h-[70%]">
+                        <CardHeader className="p-0 h-[85%]">
                           <CardTitle className="text-justify text-lg">
                             <Link href={`/detail-news/${item.slug}`}>
                               {item.title}
                             </Link>
                           </CardTitle>
                           <CardDescription className="mt-1 text-sm text-slate-600 dark:text-slate-300 line-clamp-3 text-justify">
-                            {item.content}
+                            <div className="prose max-w-none dark:prose-invert text-justify">
+                              {typeof item.content === "string" ? (
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html: item.content,
+                                  }}
+                                />
+                              ) : (
+                                item.content
+                              )}
+                            </div>{" "}
                           </CardDescription>
                         </CardHeader>
 

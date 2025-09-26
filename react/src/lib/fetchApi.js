@@ -26,6 +26,30 @@ const fetchNews = async (params = {}) => {
   }
 };
 
+const newsBySlug = async (slug) => {
+  try {
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-news-by-slug/${slug}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch news");
+    }
+
+    const data = await res.json();
+
+    return data && data.success ? data.data : null;
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return null;
+  }
+};
+
 const detailNews = async (slug) => {
   try {
     const res = await fetch(
@@ -49,4 +73,4 @@ const detailNews = async (slug) => {
     return [];
   }
 };
-export { fetchNews, detailNews };
+export { fetchNews, detailNews, newsBySlug };

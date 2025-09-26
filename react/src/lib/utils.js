@@ -19,7 +19,7 @@ export function formatDate(date, format = "dd/MM/yyyy") {
   }
 
   if (isNaN(date.getTime())) {
-    throw new Error("Ngày không hợp lệ");
+    return "";
   }
 
   const map = {

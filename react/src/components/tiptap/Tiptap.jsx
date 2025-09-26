@@ -28,7 +28,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-const Tiptap = () => {
+const Tiptap = ({ value, onChange }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -45,7 +45,10 @@ const Tiptap = () => {
       TableCell,
       Image,
     ],
-    content: "",
+    content: value,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML());
+    },
     immediatelyRender: false,
   });
 
