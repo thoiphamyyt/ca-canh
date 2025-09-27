@@ -6,7 +6,7 @@ import { ChevronDownIcon } from "@/icons";
 
 export default function SelectInputs({ listData = [] }) {
   const handleSelectChange = (value) => {
-    console.log("Selected value:", value);
+    // console.log("Selected value:", value);
   };
   return (
     <div>

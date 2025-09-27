@@ -5,19 +5,20 @@ import Product from "../../layout/user/Product";
 import Sale from "../../layout/user/Sale";
 import { useRouter } from "next/navigation";
 import { useIdleLogout } from "hooks/useIdleLogout";
+import ArticleList from "../../layout/user/ArticleList";
 
 export default function HomePage() {
   const router = useRouter();
 
   // Khi logout -> chuyển về trang login
   useIdleLogout(() => {
-    console.log("User idle > 1h -> auto logout");
     router.push("/login");
   });
   return (
     <section>
       <Hero />
       <Product />
+      <ArticleList />
       <Sale />
     </section>
   );

@@ -20,8 +20,6 @@ export async function middleware(req) {
     "/cart",
   ];
 
-  // Nếu là route public -> cho qua
-
   if (
     pathname === "/" ||
     publicRoutes.some((path) => pathname.startsWith(path))
@@ -29,7 +27,12 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
-  const customerProtectedRoutes = ["/checkout", "/profile"];
+  const customerProtectedRoutes = [
+    "/checkout",
+    "/profile",
+    "/checkout-cart",
+    "/orders",
+  ];
   const isCustomerProtected = customerProtectedRoutes.some((path) =>
     pathname.startsWith(path)
   );

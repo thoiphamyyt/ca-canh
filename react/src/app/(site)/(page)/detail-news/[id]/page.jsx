@@ -17,8 +17,6 @@ export default function DetailNew({ params }) {
     async function getDetail() {
       try {
         const data = await newsBySlug(id);
-        console.log(data);
-
         setDataDetail(data);
       } catch {
         console.error("Failed to fetch news:", error);

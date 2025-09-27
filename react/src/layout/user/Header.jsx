@@ -172,6 +172,14 @@ export default function Header() {
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link
+                      href="/orders"
+                      className="flex items-center gap-1 hover:text-green-600 cursor-pointer"
+                    >
+                      <span className="hidden lg:inline">Đơn hàng của bạn</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
                       href="#"
                       className="flex items-center gap-1 hover:text-green-600"
                     >

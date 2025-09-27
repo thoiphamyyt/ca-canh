@@ -42,7 +42,7 @@ export function DataTable({ columns, isReload = false }) {
       setLoading(true);
       try {
         const data = await fetchProduct({});
-        setProduct(data);
+        setProduct(data.data ?? []);
       } catch (error) {
         console.error("Failed to fetch product:", error);
       } finally {

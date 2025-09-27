@@ -237,13 +237,13 @@ export default function ProductDetail({ params }) {
               <div className="mt-2 flex gap-3">
                 <Button
                   onClick={() => addToCart(dataDetail, quantity)}
-                  className="flex-[7] bg-green-600 dark:bg-green-300 dark:hover:bg-white"
+                  className="flex-[7] bg-green-600 dark:bg-green-400 dark:hover:bg-green-600"
                 >
                   Thêm vào giỏ
                 </Button>
                 <Button
                   variant="ghost"
-                  className="flex-[3] hover:bg-yellow-500 bg-gray-200 dark:text-black"
+                  className="flex-[3] bg-yellow-400 dark:text-black dark:hover:bg-yellow-500"
                 >
                   Mua ngay
                 </Button>

@@ -185,8 +185,6 @@ export default function FormCreateProduct({
   };
 
   async function onSubmit(values) {
-    console.log(values);
-
     const formData = new FormData();
 
     formData.append("key_product", values.key_product);

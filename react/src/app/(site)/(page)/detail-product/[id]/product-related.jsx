@@ -1,7 +1,7 @@
 "use client";
 import { fetchProduct } from "@/lib/fetchProduct";
 import { useEffect, useState } from "react";
-import { ShoppingCart, Star, Eye } from "lucide-react";
+import { Star, Eye } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Card } from "@/components/ui/card";
@@ -16,7 +16,7 @@ export default function ProducRelated({ id_category }) {
     async function getProduct() {
       try {
         const data = await fetchProduct({ id_category: id_category });
-        setProduct(data);
+        setProduct(data.data ?? []);
       } catch {
         console.error("Failed to fetch category:", error);
       }
@@ -46,7 +46,7 @@ export default function ProducRelated({ id_category }) {
             {product.map((item, i) => (
               <div
                 key={item.id}
-                className="shrink-0 flex-[0_0_100%] md:flex-[0_0_50%]  xl:flex-[0_0_25%] px-2" // spacing nằm ngoài snap
+                className="shrink-0 flex-[0_0_100%] md:flex-[0_0_50%]  xl:flex-[0_0_25%] px-2"
               >
                 <div className="rounded-xl px-2 py-9 justify-between h-full flex">
                   <Card

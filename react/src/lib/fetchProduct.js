@@ -18,7 +18,7 @@ const fetchProduct = async (params = {}) => {
     }
 
     const data = await res.json();
-    return data && data.success ? data.data : null;
+    return data ?? null;
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;

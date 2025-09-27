@@ -19,10 +19,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Input from "@/components/form/form-elements/InputField";
-import TextArea from "@/components/form/form-elements/TextArea";
 import Select from "@/components/form/Select";
 import { Progress } from "@/components/ui/progress";
 import TipTap from "@/components/tiptap/Tiptap";
+import TextArea from "@/components/form/form-elements/TextArea";
 
 export default function FormCreateNews({ isUpdate = false, newsId = null }) {
   const { toast } = useToast();
@@ -48,6 +48,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
     slug: z.string().optional(),
     images: z.any().optional(),
     link: z.string().optional(),
+    description: z.string().optional(),
   });
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -56,19 +57,18 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
       content: "",
       status: "",
       link: "",
+      description: "",
       images: [],
     },
   });
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-
-    // convert sang object URL để preview
     const newImages = files.map((file) => ({
       id: Date.now() + Math.random(),
       name: file.name,
       url: URL.createObjectURL(file),
-      file: file, // giữ file gốc để gửi API
+      file: file,
     }));
     setImages((prev) => [...prev, ...newImages]);
 
@@ -113,6 +113,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
           content: news.content || "",
           status: news.status || "",
           link: news.link || "",
+          description: news.description || "",
           image: [],
         });
 
@@ -148,6 +149,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
     formData.append("content", values.content);
     formData.append("status", values.status);
     formData.append("link", values.link);
+    formData.append("description", values.description);
     if (values.images && values.images.length > 0) {
       values.images.forEach((file) => {
         formData.append("images[]", file);
@@ -192,6 +194,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
             content: "",
             status: "",
             link: "",
+            description: "",
             image: null,
           });
           setImages([]);
@@ -233,12 +236,12 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                 />
                 <FormField
                   control={form.control}
-                  name="link"
+                  name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Nguồn</Label>
+                      <Label>Mô tả ngắn </Label>
                       <FormControl>
-                        <Input {...field} />
+                        <TextArea rows={6} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -258,10 +261,21 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                     </FormItem>
                   )}
                 />
-
-                {/* <EditorDemo /> */}
               </div>
               <div className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Nguồn</Label>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="status"

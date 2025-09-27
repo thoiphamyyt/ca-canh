@@ -1,7 +1,7 @@
 "use client";
 import { fetchCategory } from "@/lib/fetchProduct";
 import { useState, useEffect } from "react";
-import SkeletionCard from "@/components/shadcn/skeletonCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter, useSearchParams } from "next/navigation";
 const MenuLeft = () => {
   const [category, setCategory] = useState([]);
@@ -44,9 +44,18 @@ const MenuLeft = () => {
 
   return (
     <>
-      {/* <div>Danh mục sản phẩm</div> */}
       {loading ? (
-        <SkeletionCard height={350} width={250} />
+        <div className="space-y-3">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className="w-full flex justify-between items-center p-3 border rounded-md"
+            >
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-4" />
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="space-y-3">
           {[{ name: "Tất cả", id: "all" }, ...category].map((item, index) => (
