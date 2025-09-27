@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Exception;
@@ -45,6 +46,24 @@ class OrderController extends Controller
             return response()->json([
                 'success' => false,
                 'content' => 'Xảy ra lỗi trong quá trình xử lý đơn hàng.'
+            ], 500);
+        }
+    }
+    public function getOrders(Request $request)
+    {
+        try {
+            $user = auth('api')->user();
+            $orders = Order::with('items.product')
+                ->where('user_id', $user->id)
+                ->get();
+            return response()->json([
+                'data' => $orders,
+                'success' => true
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'content' => 'Không lấy được dữ liệu, vui lòng thử lại sau.'
             ], 500);
         }
     }

@@ -55,6 +55,7 @@ class NewsController extends Controller
             $valid = Validator::make($formData, [
                 'title' => 'required|string',
                 'content' => 'required|string',
+                'description' => 'nullable|string',
                 'images' => 'nullable|array',
                 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
                 'link' => 'nullable|url',
@@ -75,6 +76,7 @@ class NewsController extends Controller
                 'title' => $formData['title'],
                 'slug' => $slug,
                 'content' => $formData['content'],
+                'description' => $formData['description'] ?? null,
                 'images' => $listImage ?? null,
                 'link' => $formData['link'] ?? null,
                 'status' => $formData['status'] ?? 'draft',
@@ -92,6 +94,7 @@ class NewsController extends Controller
             $valid = Validator::make($formData, [
                 'title' => 'nullable|string',
                 'content' => 'nullable|string',
+                'description' => 'nullable|string',
                 'images' => 'nullable|array',
                 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
                 'link' => 'nullable|url',
@@ -111,9 +114,11 @@ class NewsController extends Controller
             if (isset($formData['content'])) {
                 $news->content = $formData['content'];
             }
-
             if (isset($formData['link'])) {
                 $news->link = $formData['link'];
+            }
+            if (isset($formData['description'])) {
+                $news->description = $formData['description'];
             }
             if (isset($formData['status'])) {
                 $news->status = $formData['status'];

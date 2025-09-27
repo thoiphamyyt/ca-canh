@@ -60,5 +60,6 @@ Route::prefix('ca-canh')->group(function () {
     Route::get('detail-news-by-slug/{slug}', [NewsController::class, 'getDetailBySlug']);
 
 
-    Route::post('save-store', [OrderController::class, 'store']);
+    Route::post('save-store', [OrderController::class, 'store'])->middleware('auth:api');
+    Route::get('orders', [OrderController::class, 'getOrders'])->middleware('auth:api');
 });

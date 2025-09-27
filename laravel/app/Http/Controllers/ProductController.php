@@ -21,11 +21,36 @@ class ProductController extends Controller
         if (!empty($formData['id_category'])) {
             $query->where('id_category', $formData['id_category']);
         }
-        $product = $query->orderBy('products.created_at', 'desc')->get();
+        // sắp xếp
+        $query->orderBy('products.created_at', 'desc');
+
+        // pagination
+        if (!empty($formData['limit'])) {
+            $perPage = $request->get('limit', $formData['limit']);
+            $product = $query->paginate($perPage);
+        } else {
+            $product = $query->get();
+        }
         if (empty($product)) {
             return response()->json(['success' => false, 'message' => 'no data']);
         } else {
-            return response()->json(['success' => true, 'data' => $product]);
+            return response()->json(
+                [
+                    'success' => true,
+                    'data' => $product instanceof \Illuminate\Pagination\LengthAwarePaginator
+                        ? $product->items()
+                        : $product,
+                    'total' => $product instanceof \Illuminate\Pagination\LengthAwarePaginator
+                        ? $product->total()
+                        : count($product),
+                    'current_page' => $product instanceof \Illuminate\Pagination\LengthAwarePaginator
+                        ? $product->currentPage()
+                        : 1,
+                    'last_page' => $product instanceof \Illuminate\Pagination\LengthAwarePaginator
+                        ? $product->lastPage()
+                        : 1,
+                ]
+            );
         }
     }
 
