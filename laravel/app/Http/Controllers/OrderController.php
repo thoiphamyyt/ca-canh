@@ -67,4 +67,19 @@ class OrderController extends Controller
             ], 500);
         }
     }
+    public function getAll()
+    {
+        $orders = Order::with('items.product')->get();
+        if ($orders) {
+            return response()->json([
+                'data' => $orders,
+                'success' => true
+            ]);
+        } else {
+            return response()->json([
+                'content' => 'No data',
+                'success' => false
+            ]);
+        }
+    }
 }
