@@ -94,10 +94,38 @@ const fetchOrder = async (params = {}) => {
 
     const data = await res.json();
 
-    return data && data.success ? data.data : [];
+    return data || null;
   } catch (error) {
     console.error("Error fetching news:", error);
     return [];
   }
 };
-export { fetchNews, detailNews, newsBySlug, fetchOrder };
+
+const fetchOrderManager = async (params = {}) => {
+  try {
+    const queryString = new URLSearchParams(params).toString();
+
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/orders-manager?${queryString}`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch news");
+    }
+
+    const data = await res.json();
+
+    return data || null;
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return [];
+  }
+};
+
+export { fetchNews, detailNews, newsBySlug, fetchOrder, fetchOrderManager };

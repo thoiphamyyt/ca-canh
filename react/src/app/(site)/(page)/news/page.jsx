@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 import { Search } from "lucide-react";
-import { fetchNews } from "@/lib/fetchApi";
+import { fetchNews } from "@/lib/callApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";

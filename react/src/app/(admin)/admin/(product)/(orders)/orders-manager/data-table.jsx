@@ -16,14 +16,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import { DataTablePagination } from "@/components/common/DataTablePagination";
 
 import { useState, useEffect } from "react";
-import { fetchNews } from "@/lib/callApi";
+import { fetchOrderManager } from "@/lib/callApi";
 
 export function DataTable({ columns, isReload = false }) {
   const [loading, setLoading] = useState(true);
-  const [data, setNews] = useState([]);
+  const [data, setProduct] = useState([]);
   const table = useReactTable({
     data,
     columns,
@@ -37,18 +38,18 @@ export function DataTable({ columns, isReload = false }) {
   });
 
   useEffect(() => {
-    async function loadNews() {
+    async function loadProduct() {
       setLoading(true);
       try {
-        const data = await fetchNews({});
-        setNews(data);
+        const data = await fetchOrderManager({});
+        setProduct(data.data ?? []);
       } catch (error) {
-        console.error("Failed to fetch News:", error);
+        console.error("Failed to fetch product:", error);
       } finally {
         setLoading(false);
       }
     }
-    loadNews();
+    loadProduct();
   }, [isReload]);
 
   return (

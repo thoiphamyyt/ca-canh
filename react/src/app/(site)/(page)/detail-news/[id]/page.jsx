@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { newsBySlug } from "@/lib/fetchApi";
+import { newsBySlug } from "@/lib/callApi";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
@@ -76,7 +76,7 @@ export default function DetailNew({ params }) {
             </section>
 
             {/* Sidebar */}
-            <aside className="space-y-6">
+            <aside className="space-y-6 mt-20">
               <Card className="p-2">
                 <CardContent>
                   <div className="py-2">

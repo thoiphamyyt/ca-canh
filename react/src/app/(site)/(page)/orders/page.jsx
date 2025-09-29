@@ -6,8 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchOrder } from "@/lib/fetchApi";
+import { fetchOrder } from "@/lib/callApi";
 import { listStatusOrder } from "@/lib/contants";
+import DetaiOrders from "./detailOrders";
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ export default function OrderHistory() {
       try {
         setLoading(true);
         const data = await fetchOrder();
-        setOrders(data);
+        setOrders(data.data || []);
       } catch (error) {
         console.error("Lỗi tải đơn hàng:", error);
       } finally {
@@ -109,12 +110,7 @@ export default function OrderHistory() {
               </div>
 
               <div className="flex justify-end mt-4">
-                <Link
-                  href={`/orders/${order.id}`}
-                  className="text-blue-600 hover:underline"
-                >
-                  Xem chi tiết
-                </Link>
+                <DetaiOrders order={order} />
               </div>
             </Card>
           ))}

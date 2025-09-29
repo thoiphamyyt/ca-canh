@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { fetchNews } from "@/lib/fetchApi";
+import { fetchNews } from "@/lib/callApi";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 
@@ -146,12 +146,7 @@ function NewsSlider({ news, slidesToShow }) {
                       {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-                      {/* Title overlay */}
-                      <h3
-                        className="absolute bottom-4 left-4 right-4 text-lg md:text-xl font-bold 
-                 text-white drop-shadow-2xl leading-snug
-                 line-clamp-2 group-hover:line-clamp-none transition-all duration-300"
-                      >
+                      <h3 className="absolute bottom-4 left-4 right-4 text-lg md:text-xl font-bold text-white drop-shadow-2xl leading-snug line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                         {item.title}
                       </h3>
                     </div>
@@ -167,7 +162,10 @@ function NewsSlider({ news, slidesToShow }) {
 
                     {/* Button */}
                     <CardContent className="px-4 pb-4 mt-auto">
-                      <Link href={item.slug || "#"} className="block">
+                      <Link
+                        href={`/detail-news/${item.slug}` || "#"}
+                        className="block"
+                      >
                         <Button className="w-full rounded-xl bg-yellow-500 hover:bg-yellow-600 text-white font-semibold transition-transform hover:scale-105">
                           Xem chi tiết
                         </Button>

@@ -42,6 +42,11 @@ const navItems = [
     path: "/admin/news-manager",
   },
   {
+    icon: <CalenderIcon />,
+    name: "Quản lý đơn hàng",
+    path: "/admin/orders-manager",
+  },
+  {
     icon: <UserCircleIcon />,
     name: "User Profile",
     path: "/profile",
