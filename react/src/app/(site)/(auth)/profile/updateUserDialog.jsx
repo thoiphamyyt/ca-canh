@@ -144,7 +144,7 @@ export default function UserUpdateDialog({ title = "Cập nhật", trigger }) {
                 formData.avatarPreview ||
                 (typeof formData.avatar_url === "string"
                   ? `${formData.avatar_url}`
-                  : "/images/user-default.jpg")
+                  : "/images/user/user-default.jpg")
               }
               alt="avatar"
               className="w-32 h-32 rounded-full object-cover cursor-pointer border"

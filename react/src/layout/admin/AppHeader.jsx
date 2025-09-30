@@ -1,6 +1,5 @@
 "use client";
 import { ModeToggle } from "@/components/mode-toggle";
-import NotificationDropdown from "@/components/header/NotificationDropdown";
 import UserDropdown from "@/components/header/UserDropdown";
 import { useSidebar } from "@/context/sidebarContext";
 import Image from "next/image";

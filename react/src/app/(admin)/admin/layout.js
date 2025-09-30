@@ -8,6 +8,7 @@ import AppSidebar from "@/layout/admin/AppSidebar";
 import { Toaster } from "@/components/ui/toaster";
 import Backdrop from "@/layout/admin/Backdrop";
 import React from "react";
+import UserProvider from "@/context/userContext";
 
 function AdminLayoutContent({ children }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
@@ -22,21 +23,23 @@ function AdminLayoutContent({ children }) {
   return (
     <div className="min-h-screen xl:flex">
       {/* Sidebar and Backdrop */}
-      <AppSidebar />
-      <Backdrop />
-      <Toaster />
+      <UserProvider>
+        <AppSidebar />
+        <Backdrop />
+        <Toaster />
 
-      {/* Main Content Area */}
-      <div
-        className={`flex-1 transition-all  duration-300 ease-in-out ${mainContentMargin}`}
-      >
-        {/* Header */}
-        <AppHeader />
-        {/* Page Content */}
-        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-          {children}
+        {/* Main Content Area */}
+        <div
+          className={`flex-1 transition-all  duration-300 ease-in-out ${mainContentMargin}`}
+        >
+          {/* Header */}
+          <AppHeader />
+          {/* Page Content */}
+          <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            {children}
+          </div>
         </div>
-      </div>
+      </UserProvider>
     </div>
   );
 }
