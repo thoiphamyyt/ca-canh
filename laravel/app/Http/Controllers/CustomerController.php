@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 
 class CustomerController extends Controller
@@ -125,6 +126,15 @@ class CustomerController extends Controller
             if (isset($formData['password']) && !empty($formData['password'])) {
                 $customer->password = Hash::make($request->password);
             }
+
+            if ($request->hasFile('avatar')) {
+                if ($customer->avatar && Storage::disk('public')->exists($customer->avatar)) {
+                    Storage::disk('public')->delete($customer->avatar);
+                }
+                $path = $request->file('avatar')->store('user', 'public');
+                $customer->avatar = $path;
+            }
+
             $customer->save();
 
             return response()->json([
