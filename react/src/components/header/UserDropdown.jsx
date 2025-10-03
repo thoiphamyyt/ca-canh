@@ -12,7 +12,7 @@ import { Skeleton } from "../ui/skeleton";
 import { useUser } from "@/context/userContext";
 
 export default function UserDropdown() {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   if (!user) {
     return "";
   }
@@ -114,7 +114,8 @@ export default function UserDropdown() {
           </ul>
           <Skeleton className="py-2" />
           <Link
-            href="/signin"
+            href="#"
+            onClick={logout}
             className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text--sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
           >
             <svg

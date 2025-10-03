@@ -50,7 +50,7 @@ export default function ItemList() {
 
   return (
     <section className="container mx-auto py-12">
-      <h2 className="text-3xl font-bold mb-8 text-center dark-text-white text-sky-900">
+      <h2 className="text-3xl font-bold mb-8 text-center dark:text-white text-sky-900">
         📖 Bài viết nổi bật
       </h2>
 
