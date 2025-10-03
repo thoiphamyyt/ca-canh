@@ -23,6 +23,7 @@ import Select from "@/components/form/Select";
 import { Progress } from "@/components/ui/progress";
 import TipTap from "@/components/tiptap/Tiptap";
 import TextArea from "@/components/form/form-elements/TextArea";
+import { Button } from "@/components/ui/button";
 
 export default function FormCreateNews({ isUpdate = false, newsId = null }) {
   const { toast } = useToast();
@@ -342,26 +343,17 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
 
             <Skeleton className="h-px w-full bg-gray-300" />
             <div className="flex justify-end space-x-3 mt-4">
-              <button
+              <Button
                 type="submit"
                 disabled={loadingProcess}
-                className={`flex items-center justify-center bg-blue-700 px-3 py-1 rounded-md text-white ${
-                  loadingProcess ? "opacity-70 cursor-not-allowed" : ""
-                }`}
+                className="ml-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white dark:from-blue-600 dark:to-indigo-700 dark:hover:from-blue-700 dark:hover:to-indigo-800"
               >
-                {loadingProcess ? (
-                  <>
-                    <span className="inline-block w-4 h-4 border-2 border-t-blue-500 border-gray-200 rounded-full animate-spin mr-2"></span>
-                    Đang lưu...
-                  </>
-                ) : (
-                  "Lưu lại"
-                )}
-              </button>
+                {loadingProcess ? "Đang lưu..." : "Lưu lại"}
+              </Button>
               <Link href="/admin/news-manager">
-                <button className="bg-gray-400 px-3 py-1 rounded-md">
+                <Button className="bg-gradient-to-r from-gray-500 to-zinc-600 hover:from-gray-600 hover:to-zinc-700 text-white px-3 rounded-md">
                   Quay về
-                </button>
+                </Button>
               </Link>
             </div>
           </form>

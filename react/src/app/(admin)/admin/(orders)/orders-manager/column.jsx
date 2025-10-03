@@ -67,8 +67,8 @@ export const columns = (onOpenDialog) => [
     header: "Thao tác",
     cell: ({ row }) => (
       <div className="flex justify-center gap-2 text-center">
-        <Link href={`/admin/update-orders/${row.original.id}`}>
-          <Button size="sm">Sửa</Button>
+        <Link href={`/admin/detail-orders/${row.original.id}`}>
+          <Button size="sm">Chi tiết</Button>
         </Link>
         <Button
           variant="destructive"
