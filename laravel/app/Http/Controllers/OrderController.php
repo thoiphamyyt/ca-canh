@@ -69,7 +69,7 @@ class OrderController extends Controller
     }
     public function getAll()
     {
-        $orders = Order::with('items.product')->get();
+        $orders = Order::with(['items.product', 'user'])->get();
         if ($orders) {
             return response()->json([
                 'data' => $orders,

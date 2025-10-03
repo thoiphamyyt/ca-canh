@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 
 class User extends Authenticatable implements JWTSubject
@@ -40,7 +42,12 @@ class User extends Authenticatable implements JWTSubject
     ];
     public function getJWTIdentifier()
     {
-        return $this->getKey(); // trả về id user
+        return $this->getKey();
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     /**
