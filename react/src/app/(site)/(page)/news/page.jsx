@@ -94,7 +94,7 @@ export default function AquariumNewsPage() {
       <header className="container mx-auto p-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="space-y-4">
-            <h1 className="text-3xl md:text-4xl font-extrabold">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-sky-900 dark:text-sky-400">
               Tin tức & hướng dẫn về cá cảnh
             </h1>
             <p className="mt-1 text-slate-600 dark:text-slate-300">

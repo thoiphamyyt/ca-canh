@@ -41,7 +41,7 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-6 text-green-900 dark:text-green-500">
+      <h1 className="text-2xl font-bold mb-6 text-sky-900 dark:text-sky-400">
         🛒 Giỏ hàng của bạn
       </h1>
 

@@ -19,7 +19,7 @@ export default function SiteLayout({ children }) {
       >
         <CartProvider>
           <Header />
-          <div className="bg-sky-100 dark:bg-black">{children}</div>
+          <div>{children}</div>
           <Toaster />
           <Footer />
           <CartSidebar />
