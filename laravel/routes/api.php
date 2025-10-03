@@ -47,6 +47,8 @@ Route::prefix('ca-canh')->middleware(['auth:api', 'checkRole:admin'])->group(fun
     Route::delete('delete-news/{id}', [NewsController::class, 'delete']);
 
     Route::get('/orders-manager', [OrderController::class, 'getAll']);
+    Route::get('/orders-detail/{id}', [OrderController::class, 'detail']);
+    Route::post('/orders-change-status/{id}', [OrderController::class, 'updateStatus']);
 });
 Route::prefix('ca-canh')->group(function () {
     Route::post('register', [AuthController::class, 'register']);

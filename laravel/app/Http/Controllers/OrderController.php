@@ -82,4 +82,28 @@ class OrderController extends Controller
             ]);
         }
     }
+
+    public function detail($id)
+    {
+        $order = Order::with(['user', 'items.product'])->findOrFail($id);
+
+        return response()->json($order);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,processing,completed,cancelled',
+        ]);
+
+        $order = Order::with(['user', 'items.product'])->findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Trạng thái đơn hàng đã được cập nhật',
+            'order' => $order
+        ]);
+    }
 }
