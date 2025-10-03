@@ -31,6 +31,7 @@ export default function UserDropdown() {
                     : "/images/user/user-default.jpg"
                 }
                 alt="User"
+                className="w-full h-full object-cover"
               />
             </span>
 

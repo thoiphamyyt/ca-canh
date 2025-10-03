@@ -166,4 +166,8 @@
     border-radius: 4px;
     margin: 8px 0;
   }
+
+  .skeleton-wrapper .skeleton {
+    @apply bg-gray-300 dark:bg-gray-700;
+  }
 }

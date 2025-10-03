@@ -13,7 +13,7 @@ export const columns = (onOpenDialog) => [
   {
     accessorKey: "id",
     header: "Mã đơn hàng",
-    cell: ({ row }) => <div className="text-center">OR-{row.original.id}</div>,
+    cell: ({ row }) => <div className="text-center">#{row.original.id}</div>,
   },
   {
     accessorKey: "created_at",

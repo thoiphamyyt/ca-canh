@@ -48,7 +48,9 @@ export default function ProductList() {
   return (
     <section className="container mx-auto py-12">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold">Danh mục sản phẩm</h2>
+        <h2 className="text-3xl font-bold dark:text-white text-sky-800">
+          Danh mục sản phẩm
+        </h2>
         <p className="text-gray-500 mt-2">
           Chúng tôi đem đến cho bạn những sản phẩm tốt nhất, mới nhất và đa dạng
           nhất. Với nhiều loại cá đẹp, độc lạ, bạn sẽ tìm thấy những người bạn

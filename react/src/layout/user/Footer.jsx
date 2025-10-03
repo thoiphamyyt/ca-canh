@@ -55,23 +55,22 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-background text-foreground border-t mt-10 relative">
+    <footer className="bg-gray-900 text-gray-200 border-t border-gray-700 mt-10 relative">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12 px-4 md:px-6">
         {/* Logo + Info */}
         <div className="text-base">
           <div className="flex items-center gap-2">
-            {/* <Image src="/logo.png" alt="Carrot Logo" width={30} height={30} /> */}
-            <h2 className="text-2xl font-bold">CaCanhTV</h2>
+            <h2 className="text-2xl font-bold text-green-400">CaCanhTV</h2>
           </div>
-          <p className="mt-4 text-gray-600 text-sm md:text-base">
+          <p className="mt-4 text-gray-400 text-sm md:text-base">
             CaCanhTV chuyên cung cấp các loại cá cảnh đẹp, độc lạ với giá cả hợp
             lý. Chúng tôi cam kết mang đến cho khách hàng những sản phẩm và dịch
             vụ tốt nhất.
           </p>
-          <p className="mt-4 text-gray-600 font-semibold">
+          <p className="mt-4 text-gray-300 font-semibold">
             Liên hệ với chúng tôi
           </p>
-          <ul className="mt-4 space-y-2 text-gray-600 text-sm md:text-base">
+          <ul className="mt-4 space-y-2 text-gray-400 text-sm md:text-base">
             <li className="flex gap-2">
               📍 Ấp Tân Thành Tây, xã Tân Hòa, Tỉnh Vĩnh Long.
             </li>
@@ -82,10 +81,10 @@ export default function Footer() {
 
         {/* Company */}
         <div>
-          <h3 className="font-semibold text-xl md:text-2xl mb-4">
+          <h3 className="font-semibold text-xl md:text-2xl mb-4 text-white">
             Về chúng tôi
           </h3>
-          <ul className="space-y-2 text-sm md:text-base text-gray-600">
+          <ul className="space-y-2 text-sm md:text-base text-gray-400">
             <li>
               <Link href="#">Giới thiệu</Link>
             </li>
@@ -106,13 +105,13 @@ export default function Footer() {
 
         {/* Category */}
         <div>
-          <h3 className="font-semibold text-xl md:text-2xl mb-4">
+          <h3 className="font-semibold text-xl md:text-2xl mb-4 text-white">
             Danh mục sản phẩm
           </h3>
           {categories.length === 0 ? (
-            <p>Đang tải dữ liệu...</p>
+            <p className="text-gray-400">Đang tải dữ liệu...</p>
           ) : (
-            <ul className="space-y-2 text-sm md:text-base text-gray-600">
+            <ul className="space-y-2 text-sm md:text-base text-gray-400">
               {categories.map((category) => (
                 <li key={category.id}>
                   <Link onClick={() => handleClick(category.id)} href="#">
@@ -123,26 +122,34 @@ export default function Footer() {
             </ul>
           )}
         </div>
-
-        {/* Newsletter */}
         <div>
-          <h3 className="font-semibold text-xl md:text-2xl mb-4">
+          <h3 className="font-semibold text-xl md:text-2xl mb-4 text-white">
             Theo dõi chúng tôi
           </h3>
-          {/* Social icons */}
           <div className="flex gap-3 mt-4 flex-wrap">
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-gray-800 text-gray-300 hover:bg-green-600 hover:text-white"
+            >
               <Facebook className="w-4 h-4" />
             </Button>
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-gray-800 text-gray-300 hover:bg-green-600 hover:text-white"
+            >
               <Twitter className="w-4 h-4" />
             </Button>
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-gray-800 text-gray-300 hover:bg-green-600 hover:text-white"
+            >
               <Instagram className="w-4 h-4" />
             </Button>
           </div>
 
-          {/* Images */}
           <div className="flex flex-wrap gap-2 mt-4">
             <Image
               src="/images/footer1.jpg"
@@ -183,13 +190,11 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom line */}
-      <div className="border-t py-4 text-center text-xs md:text-sm text-gray-500">
-        © 2025 <span className="text-green-600 font-semibold">CaCanhTV</span>,
+      <div className="border-t border-gray-700 py-4 text-center text-xs md:text-sm text-gray-500">
+        © 2025 <span className="text-green-400 font-semibold">CaCanhTV</span>,
         All rights reserved.
       </div>
 
-      {/* Scroll To Top Button */}
       {visible && (
         <button
           onClick={scrollToTop}

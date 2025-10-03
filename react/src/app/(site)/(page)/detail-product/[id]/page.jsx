@@ -57,7 +57,6 @@ export default function ProductDetail({ params }) {
 
   return loading ? (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 max-w-7xl mx-auto">
-      {/* Cột trái - ảnh */}
       <div className="space-y-4">
         <Skeleton className="h-[400px] w-full rounded-xl" />
         <div className="flex gap-3">
@@ -67,7 +66,6 @@ export default function ProductDetail({ params }) {
         </div>
       </div>
 
-      {/* Cột phải - thông tin */}
       <div className="space-y-4">
         <Skeleton className="h-[100px] w-2/3" />
         <Skeleton className="h-[50px] w-1/2" />
@@ -85,12 +83,10 @@ export default function ProductDetail({ params }) {
         <div className="flex-1 border-t border-gray-600"></div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left: images */}
         <div className="lg:col-span-6">
           <Card className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start md:items-center">
               <div className="md:col-span-2">
-                {/* Main image */}
                 <ZoomImage
                   src={
                     dataDetail.images_url && dataDetail.images_url.length > 0
@@ -101,7 +97,6 @@ export default function ProductDetail({ params }) {
                 />
               </div>
 
-              {/* Thumbnails */}
               <div className="flex flex-col gap-y-4 items-center">
                 {dataDetail.images_url &&
                   dataDetail.images_url.map((src, i) => (
@@ -168,8 +163,6 @@ export default function ProductDetail({ params }) {
             </TabsContent>
           </Tabs>
         </div>
-
-        {/* Right: details */}
         <div className="lg:col-span-6 flex flex-col gap-4">
           <Card className="p-6">
             <CardHeader className="p-[none]">

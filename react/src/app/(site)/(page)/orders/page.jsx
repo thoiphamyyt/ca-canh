@@ -54,7 +54,7 @@ export default function OrderHistory() {
           {orders.map((order) => (
             <Card key={order.id} className="p-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="font-bold text-lg">Đơn hàng: OR-{order.id}</h2>
+                <h2 className="font-bold text-lg">Đơn hàng: #{order.id}</h2>
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     order.status === "delivered"

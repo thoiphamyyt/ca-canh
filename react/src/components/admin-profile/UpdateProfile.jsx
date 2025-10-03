@@ -43,7 +43,7 @@ export default function UpdateProfile() {
       .string()
       .min(1, { message: "Tên đăng nhập không được trống." })
       .min(6, {
-        message: "Rên đăng nhập ít nhất 6 ký tự.",
+        message: "Tên đăng nhập ít nhất 6 ký tự.",
       }),
     name: z.string().min(1, {
       message: "Họ tên không được trống.",
@@ -77,13 +77,12 @@ export default function UpdateProfile() {
       email: user?.email,
       address: user?.address,
       phone: user?.phone,
-      avatar: user?.avatar,
-      avatar_url: user?.avatar_url || null, // đường dẫn ảnh hoặc file upload
+      avatar: null,
+      avatar_url: user?.avatar_url || null,
       password: "",
     },
   });
 
-  // Khi bấm vào ảnh => trigger chọn file
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
@@ -96,6 +95,8 @@ export default function UpdateProfile() {
   }
 
   async function onSubmit(values) {
+    console.log(values);
+
     const formData = new FormData();
 
     formData.append("name", values.name);

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { fetchProduct } from "@/lib/fetchProduct";
 import MenuLeft from "@/layout/user/Menu";
 import { formatVND } from "@/lib/utils";
-import { ShoppingCart, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import CartDialog from "@/components/cart/cartDialog";
