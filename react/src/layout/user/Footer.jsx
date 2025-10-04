@@ -55,7 +55,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-200 border-t border-gray-700 mt-10 relative">
+    <footer className="bg-gray-900 text-gray-200 border-t border-gray-700 relative">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12 px-4 md:px-6">
         {/* Logo + Info */}
         <div className="text-base">
@@ -79,31 +79,29 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Company */}
         <div>
           <h3 className="font-semibold text-xl md:text-2xl mb-4 text-white">
             Về chúng tôi
           </h3>
           <ul className="space-y-2 text-sm md:text-base text-gray-400">
             <li>
-              <Link href="#">Giới thiệu</Link>
+              <Link href="/introduce">Giới thiệu</Link>
             </li>
             <li>
-              <Link href="#">Tin tức</Link>
+              <Link href="/news">Tin tức</Link>
             </li>
             <li>
-              <Link href="#">Chính sách vận chuyển</Link>
+              <Link href="/about">Chính sách vận chuyển</Link>
             </li>
             <li>
-              <Link href="#">Chính sách đổi trả</Link>
+              <Link href="/about">Chính sách đổi trả</Link>
             </li>
             <li>
-              <Link href="#">Liên hệ</Link>
+              <Link href="/about">Liên hệ</Link>
             </li>
           </ul>
         </div>
 
-        {/* Category */}
         <div>
           <h3 className="font-semibold text-xl md:text-2xl mb-4 text-white">
             Danh mục sản phẩm

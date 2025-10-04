@@ -38,7 +38,6 @@ export default function CartSidebar() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* lớp nền mờ */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
@@ -48,7 +47,6 @@ export default function CartSidebar() {
             onClick={() => setIsOpen(false)}
           />
 
-          {/* sidebar */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -121,7 +119,7 @@ export default function CartSidebar() {
             )}
 
             <Link href="/cart">
-              <Button className="w-full mt-6 bg-green-600 dark:hover:bg-green-800 dark:hover:bg-white">
+              <Button className="w-full mt-6 bg-gradient-to-r from-green-600 to-lime-500 text-white hover:opacity-90">
                 Thanh toán →
               </Button>
             </Link>

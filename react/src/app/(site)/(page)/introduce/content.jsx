@@ -66,8 +66,17 @@ export default function Content() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button>Khám phá sản phẩm</Button>
-              <Button variant="outline">Đặt tư vấn chăm sóc</Button>
+              <Link href="/product">
+                <Button className="bg-green-600 dark:bg-green-700 dark:hover:bg-gray-800 dark:hover:text-white">
+                  Khám phá sản phẩm
+                </Button>
+              </Link>
+              <Button
+                variant="outline"
+                className="bg-amber-400 dark:bg-amber-500 dark:hover:bg-white dark:hover:text-black"
+              >
+                Đặt tư vấn chăm sóc
+              </Button>
             </div>
 
             <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-md">

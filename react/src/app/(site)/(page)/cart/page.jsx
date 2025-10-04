@@ -47,7 +47,6 @@ export default function CartPage() {
 
       {loadingCart ? (
         <div className="space-y-6">
-          {/* Skeleton bảng */}
           <div className="space-y-4">
             {[...Array(3)].map((_, idx) => (
               <div
@@ -65,12 +64,10 @@ export default function CartPage() {
             ))}
           </div>
 
-          {/* Skeleton tổng cộng */}
           <div className="flex justify-end">
             <Skeleton className="h-8 w-40" />
           </div>
 
-          {/* Skeleton nút */}
           <div className="flex justify-end space-x-2">
             <Skeleton className="h-12 w-32 rounded-lg" />
             <Skeleton className="h-12 w-32 rounded-lg" />

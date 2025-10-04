@@ -75,7 +75,7 @@ export default function ProductCard({ product, addToCart }) {
               variant="ghost"
               size="sm"
             >
-              Chi tiết
+              Xem chi tiết
             </Button>
           </Link>
         </div>

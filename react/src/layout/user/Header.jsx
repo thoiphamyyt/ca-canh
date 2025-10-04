@@ -10,8 +10,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "/src/components/ui/dropdown-menu";
-import { Menu, User, ShoppingCart, Phone } from "lucide-react";
+import {
+  Menu,
+  User,
+  ShoppingCart,
+  Phone,
+  UserCircle2,
+  LogOut,
+  ShoppingBag,
+} from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -125,45 +134,78 @@ export default function Header() {
           {!loading && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="cursor-pointer">
-                <Link href="#" className="flex items-center gap-1">
+                <Link
+                  href="#"
+                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                >
                   <User className="h-5 w-5" />
-                  <span className="hidden lg:inline">
+                  <span className="hidden lg:inline font-medium">
                     {user ? user.userName : "Tài khoản"}
                   </span>
                 </Link>
               </DropdownMenuTrigger>
-              {!user ? (
-                <DropdownMenuContent className="bg-gray-800 text-gray-200">
-                  <DropdownMenuItem asChild>
-                    <Link href="/login" className="hover:text-green-400">
-                      Đăng nhập
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/register" className="hover:text-green-400">
-                      Đăng ký
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              ) : (
-                <DropdownMenuContent className="bg-gray-800 text-gray-200">
-                  <DropdownMenuItem asChild>
-                    <Link href="/profile" className="hover:text-green-400">
-                      Thông tin cá nhân
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/orders" className="hover:text-green-400">
-                      Đơn hàng của bạn
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <button onClick={logout} className="hover:text-green-400">
+
+              <DropdownMenuContent
+                align="end"
+                className="w-52 bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-100 shadow-lg rounded-xl p-2 text-sm font-medium"
+              >
+                {!user ? (
+                  <>
+                    <DropdownMenuItem
+                      asChild
+                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400 transition"
+                    >
+                      <Link href="/login" className="flex items-center gap-2">
+                        <UserCircle2 className="h-4 w-4 text-green-600" />
+                        Đăng nhập
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      asChild
+                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400  transition"
+                    >
+                      <Link
+                        href="/register"
+                        className="flex items-center gap-2"
+                      >
+                        <ShoppingBag className="h-4 w-4 text-green-600" />
+                        Đăng ký
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem
+                      asChild
+                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400  transition"
+                    >
+                      <Link href="/profile" className="flex items-center gap-2">
+                        <UserCircle2 className="h-4 w-4 text-green-600" />
+                        Thông tin cá nhân
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      asChild
+                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400 transition"
+                    >
+                      <Link href="/orders" className="flex items-center gap-2">
+                        <ShoppingBag className="h-4 w-4 text-green-600" />
+                        Đơn hàng của bạn
+                      </Link>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator className="my-1 border-gray-300 dark:border-gray-700" />
+
+                    <DropdownMenuItem
+                      onClick={logout}
+                      className="cursor-pointer rounded-md dark:hover:bg-red-800/20 focus:bg-red-600/20 focus:text-red-400 transition flex items-center gap-2"
+                    >
+                      <LogOut className="h-4 w-4" />
                       Đăng xuất
-                    </button>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              )}
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
             </DropdownMenu>
           )}
 
@@ -191,21 +233,27 @@ export default function Header() {
           Giới thiệu
         </Link>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild className="cursor-pointer">
-            <span className="flex items-center gap-2 hover:text-green-400">
+          <DropdownMenuTrigger asChild>
+            <span className="flex items-center gap-2 cursor-pointer text-gray-100 hover:text-green-400 transition-colors">
               Sản phẩm
               <FontAwesomeIcon icon={faChevronDown} className="ml-1 w-4 h-4" />
             </span>
           </DropdownMenuTrigger>
+
           {category && (
-            <DropdownMenuContent className="bg-gray-800 text-gray-200">
+            <DropdownMenuContent
+              align="start"
+              sideOffset={8}
+              className="mt-2 min-w-[180px]rounded-xl border border-slate-700/40 bg-gray-900/95 backdrop-blur-md text-gray-100 shadow-lg shadow-black/30 animate-in fade-in-10 slide-in-from-top-2
+          "
+            >
               {category.map((item, index) => (
                 <DropdownMenuItem
                   key={index}
                   onClick={() => handleClick(item.id)}
-                  className="hover:text-green-400"
+                  className="cursor-pointer flex items-center justify-between px-3 py-2.5 text-sm rounded-md transition-all duration-200 hover:bg-green-600/20 hover:text-green-400 focus:bg-green-600/20 focus:text-green-400"
                 >
-                  {item.name}
+                  <span>{item.name}</span>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -214,7 +262,7 @@ export default function Header() {
         <Link href="/news" className="hover:text-green-400">
           Tin tức
         </Link>
-        <Link href="#" className="hover:text-green-400">
+        <Link href="/about" className="hover:text-green-400">
           Về chúng tôi
         </Link>
       </nav>
