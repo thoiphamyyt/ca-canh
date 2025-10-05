@@ -23,6 +23,8 @@ export default function FormRegister() {
   const router = useRouter();
   const [loadingProcess, setLoadingProcess] = useState(false);
   const phoneRegex = /^(?:\+84|0)(?:3|5|7|8|9)[0-9]{8}$/;
+  const { toast } = useToast();
+
   const formSchema = z
     .object({
       username: z
@@ -34,6 +36,7 @@ export default function FormRegister() {
       name: z.string().min(1, {
         message: "Họ tên không được trống.",
       }),
+      address: z.string().optional(),
       password: z
         .string()
         .min(1, { message: "Mật khẩu không được để trống." })
@@ -55,7 +58,7 @@ export default function FormRegister() {
         }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      path: ["confirmPassword"], // báo lỗi ở confirmPassword
+      path: ["confirmPassword"],
       message: "Nhập lại mật khẩu không khớp.",
     });
 
@@ -72,9 +75,6 @@ export default function FormRegister() {
     },
   });
 
-  const { toast } = useToast();
-
-  // 2. Define a submit handler.
   async function onSubmit(values) {
     const formData = new FormData();
     formData.append("name", values.name);
@@ -224,10 +224,10 @@ export default function FormRegister() {
             </FormItem>
           )}
         />
-        <button
+        <Button
           type="submit"
           disabled={loadingProcess}
-          className={`w-full ${
+          className={`w-full bg-green-700 ${
             loadingProcess ? "opacity-70 cursor-not-allowed" : ""
           }`}
         >
@@ -239,10 +239,7 @@ export default function FormRegister() {
           ) : (
             "Đăng ký"
           )}
-        </button>
-        {/* <Button type="submit" className="w-full">
-          Đăng ký
-        </Button> */}
+        </Button>
       </form>
     </Form>
   );

@@ -41,7 +41,6 @@ export default function FormLogin() {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values) {
     const formData = new FormData();
     formData.append("userName", values.username);
@@ -71,7 +70,6 @@ export default function FormLogin() {
           description: "Đăng nhập tài khoản thành công!",
           variant: "success",
         });
-        // setToken(data._token, 60);
         setUser(data.user);
         if (data.user.role === "admin") {
           router.push("/admin");
@@ -133,7 +131,7 @@ export default function FormLogin() {
           <Button
             type="submit"
             disabled={loadingProcess}
-            className={`w-full ${
+            className={`w-full bg-yellow-500 ${
               loadingProcess ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >

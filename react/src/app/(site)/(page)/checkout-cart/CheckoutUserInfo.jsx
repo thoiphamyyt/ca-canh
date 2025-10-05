@@ -5,7 +5,7 @@ import UserUpdateDialog from "../../(auth)/profile/updateUserDialog";
 
 export default function CheckoutUserInfo({ user, loading }) {
   return (
-    <div className="border rounded-xl bg-gray-100 dark:bg-gradient-to-br from-slate-800 to-slate-900 p-10 shadow-lg">
+    <div className="border rounded-xl bg-gray-50 dark:bg-gradient-to-br from-slate-800 to-slate-900 p-10 shadow-lg">
       <h2 className="text-xl font-bold mb-4 border-b border-slate-700 pb-2">
         Thông tin khách hàng
       </h2>

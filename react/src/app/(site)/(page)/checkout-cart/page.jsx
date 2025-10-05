@@ -75,26 +75,22 @@ export default function Checkout() {
 
   return (
     <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Form thông tin khách hàng */}
       <div className="md:col-span-2">
         {<CheckoutUserInfo user={user} loading={loading} />}
       </div>
-      {/* Đơn hàng */}
-      <div className="dark:bg-slate-800 bg-gray-100 p-6 rounded-2xl shadow-lg">
+      <div className="dark:bg-slate-800 bg-gray-50 p-6 rounded-2xl shadow-lg">
         <h2 className="text-xl font-bold mb-4 pb-2 border-b border-slate-700">
           Đơn hàng của bạn
         </h2>
 
         {loadingCart ? (
           <div className="space-y-4">
-            {/* Skeleton header */}
             <div className="flex justify-between">
               <Skeleton className="h-6 w-12 rounded bg-gray-200 dark:bg-slate-600" />
               <Skeleton className="h-6 w-24 rounded bg-gray-200 dark:bg-slate-600" />
               <Skeleton className="h-6 w-12 rounded bg-gray-200 dark:bg-slate-600" />
               <Skeleton className="h-6 w-20 rounded bg-gray-200 dark:bg-slate-600" />
             </div>
-            {/* Skeleton rows */}
             {[...Array(3)].map((_, i) => (
               <div key={i} className="flex justify-between items-center py-2">
                 <Skeleton className="h-6 w-12 rounded bg-gray-200 dark:bg-slate-600" />
@@ -103,11 +99,9 @@ export default function Checkout() {
                 <Skeleton className="h-6 w-20 rounded bg-gray-200 dark:bg-slate-600" />
               </div>
             ))}
-            {/* Skeleton total */}
             <div className="flex justify-end py-3">
               <Skeleton className="h-6 w-32 rounded bg-gray-200 dark:bg-slate-600" />
             </div>
-            {/* Skeleton button */}
             <Skeleton className="h-12 w-full rounded-xl bg-gray-200 dark:bg-slate-600" />
           </div>
         ) : cart && cart.length ? (

@@ -34,7 +34,7 @@ export const columns = (onOpenDialog) => [
           ? "border-green-500 text-green-700"
           : status === "draft"
           ? "border-gray-400 text-gray-600"
-          : "border-red-500 text-red-700";
+          : "border-orange-400 text-orange-600";
 
       return (
         <div className="flex justify-center">
