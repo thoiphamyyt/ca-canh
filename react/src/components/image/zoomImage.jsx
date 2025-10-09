@@ -15,7 +15,7 @@ export default function ZoomImage({ src, alt }) {
 
   return (
     <div
-      className="relative w-full h-96 overflow-hidden rounded-2xl bg-gray-50"
+      className="relative w-full h-100 overflow-hidden rounded-2xl bg-gray-50"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}

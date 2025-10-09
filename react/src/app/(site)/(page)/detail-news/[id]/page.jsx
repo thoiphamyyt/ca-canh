@@ -2,15 +2,13 @@
 
 import { useEffect, useState, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { newsBySlug } from "@/lib/callApi";
 import { formatDate } from "@/lib/utils";
-import Link from "next/link";
 import NewArtical from "../../news/newArtical";
+import { useParams } from "next/navigation";
 
-export default function DetailNew({ params }) {
-  const { id } = use(params);
+export default function DetailNew() {
+  const { id } = useParams();
   const [dataDetail, setDataDetail] = useState({});
 
   const [loading, setLoading] = useState(true);

@@ -13,13 +13,16 @@ import { formatVND } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCart } from "@/context/cartContext";
 import ReviewProduct from "./reivewProduct";
+import { useParams } from "next/navigation";
 
-export default function ProductDetail({ params }) {
-  const { id } = use(params);
+export default function ProductDetail() {
+  const { id } = useParams();
+
   const { addToCart } = useCart();
   const [dataDetail, setDataDetail] = useState({});
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [mainImage, setMainImage] = useState("");
 
   useEffect(() => {
     async function getDetail() {
@@ -47,7 +50,12 @@ export default function ProductDetail({ params }) {
     if (!quantity || quantity < 1) setQuantity(1);
   };
 
-  // 🔹 Skeleton UI đẹp hơn
+  useEffect(() => {
+    if (dataDetail.images_url?.length > 0) {
+      setMainImage(dataDetail.images_url[0]);
+    }
+  }, [dataDetail]);
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto p-6">
@@ -60,7 +68,6 @@ export default function ProductDetail({ params }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-pulse">
-          {/* Cột ảnh sản phẩm */}
           <div className="lg:col-span-6 space-y-6">
             <Skeleton className="w-full h-[400px] rounded-xl" />
             <div className="flex gap-3">
@@ -75,7 +82,6 @@ export default function ProductDetail({ params }) {
             </div>
           </div>
 
-          {/* Cột thông tin sản phẩm */}
           <div className="lg:col-span-6 space-y-5">
             <Skeleton className="h-10 w-2/3 rounded-md" />
             <Skeleton className="h-6 w-1/2" />
@@ -97,7 +103,6 @@ export default function ProductDetail({ params }) {
     );
   }
 
-  // 🔹 Giao diện thật khi có dữ liệu
   return (
     <div className="max-w-7xl mx-auto p-6">
       <div className="flex items-center justify-center my-8">
@@ -110,25 +115,24 @@ export default function ProductDetail({ params }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Cột ảnh */}
         <div className="lg:col-span-6">
           <Card className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start md:items-center">
               <div className="md:col-span-2">
                 <ZoomImage
-                  src={
-                    dataDetail.images_url?.length > 0
-                      ? dataDetail.images_url[0]
-                      : "/images/product/product-default.png"
-                  }
+                  src={mainImage || "/images/product/product-default.png"}
                   alt={dataDetail.product}
+                  className="object-cover"
                 />
               </div>
               <div className="flex flex-col gap-y-4 items-center">
                 {dataDetail.images_url?.map((src, i) => (
                   <button
                     key={i}
-                    className="rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition flex items-center justify-center w-28 h-24"
+                    onClick={() => setMainImage(src)}
+                    className={`rounded-lg overflow-hidden border ${
+                      mainImage === src ? "border-green-500" : "border-gray-200"
+                    } hover:shadow-md transition flex items-center justify-center w-28 h-24`}
                   >
                     <img
                       src={src}
