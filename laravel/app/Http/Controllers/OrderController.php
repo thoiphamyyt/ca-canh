@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Exception;
@@ -99,6 +100,22 @@ class OrderController extends Controller
         $order = Order::with(['user', 'items.product'])->findOrFail($id);
         $order->status = $request->status;
         $order->save();
+        if ($request->status == "processing") {
+            foreach ($order->items as $item) {
+                $product = $item->product;
+                if ($product) {
+                    if ($product->quantity < $item->quantity) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Sản phẩm {$product->name} không đủ số lượng tồn kho.",
+                        ], 400);
+                    }
+
+                    $product->quantity -= $item->quantity;
+                    $product->save();
+                }
+            }
+        }
 
         return response()->json([
             'success' => true,
