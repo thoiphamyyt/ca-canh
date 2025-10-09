@@ -39,7 +39,8 @@ export default function ProductDetail() {
   }, []);
 
   const decrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-  const increase = () => setQuantity((prev) => prev + 1);
+  const increase = () =>
+    setQuantity((prev) => (dataDetail.quantity > prev ? prev + 1 : prev));
   const handleChangeQuantity = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
@@ -163,7 +164,6 @@ export default function ProductDetail() {
           </Tabs>
         </div>
 
-        {/* Cột thông tin */}
         <div className="lg:col-span-6 flex flex-col gap-4">
           <Card className="p-6">
             <h1 className="text-4xl font-bold text-green-900 dark:text-green-500">
@@ -231,13 +231,13 @@ export default function ProductDetail() {
             <div className="mt-2 flex gap-3">
               <Button
                 onClick={() => addToCart(dataDetail, quantity)}
-                className="flex-[7] bg-green-600 dark:bg-green-400 dark:hover:bg-green-600"
+                className="flex-[7] bg-gradient-to-r from-green-600 to-lime-500"
               >
                 Thêm vào giỏ
               </Button>
               <Button
                 variant="ghost"
-                className="flex-[3] bg-yellow-400 dark:text-black dark:hover:bg-yellow-500"
+                className="flex-[3] bg-gradient-to-r from-red-600 to-orange-500"
               >
                 Mua ngay
               </Button>

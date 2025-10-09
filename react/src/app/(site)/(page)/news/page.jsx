@@ -143,7 +143,7 @@ export default function AquariumNewsPage() {
                       </div>
                       <CardContent className="p-4">
                         <CardHeader className="p-0 h-[85%]">
-                          <CardTitle className="text-justify text-lg">
+                          <CardTitle className="text-justify text-lg hover:text-green-500">
                             <Link href={`/detail-news/${item.slug}`}>
                               {item.title}
                             </Link>

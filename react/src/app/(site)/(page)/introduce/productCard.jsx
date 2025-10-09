@@ -63,7 +63,7 @@ export default function ProductCard({ product, addToCart }) {
             trigger={
               <Button
                 size="sm"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                className="bg-gradient-to-r from-green-600 to-lime-500"
               >
                 Thêm vào giỏ
               </Button>
@@ -71,7 +71,7 @@ export default function ProductCard({ product, addToCart }) {
           />
           <Link href={`/detail-product/${product.id}`}>
             <Button
-              className="border border-slate-300 text-slate-700 dark:text-slate-200 dark:border-slate-600"
+              className="bg-gradient-to-r from-sky-500 to-cyan-400"
               variant="ghost"
               size="sm"
             >

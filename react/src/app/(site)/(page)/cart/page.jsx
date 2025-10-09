@@ -134,7 +134,12 @@ export default function CartPage() {
                         size="sm"
                         variant="outline"
                         onClick={() =>
-                          updateQuantity(item.id, item.quantityCart + 1)
+                          updateQuantity(
+                            item.id,
+                            item.quantity > item.quantityCart
+                              ? item.quantityCart + 1
+                              : item.quantityCart
+                          )
                         }
                       >
                         +
@@ -170,7 +175,7 @@ export default function CartPage() {
           <div className="flex justify-end mt-6 space-x-2">
             <Button
               size="lg"
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-lg shadow-md"
+              className="bg-gradient-to-r from-green-600 to-lime-500 px-8 py-4 text-lg rounded-lg shadow-md"
               onClick={handleCheckout}
             >
               Thanh toán
@@ -178,7 +183,7 @@ export default function CartPage() {
             <Link href="/">
               <Button
                 size="lg"
-                className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-4 text-lg rounded-lg shadow-md"
+                className="bg-gradient-to-r from-sky-600 to-cyan-500 px-8 py-4 text-lg rounded-lg shadow-md"
               >
                 Mua tiếp
               </Button>

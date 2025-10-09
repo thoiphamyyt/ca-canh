@@ -351,7 +351,6 @@ export default function FormCreateProduct({
                           className="dark:bg-dark-900"
                           {...field}
                         />
-                        {/* <Select {...field} /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>

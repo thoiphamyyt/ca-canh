@@ -149,7 +149,7 @@ export default function Content() {
                     trigger={
                       <Button
                         size="sm"
-                        className="bg-emerald-500 hover:bg-emerald-600"
+                        className="bg-gradient-to-r from-green-600 to-lime-500"
                       >
                         Mua ngay
                       </Button>
@@ -158,7 +158,11 @@ export default function Content() {
                   />
 
                   <Link href={`/detail-product/${product.id}`}>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-gradient-to-r from-sky-500 to-cyan-400"
+                    >
                       Xem chi tiết
                     </Button>
                   </Link>

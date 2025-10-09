@@ -144,7 +144,7 @@ export default function Cart() {
                 <span>Tổng cộng</span>
                 <span>{formatVND(totalPrice)}</span>
               </div>
-              <Button className="w-full bg-sky-600 hover:bg-sky-700 text-white mt-4">
+              <Button className="w-full bg-gradient-to-r from-blue-500 to-sky-400 mt-4">
                 Tiến hành thanh toán
               </Button>
               {clearCart && (

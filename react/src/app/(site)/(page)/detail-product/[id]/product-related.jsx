@@ -41,7 +41,6 @@ export default function ProducRelated({ id_category }) {
           <span className="absolute left-0 -bottom-3 w-[50px] h-1 bg-lime-700 dark:bg-lime-400 rounded-md"></span>
         </h2>
         <div className="overflow-hidden" ref={emblaRef}>
-          {/* Track */}
           <div className="flex">
             {product.map((item, i) => (
               <div

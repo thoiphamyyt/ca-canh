@@ -56,7 +56,6 @@ const Tiptap = ({ value, onChange }) => {
 
   return (
     <div className="border rounded-md p-2">
-      {/* 🔹 Toolbar */}
       <div className="flex flex-wrap gap-2 border-b pb-2 mb-2">
         <Button
           size="sm"
@@ -145,7 +144,6 @@ const Tiptap = ({ value, onChange }) => {
           <RedoIcon className="w-4 h-4" />
         </Button>
 
-        {/* 🔹 Table */}
         <Button
           size="sm"
           variant="outline"
@@ -195,7 +193,6 @@ const Tiptap = ({ value, onChange }) => {
           <Trash2 className="w-4 h-4" />
         </Button>
 
-        {/* 🔹 Image */}
         <Button
           size="sm"
           variant="outline"
@@ -210,7 +207,6 @@ const Tiptap = ({ value, onChange }) => {
         </Button>
       </div>
 
-      {/* 🔹 Nội dung editor */}
       <EditorContent
         editor={editor}
         className="ProseMirror min-h-[150px] px-2"

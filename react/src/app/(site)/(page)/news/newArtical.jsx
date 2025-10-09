@@ -63,7 +63,7 @@ export default function NewArtical() {
                         className="w-[100px] h-[100px] object-cover rounded-md"
                       />
                       <div className="p-1 flex-1">
-                        <div className="font-medium line-clamp-2">
+                        <div className="font-medium line-clamp-2 hover:text-green-500">
                           <Link href={`/detail-news/${a.slug}`}>{a.title}</Link>
                         </div>
                         <div className="text-sm text-slate-500">

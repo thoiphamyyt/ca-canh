@@ -27,7 +27,6 @@ export default function CartDialog({ dataProduct, trigger }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* Trigger */}
       <DialogTrigger asChild>
         {trigger ? (
           trigger
@@ -46,7 +45,6 @@ export default function CartDialog({ dataProduct, trigger }) {
         </DialogHeader>
         <Separator className="my-3" />
 
-        {/* Sản phẩm */}
         <div className="flex gap-4 items-start bg-gray-50 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
           <img
             src={
@@ -66,7 +64,6 @@ export default function CartDialog({ dataProduct, trigger }) {
               {formatVND(dataProduct.price)}
             </p>
 
-            {/* Chọn số lượng */}
             <div className="flex items-center gap-3 mt-3">
               <Button
                 size="icon"
@@ -91,7 +88,6 @@ export default function CartDialog({ dataProduct, trigger }) {
           </div>
         </div>
 
-        {/* Tổng tiền */}
         <div className="flex justify-between items-center mt-6 p-4 bg-green-50 dark:bg-green-900/30 rounded-xl">
           <span className="text-gray-600 dark:text-gray-300 font-medium">
             Tổng cộng:
@@ -101,7 +97,6 @@ export default function CartDialog({ dataProduct, trigger }) {
           </span>
         </div>
 
-        {/* Hành động */}
         <div className="flex justify-end gap-3 mt-6">
           <Link href={`/detail-product/${dataProduct.id}`}>
             <Button

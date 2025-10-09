@@ -69,7 +69,6 @@ export default function SaleSlider() {
   return (
     <section className="container mx-auto py-12">
       <div className="overflow-hidden px-2" ref={emblaRef}>
-        {/* Track */}
         <div className="flex">
           {sales.map((s, i) => (
             <div

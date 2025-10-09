@@ -4,7 +4,6 @@ import { useCart } from "@/context/cartContext";
 import { Button } from "@/components/ui/button";
 import { formatVND } from "@/lib/utils";
 import Link from "next/link";
-import { link_public_api } from "@/lib/contants";
 
 export default function CartSidebar() {
   const { cart, isOpen, setIsOpen, updateCart } = useCart();

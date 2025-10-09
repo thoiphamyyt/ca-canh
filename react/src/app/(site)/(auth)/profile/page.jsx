@@ -22,7 +22,6 @@ export default function UserProfile() {
     >
       {loading ? (
         <Card className="w-full max-w-md md:max-w-2xl shadow-2xl rounded-2xl overflow-hidden">
-          {/* Header Skeleton */}
           <CardHeader className="flex flex-col items-center text-center space-y-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
             <Skeleton className="w-[120px] h-[120px] rounded-full border-4 border-white shadow-lg" />
             <div className="space-y-2">
@@ -30,8 +29,6 @@ export default function UserProfile() {
               <Skeleton className="h-4 w-24 mx-auto rounded" />
             </div>
           </CardHeader>
-
-          {/* Content Skeleton */}
           <CardContent className="space-y-6 px-6 py-8">
             <div className="grid gap-6">
               <div className="flex items-center gap-3">
@@ -49,8 +46,6 @@ export default function UserProfile() {
             </div>
 
             <Skeleton className="h-[1px] w-full bg-gray-300 dark:bg-gray-700" />
-
-            {/* Buttons Skeleton */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Skeleton className="h-10 w-32 rounded-lg" />
               <Skeleton className="h-10 w-32 rounded-lg" />
@@ -59,7 +54,6 @@ export default function UserProfile() {
         </Card>
       ) : (
         <Card className="w-full max-w-md md:max-w-2xl shadow-2xl rounded-2xl overflow-hidden">
-          {/* Header */}
           <CardHeader className="flex flex-col items-center text-center space-y-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
             {!user.avatar ? (
               <UserCircle2 className="w-28 h-28 text-white/80" />

@@ -131,7 +131,7 @@ export default function FormLogin() {
           <Button
             type="submit"
             disabled={loadingProcess}
-            className={`w-full bg-yellow-500 ${
+            className={`w-full bg-gradient-to-r from-blue-500 to-sky-400 ${
               loadingProcess ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >

@@ -12,7 +12,6 @@ export default function CheckoutUserInfo({ user, loading }) {
 
       {loading ? (
         <ul className="space-y-4">
-          {/* Name */}
           <li className="flex items-center space-x-3">
             <div className="p-2 dark:bg-blue-600/20 bg-blue-800/20 rounded-full">
               <Skeleton className="w-5 h-5 rounded-full bg-gray-200 dark:bg-slate-600" />
@@ -20,7 +19,6 @@ export default function CheckoutUserInfo({ user, loading }) {
             <Skeleton className="h-4 w-32 rounded bg-gray-200 dark:bg-slate-600" />
           </li>
 
-          {/* Email */}
           <li className="flex items-center space-x-3">
             <div className="p-2 dark:bg-green-600/20 bg-green-800/20 rounded-full">
               <Skeleton className="w-5 h-5 rounded-full bg-gray-200 dark:bg-slate-600" />
@@ -28,7 +26,6 @@ export default function CheckoutUserInfo({ user, loading }) {
             <Skeleton className="h-4 w-40 rounded bg-gray-200 dark:bg-slate-600" />
           </li>
 
-          {/* Phone */}
           <li className="flex items-center space-x-3">
             <div className="p-2 dark:bg-yellow-600/20 bg-yellow-800/20 rounded-full">
               <Skeleton className="w-5 h-5 rounded-full bg-gray-200 dark:bg-slate-600" />
@@ -36,7 +33,6 @@ export default function CheckoutUserInfo({ user, loading }) {
             <Skeleton className="h-4 w-28 rounded bg-gray-200 dark:bg-slate-600" />
           </li>
 
-          {/* Address */}
           <li className="flex items-center space-x-3">
             <div className="p-2 dark:bg-red-600/20 bg-red-800/20 rounded-full">
               <Skeleton className="w-5 h-5 rounded-full bg-gray-200 dark:bg-slate-600" />

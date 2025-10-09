@@ -107,7 +107,7 @@ export default function FormRegister() {
           description: "Đăng ký tài khoản thành công!",
           variant: "success",
         });
-        form.reset(); // reset form nếu muốn
+        form.reset();
         router.push("/login");
       }
     } catch (error) {
@@ -144,9 +144,6 @@ export default function FormRegister() {
               <FormControl>
                 <Input placeholder="Vui lòng nhập tên đăng nhập" {...field} />
               </FormControl>
-              {/* <FormDescription>
-                    Vui lòng nhập tên đăng nhập.
-                </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -227,7 +224,7 @@ export default function FormRegister() {
         <Button
           type="submit"
           disabled={loadingProcess}
-          className={`w-full bg-green-700 ${
+          className={`w-full bg-gradient-to-r from-green-700 to-emerald-400 ${
             loadingProcess ? "opacity-70 cursor-not-allowed" : ""
           }`}
         >
