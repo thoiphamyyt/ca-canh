@@ -13,7 +13,7 @@ export default function ListProduct() {
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState([]);
 
-  const loadProduct = async (searchText = "") => {
+  const loadProduct = async () => {
     setLoading(true);
     try {
       const data = await fetchProduct({
@@ -33,7 +33,7 @@ export default function ListProduct() {
   }, []);
 
   const handleSearch = () => {
-    loadProduct(textSearch.trim());
+    loadProduct();
   };
 
   const addToCart = (product) => {

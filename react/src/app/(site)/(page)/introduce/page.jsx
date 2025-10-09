@@ -1,4 +1,4 @@
-import ListProduct from "./lisproduct";
+import ListProduct from "./listProduct";
 import Cart from "./cart";
 import Content from "./content";
 

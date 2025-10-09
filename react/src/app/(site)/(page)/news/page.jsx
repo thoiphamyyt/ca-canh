@@ -9,85 +9,36 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { format } from "date-fns";
 import { Search } from "lucide-react";
 import { fetchNews } from "@/lib/callApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
-
-// Sample data (replace with real API data)
-const sampleArticles = [
-  {
-    id: 1,
-    title: "Hướng dẫn chăm sóc cá Betta cho người mới",
-    excerpt:
-      "Betta là loài cá cảnh phổ biến vì màu sắc rực rỡ và tính cách dễ thuần. Bài viết hướng dẫn cách chọn hồ, thức ăn, và xử lý bệnh cơ bản.",
-    image: "/images/image-baner.jpg",
-    author: "Nguyễn An",
-    date: "2025-08-22",
-  },
-  {
-    id: 2,
-    title: "Top 7 loài cá dễ nuôi cho bể cộng đồng",
-    excerpt:
-      "Bạn muốn một bể cá đẹp, dễ quản lý? Dưới đây là 7 gợi ý loài cá thân thiện, ít bệnh và chịu đựng tốt.",
-    image: "/images/image-baner2.jpg",
-    author: "Lê Bảo",
-    date: "2025-07-10",
-  },
-  {
-    id: 3,
-    title: "Thiết kế bể cây thủy sinh: bố cục và cây nên trồng",
-    excerpt:
-      "Bể thủy sinh đẹp không chỉ cần cây; bố cục, nền và ánh sáng quyết định 80% thành công.",
-    image: "/images/image-baner3.jpg",
-    author: "Phạm Hòa",
-    date: "2025-06-05",
-  },
-  {
-    id: 4,
-    title: "Thiết kế bể cây thủy sinh: bố cục và cây nên trồng",
-    excerpt:
-      "Bể thủy sinh đẹp không chỉ cần cây; bố cục, nền và ánh sáng quyết định 80% thành công.",
-    image: "/images/image-baner.jpg",
-    author: "Phạm Hòa",
-    date: "2025-06-05",
-  },
-];
+import NewArtical from "./newArtical";
 
 export default function AquariumNewsPage() {
   const [query, setQuery] = useState("");
-  const [selectedTag, setSelectedTag] = useState("");
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadDataNews() {
-      try {
-        const data = await fetchNews({ status: "published" });
-        setNews(data);
-      } catch {
-        console.error("Failed to fetch product:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
     loadDataNews();
   }, []);
 
-  const filtered = useMemo(() => {
-    return sampleArticles.filter((a) => {
-      const q = query.trim().toLowerCase();
-      const matchesQuery =
-        !q ||
-        a.title.toLowerCase().includes(q) ||
-        a.excerpt.toLowerCase().includes(q);
-      const matchesTag = !selectedTag || a.tags.includes(selectedTag);
-      return matchesQuery && matchesTag;
-    });
-  }, [query, selectedTag]);
+  const loadDataNews = async (searchText = "") => {
+    try {
+      setLoading(true);
+      const data = await fetchNews({ status: "published", title: searchText });
+      setNews(data ?? []);
+    } catch (error) {
+      console.error("Failed to fetch news:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleSearch = () => {
+    loadDataNews(query.trim());
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
@@ -107,6 +58,12 @@ export default function AquariumNewsPage() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleSearch();
+                  }
+                }}
                 placeholder="Tìm kiếm bài viết, từ khóa..."
                 className="pl-10"
               />
@@ -123,15 +80,45 @@ export default function AquariumNewsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <section className="lg:col-span-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <Skeleton className="h-[250px] w-full rounded-xl" />
-                <Skeleton className="h-[250px] w-full rounded-xl" />
-                <Skeleton className="h-[250px] w-full rounded-xl" />
-                <Skeleton className="h-[250px] w-full rounded-xl" />
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Card key={i} className="overflow-hidden p-3">
+                    <div className="md:flex h-full gap-3">
+                      <Skeleton className="w-full md:w-40 h-[140px] rounded-md" />
+                      <div className="flex-1 space-y-2 mt-2 md:mt-0">
+                        <Skeleton className="h-5 w-3/4" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-5/6" />
+                        <div className="flex gap-3 mt-3">
+                          <Skeleton className="h-3 w-1/4" />
+                          <Skeleton className="h-3 w-1/5" />
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
               </div>
             </section>
-            <div>
-              <Skeleton className="h-[530px] w-full rounded-xl" />
-            </div>
+            <aside>
+              <Card className="p-4">
+                <div className="py-2">
+                  <Skeleton className="h-6 w-32 mb-3" />
+                </div>
+                <div className="space-y-3">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-3 border-[1px] p-2 rounded-lg"
+                    >
+                      <Skeleton className="w-[90px] h-[90px] rounded-md" />
+                      <div className="flex flex-col gap-2 flex-1">
+                        <Skeleton className="h-5 w-3/4" />
+                        <Skeleton className="h-4 w-1/3" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </aside>
           </div>
         </div>
       ) : news && news.length ? (
@@ -145,7 +132,7 @@ export default function AquariumNewsPage() {
                       <div className="relative md:w-44 aspect-square flex-shrink-0">
                         <img
                           src={
-                            item.images_url && item.images_url.length
+                            item.images_url?.length
                               ? item.images_url[0]
                               : "/images/product/product-default.png"
                           }
@@ -172,7 +159,7 @@ export default function AquariumNewsPage() {
                               ) : (
                                 item.content
                               )}
-                            </div>{" "}
+                            </div>
                           </CardDescription>
                         </CardHeader>
 
@@ -197,41 +184,13 @@ export default function AquariumNewsPage() {
               )}
             </section>
 
-            <aside className="space-y-6">
-              <Card className="p-2">
-                <CardContent>
-                  <div className="py-2">
-                    <h3 className="font-semibold text-xl">Bài nổi bật</h3>
-                  </div>
-                  <ScrollArea className="h-full mt-3">
-                    <div className="space-y-3">
-                      {sampleArticles.slice(0, 4).map((a) => (
-                        <div
-                          key={a.id}
-                          className="flex items-start gap-3 border-[1px]"
-                        >
-                          <img
-                            src={a.image}
-                            alt={a.title}
-                            className="w-[100px] h-[100px] object-cover"
-                          />
-                          <div className="p-2">
-                            <div className="font-medium">{a.title}</div>
-                            <div className="text-sm text-slate-500">
-                              {formatDate(a.date, "dd/MM/yyyy")}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                </CardContent>
-              </Card>
-            </aside>
+            <NewArtical />
           </div>
         </main>
       ) : (
-        <div>Chưa có dữ liệu</div>
+        <div className="text-center py-12 text-slate-500">
+          Chưa có dữ liệu bài viết.
+        </div>
       )}
     </div>
   );

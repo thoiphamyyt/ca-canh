@@ -179,6 +179,43 @@ const changeStatusOrders = async (id, status) => {
   }
 };
 
+const fetchProductReviews = async (productId, page = 1) => {
+  try {
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/products/${productId}/reviews?page=${page}`,
+      {
+        cache: "no-store",
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch product reviews");
+    }
+    const data = await res.json();
+    return data || [];
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return [];
+  }
+};
+
+const postProductReview = async (productId, payload) => {
+  try {
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/products/${productId}/reviews`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return null;
+  }
+};
+
 export {
   fetchNews,
   detailNews,
@@ -187,4 +224,6 @@ export {
   fetchOrderManager,
   detailOrderManager,
   changeStatusOrders,
+  fetchProductReviews,
+  postProductReview,
 };
