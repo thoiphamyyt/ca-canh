@@ -21,10 +21,8 @@ class ProductController extends Controller
         if (!empty($formData['id_category'])) {
             $query->where('id_category', $formData['id_category']);
         }
-        // sắp xếp
         $query->orderBy('products.created_at', 'desc');
 
-        // pagination
         if (!empty($formData['limit'])) {
             $perPage = $request->get('limit', $formData['limit']);
             $product = $query->paginate($perPage);

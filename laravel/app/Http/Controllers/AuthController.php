@@ -37,7 +37,7 @@ class AuthController extends Controller
             'address' => $formData['address'] ?? null,
             'phone' => $formData['phone'] ?? null,
             'password' => Hash::make($request->password),
-            'role' => 'user', // Mặc định role là user
+            'role' => 'user',
         ]);
 
         return response()->json(['message' => 'User registered successfully', 'user' => $user, 'success' => true], 201);

@@ -50,6 +50,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Order::class);
     }
 
+    public function productReviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
     /**
      * Return a key value array, containing any custom claims to be added to JWT.
      */

@@ -18,11 +18,33 @@ class NewsController extends Controller
         if (!empty($formData['status'])) {
             $query->where('status', $formData['status']);
         }
-        $getNews = $query->get();
+        if (!empty($formData['title'])) {
+            $query->where("title", 'like', "%{$formData['title']}%");
+        }
+        if (!empty($formData['limit'])) {
+            $perPage = $request->get('limit', $formData['limit']);
+            $getNews = $query->paginate($perPage);
+        } else {
+            $getNews = $query->get();
+        }
         if ($getNews->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'no data']);
         } else {
-            return response()->json(['success' => true, 'data' => $getNews]);
+            return response()->json([
+                'success' => true,
+                'data' => $getNews instanceof \Illuminate\Pagination\LengthAwarePaginator
+                    ? $getNews->items()
+                    : $getNews,
+                'total' => $getNews instanceof \Illuminate\Pagination\LengthAwarePaginator
+                    ? $getNews->total()
+                    : count($getNews),
+                'current_page' => $getNews instanceof \Illuminate\Pagination\LengthAwarePaginator
+                    ? $getNews->currentPage()
+                    : 1,
+                'last_page' => $getNews instanceof \Illuminate\Pagination\LengthAwarePaginator
+                    ? $getNews->lastPage()
+                    : 1,
+            ]);
         }
     }
     public function getDetail($id)

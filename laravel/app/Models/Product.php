@@ -37,4 +37,9 @@ class Product extends Model
     protected $casts = [
         'images' => 'array', // tự động cast JSON -> array khi query
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
 }

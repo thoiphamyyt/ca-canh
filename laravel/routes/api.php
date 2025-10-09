@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,10 @@ Route::prefix('ca-canh')->group(function () {
 
     Route::get('news', [NewsController::class, 'getAll']);
     Route::get('detail-news-by-slug/{slug}', [NewsController::class, 'getDetailBySlug']);
+
+    Route::get('products/{id}/reviews', [ProductReviewController::class, 'getAll']);
+    Route::post('/products/{id}/reviews', [ProductReviewController::class, 'store'])->middleware('auth:api');
+
 
 
     Route::post('save-store', [OrderController::class, 'store'])->middleware('auth:api');
