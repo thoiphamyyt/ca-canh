@@ -57,7 +57,6 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-200 border-t border-gray-700 relative">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12 px-4 md:px-6">
-        {/* Logo + Info */}
         <div className="text-base">
           <div className="flex items-center gap-2">
             <h2 className="text-2xl font-bold text-green-400">CaCanhTV</h2>

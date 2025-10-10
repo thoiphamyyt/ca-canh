@@ -60,7 +60,6 @@ export default function HeroSlider() {
 
   return (
     <section className="relative">
-      {/* Slider */}
       <div className="overflow-hidden relative" ref={emblaRef}>
         <div className="flex">
           {slides.map((item, index) => (
@@ -68,7 +67,6 @@ export default function HeroSlider() {
               key={index}
               className={`${item.color} flex-[0_0_100%] h-[550px] flex flex-col-reverse lg:flex-row items-center gap-8 px-4 lg:px-12`}
             >
-              {/* Left Text */}
               <div className="flex-1 text-center lg:text-left animate-fall-down">
                 <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
                   <span className={item.highlightColor}>{item.highlight}</span>{" "}
@@ -80,14 +78,13 @@ export default function HeroSlider() {
                 <div className="mt-6 flex justify-center lg:justify-start">
                   <Button
                     size="lg"
-                    className="bg-green-800 hover:bg-green-700 text-white rounded-full px-8 shadow-lg"
+                    className="bg-gradient-to-r from-teal-600 to-green-500 rounded-full px-8 shadow-lg"
                   >
                     {item.cta}
                   </Button>
                 </div>
               </div>
 
-              {/* Right Image */}
               <div className="flex-1 flex justify-center">
                 <Card className="shadow-xl rounded-2xl overflow-hidden">
                   <CardContent className="p-0">
@@ -107,7 +104,6 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Dots */}
       <div className="absolute left-1/2 -translate-x-1/2 flex space-x-2 bottom-[70px]">
         {scrollSnaps.map((_, index) => (
           <button

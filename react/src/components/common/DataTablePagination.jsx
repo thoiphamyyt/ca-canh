@@ -13,7 +13,6 @@ import { ChevronFirst, ChevronLast } from "lucide-react";
 export function DataTablePagination({ table }) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4 mr-3">
-      {/* Nút Previous */}
       <Button
         variant="outline"
         size="sm"
@@ -23,7 +22,6 @@ export function DataTablePagination({ table }) {
         <ChevronFirst className="h-4 w-4" />
       </Button>
 
-      {/* Dropdown chọn số dòng */}
       <div className="flex items-center gap-2">
         <Select
           value={String(table.getState().pagination.pageSize)}
@@ -42,7 +40,6 @@ export function DataTablePagination({ table }) {
         </Select>
       </div>
 
-      {/* Nút Next */}
       <Button
         variant="outline"
         size="sm"

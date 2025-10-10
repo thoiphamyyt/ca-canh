@@ -78,7 +78,6 @@ export default function UserProfile() {
             </div>
           </CardHeader>
 
-          {/* Content */}
           <CardContent className="space-y-6 px-6 py-8">
             <div className="grid gap-6 text-gray-700 dark:text-gray-300">
               <div className="flex items-center gap-3">
@@ -95,7 +94,6 @@ export default function UserProfile() {
               </div>
             </div>
             <Skeleton className="h-[1px] w-full bg-gray-300 dark:bg-gray-700" />
-            {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <UserUpdateDialog />
               <Button

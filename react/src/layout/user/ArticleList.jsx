@@ -143,7 +143,6 @@ function NewsSlider({ news, slidesToShow }) {
                         loading="lazy"
                       />
 
-                      {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
                       <h3 className="absolute bottom-4 left-4 right-4 text-lg md:text-xl font-bold text-white drop-shadow-2xl leading-snug line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
@@ -151,7 +150,6 @@ function NewsSlider({ news, slidesToShow }) {
                       </h3>
                     </div>
 
-                    {/* Description */}
                     <CardHeader className="mt-2 px-4 flex-grow overflow-hidden">
                       <CardDescription className="line-clamp-4 text-slate-700 dark:text-slate-300">
                         <div className="prose max-w-none dark:prose-invert text-justify">
@@ -160,7 +158,6 @@ function NewsSlider({ news, slidesToShow }) {
                       </CardDescription>
                     </CardHeader>
 
-                    {/* Button */}
                     <CardContent className="px-4 pb-4 mt-auto">
                       <Link
                         href={`/detail-news/${item.slug}` || "#"}

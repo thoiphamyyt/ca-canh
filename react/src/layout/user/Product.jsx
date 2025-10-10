@@ -66,7 +66,6 @@ export default function ProductList() {
           }}
         />
 
-        {/* Products */}
         {loading ? (
           <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
             {Array.from({ length: perPage }).map((_, index) => (
@@ -153,7 +152,6 @@ export default function ProductList() {
               ))}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center mt-8 gap-3">
                 <Button

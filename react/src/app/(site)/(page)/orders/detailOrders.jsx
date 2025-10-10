@@ -32,7 +32,6 @@ export default function OrderDetailDialog({ order }) {
           </DialogTitle>
         </DialogHeader>
 
-        {/* Thông tin chung */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-gray-50 dark:bg-gray-900 p-4 rounded-lg shadow-sm">
           <div>
             <p className="text-gray-500 text-sm">Ngày đặt</p>
@@ -63,7 +62,6 @@ export default function OrderDetailDialog({ order }) {
           </div>
         </div>
 
-        {/* Danh sách sản phẩm */}
         <div className="mt-6">
           <h3 className="font-semibold mb-3 text-lg">Sản phẩm</h3>
           <div className="divide-y rounded-lg border">

@@ -13,10 +13,8 @@ export default function UserMetaCard() {
       <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
-            {/* Avatar Skeleton */}
             <Skeleton className="w-20 h-20 rounded-full" />
 
-            {/* Info Skeleton */}
             <div className="order-3 xl:order-2 space-y-2">
               <Skeleton className="h-5 w-32" />
               <div className="flex flex-col items-center gap-1 xl:flex-row xl:gap-3">
@@ -25,7 +23,6 @@ export default function UserMetaCard() {
               </div>
             </div>
 
-            {/* Social Skeleton */}
             <div className="flex items-center order-2 gap-2 grow xl:order-3 xl:justify-end">
               <Skeleton className="h-11 w-11 rounded-full" />
               <Skeleton className="h-11 w-11 rounded-full" />

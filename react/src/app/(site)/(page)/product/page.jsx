@@ -102,7 +102,6 @@ export default function ProductList() {
                       className="mx-auto w-full h-[210px] object-cover transition-transform duration-500 ease-out hover:scale-110"
                     />
 
-                    {/* Hover Action Icons */}
                     <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                       <CartDialog dataProduct={item} />
 
@@ -142,7 +141,6 @@ export default function ProductList() {
                 </Card>
               ))}
             </div>
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center mt-8 gap-3">
                 <Button
