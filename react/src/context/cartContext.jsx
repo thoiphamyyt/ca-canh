@@ -1,34 +1,37 @@
-// context/CartContext.js
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { useUser } from "@/context/userContext";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  const { user } = useUser();
   const [cart, setCart] = useState([]);
   const [loadingCart, setLoadingCart] = useState(true);
-  const [isOpen, setIsOpen] = useState(false); // mở/đóng sidebar giỏ hàng
+  const [isOpen, setIsOpen] = useState(false);
+
+  const storageKey = user ? `cart_${user.id}` : "cart_guest";
+
   useEffect(() => {
-    const fetchCart = () => {
-      try {
-        const savedCart = localStorage.getItem("cart");
-        if (savedCart) {
-          setCart(JSON.parse(savedCart));
-        }
-      } catch (err) {
-        console.error("Lỗi khi đọc cart từ localStorage:", err);
-      } finally {
-        setTimeout(() => setLoadingCart(false), 1000);
+    try {
+      const savedCart = localStorage.getItem(storageKey);
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      } else {
+        setCart([]);
       }
-    };
+    } catch (err) {
+      console.error("Lỗi khi đọc cart từ localStorage:", err);
+    } finally {
+      setTimeout(() => setLoadingCart(false), 300);
+    }
+  }, [user]);
 
-    fetchCart();
-  }, []);
-
-  // 🔹 Lưu cart vào localStorage mỗi khi thay đổi
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    if (!loadingCart) {
+      localStorage.setItem(storageKey, JSON.stringify(cart));
+    }
+  }, [cart, storageKey, loadingCart]);
 
   const addToCart = (product, quantityCart = 1) => {
     setCart((prev) => {
@@ -37,15 +40,14 @@ export function CartProvider({ children }) {
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantityCart: item.quantityCart + quantityCart }
-            : { ...item, quantityCart: quantityCart }
+            : item
         );
       }
-
       return [...prev, { ...product, quantityCart }];
     });
-
-    setIsOpen(true); // mở giỏ hàng sau khi thêm
+    setIsOpen(true);
   };
+
   const updateCart = (id, quantity) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -53,11 +55,14 @@ export function CartProvider({ children }) {
       )
     );
   };
+
   const deleteItemCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
+
   const removeCart = () => {
-    localStorage.removeItem("cart");
+    localStorage.removeItem(storageKey);
+    setCart([]);
   };
 
   return (
