@@ -3,21 +3,20 @@
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Star, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchProduct } from "@/lib/fetchProduct";
 import MenuLeft from "@/layout/user/Menu";
 import CartDialog from "@/components/cart/cartDialog";
-import { formatVND } from "@/lib/utils";
+import { formatVND, renderStars } from "@/lib/utils";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import PaginationPage from "@/components/common/PaginationPage";
 
 export default function ProductList() {
   const [products, setProduct] = useState([]);
   const [idCategory, setIdCategory] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // pagination state
   const [page, setPage] = useState(1);
   const [perPage] = useState(8);
   const [total, setTotal] = useState(0);
@@ -31,7 +30,6 @@ export default function ProductList() {
           page,
           limit: perPage,
         });
-
         setProduct(data.data || []);
         setTotal(data.total || 0);
       } catch (error) {
@@ -46,15 +44,15 @@ export default function ProductList() {
   const totalPages = Math.ceil(total / perPage);
 
   return (
-    <section className="container mx-auto py-12">
+    <section className="container mx-auto py-12 transition-colors duration-300">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold dark:text-white text-sky-800">
+        <h2 className="text-3xl font-bold text-sky-800 dark:text-sky-300">
           Danh mục sản phẩm
         </h2>
-        <p className="text-gray-500 mt-2">
-          Chúng tôi đem đến cho bạn những sản phẩm tốt nhất, mới nhất và đa dạng
-          nhất. Với nhiều loại cá đẹp, độc lạ, bạn sẽ tìm thấy những người bạn
-          tuyệt vời cho bể cá của mình.
+        <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">
+          Khám phá thế giới cá cảnh phong phú – từ những loài cá rực rỡ sắc màu
+          đến các phụ kiện bể cá độc đáo. Hãy chọn cho mình “người bạn nước” lý
+          tưởng nhất nhé!
         </p>
       </div>
 
@@ -71,7 +69,7 @@ export default function ProductList() {
             {Array.from({ length: perPage }).map((_, index) => (
               <Card
                 key={index}
-                className="p-4 h-[500px] flex flex-col animate-pulse"
+                className="p-4 h-[500px] flex flex-col animate-pulse bg-white dark:bg-[#0b1e2b] border border-sky-100 dark:border-sky-900 rounded-xl"
               >
                 <Skeleton className="w-full h-[210px] rounded-md" />
                 <Skeleton className="mt-4 h-4 w-24 mx-auto" />
@@ -99,9 +97,9 @@ export default function ProductList() {
               {products.map((item) => (
                 <Card
                   key={item.id}
-                  className="group relative p-4 text-center hover:shadow-lg transition h-[500px]"
+                  className="group relative p-4 text-center bg-white dark:bg-[#0b1e2b] border border-sky-100 dark:border-sky-900 hover:shadow-lg hover:shadow-sky-100 dark:hover:shadow-sky-800 transition h-[500px] rounded-xl"
                 >
-                  <div className="bg-gray-100 rounded-md overflow-hidden">
+                  <div className="bg-sky-50 dark:bg-sky-950 rounded-md overflow-hidden relative">
                     <Image
                       src={
                         item.images_url && item.images_url.length
@@ -112,39 +110,44 @@ export default function ProductList() {
                       alt={item.product}
                       width={150}
                       height={150}
-                      className="mx-auto w-full h-[210px] object-cover transition-transform duration-500 ease-out hover:scale-110"
+                      className="mx-auto w-full h-[210px] object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     />
+
                     <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                       <CartDialog dataProduct={item} />
                       <Link href={`/detail-product/${item.id}`}>
-                        <button className="p-3 rounded-full shadow-md bg-yellow-300 hover:bg-yellow-500 dark:bg-amber-600 dark:hover:bg-orange-700">
-                          <Eye className="w-5 h-5 text-white" />
+                        <button className="p-3 rounded-full shadow-md bg-sky-500 hover:bg-sky-600 dark:bg-sky-700 dark:hover:bg-sky-600 text-white transition">
+                          <Eye className="w-5 h-5" />
                         </button>
                       </Link>
                     </div>
                   </div>
+
                   <div className="text-lg flex flex-col gap-3 mt-4">
-                    <p className="text-gray-500 mt-2">{item.category}</p>
+                    <p className="text-sky-600 dark:text-sky-300 mt-2">
+                      {item.category}
+                    </p>
+
                     <div className="flex justify-center text-yellow-400">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-4 h-4 ${
-                            i < Math.floor(item.rating) ? "fill-yellow-400" : ""
-                          }`}
-                        />
-                      ))}
+                      {renderStars(Math.round(item.rating || 0))}
                     </div>
-                    <h4 className="mt-2 font-semibold">{item.product}</h4>
+
+                    <h4 className="mt-2 font-semibold text-gray-900 dark:text-white">
+                      {item.product}
+                    </h4>
+
                     <p className="mt-1">
-                      <span className="text-green-600 font-bold">
+                      <span className="text-orange-500 dark:text-orange-400 font-bold">
                         {formatVND(item.price)}
                       </span>
-                      <span className="line-through text-gray-400 text-sm ml-3">
-                        {item.old_price ? formatVND(item.old_price) : ""}
-                      </span>
+                      {item.old_price && (
+                        <span className="line-through text-gray-400 dark:text-gray-500 text-sm ml-3">
+                          {formatVND(item.old_price)}
+                        </span>
+                      )}
                     </p>
-                    <p className="mt-1 text-base line-clamp-3">
+
+                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
                       {item.description}
                     </p>
                   </div>
@@ -152,37 +155,17 @@ export default function ProductList() {
               ))}
             </div>
 
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-8 gap-3">
-                <Button
-                  disabled={page === 1}
-                  onClick={() => setPage((p) => p - 1)}
-                  variant="outline"
-                >
-                  Previous
-                </Button>
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <Button
-                    key={i}
-                    onClick={() => setPage(i + 1)}
-                    variant={page === i + 1 ? "default" : "outline"}
-                  >
-                    {i + 1}
-                  </Button>
-                ))}
-                <Button
-                  disabled={page === totalPages}
-                  onClick={() => setPage((p) => p + 1)}
-                  variant="outline"
-                >
-                  Next
-                </Button>
-              </div>
-            )}
+            <div className="mt-6 flex justify-center">
+              <PaginationPage
+                totalPages={totalPages}
+                page={page}
+                setPage={setPage}
+              />
+            </div>
           </div>
         ) : (
-          <div className="text-center text-xl col-span-3">
-            Chưa tìm thấy sản phẩm nào phù hợp
+          <div className="text-center text-xl col-span-3 text-gray-600 dark:text-gray-300">
+            Chưa tìm thấy sản phẩm nào phù hợp 🐠
           </div>
         )}
       </div>

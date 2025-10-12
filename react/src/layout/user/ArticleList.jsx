@@ -35,7 +35,7 @@ export default function ItemList() {
       try {
         const data = await fetchNews({ status: "published" });
         if (!mounted) return;
-        setNews(data || []);
+        setNews(data.data || []);
       } catch (e) {
         console.error("fetchNews error", e);
       } finally {
@@ -85,14 +85,13 @@ function NewsSlider({ news, slidesToShow }) {
   const originalCount = news.length;
   const shouldLoop = originalCount > slidesToShow;
 
-  //tạo autoplay plugin tự động chạy qua từng item sau 4s
   const autoplay = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
-      loop: shouldLoop, // check đủ item thì bậc loop
+      loop: shouldLoop,
       align: "start",
-      containScroll: "trimSnaps", // không để thừa khoảng trống ở cuối danh sách
+      containScroll: "trimSnaps",
     },
     [autoplay.current]
   );

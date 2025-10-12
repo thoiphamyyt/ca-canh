@@ -55,48 +55,45 @@ export default function Header() {
 
   const handleClick = (category) => {
     const params = new URLSearchParams(searchParams);
-    if (category === "all") {
-      params.delete("category");
-    } else {
-      params.set("category", category);
-    }
+    if (category === "all") params.delete("category");
+    else params.set("category", category);
     router.push("/product?" + params.toString());
   };
 
   const searchProduct = () => {
     const params = new URLSearchParams(searchParams);
-    if (textSearch.trim() === "") {
-      params.delete("product");
-    } else {
-      params.set("product", textSearch);
-    }
+    if (textSearch.trim() === "") params.delete("product");
+    else params.set("product", textSearch);
     router.push("/product?" + params.toString());
   };
 
   return (
-    <header className="bg-gray-900 text-gray-200 shadow-md">
-      <div className="h-[50px] w-full bg-black flex justify-between items-center px-4">
-        <div className="text-green-400 font-semibold">CaCanh - TraVinh</div>
-        <div>
-          <Button className="bg-green-600 hover:bg-green-700 text-white">
-            Mua hàng
-          </Button>
+    <header className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-md transition-colors duration-300">
+      <div className="h-[50px] w-full bg-black flex justify-between items-center px-4 text-white">
+        <div className="font-semibold tracking-wide text-sky-500">
+          CaCanh - Trà Vinh
         </div>
+        <Button className="bg-orange-500 hover:bg-orange-400 text-white dark:text-white">
+          Mua hàng
+        </Button>
       </div>
 
-      <div className="container mx-auto flex items-center justify-between px-4 border-b border-gray-800 py-3">
+      <div className="container mx-auto flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700 py-3">
         <div className="flex items-center gap-4">
           <Sheet>
-            <SheetTrigger className="lg:hidden">
+            <SheetTrigger className="lg:hidden text-gray-700 dark:text-gray-200">
               <Menu className="h-6 w-6" />
             </SheetTrigger>
-            <SheetContent side="left" className="bg-gray-900 text-gray-200">
+            <SheetContent
+              side="left"
+              className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+            >
               <nav className="flex flex-col gap-4">
                 <Link href="/">Trang chủ</Link>
                 <Link href="/introduce">Giới thiệu</Link>
                 <Link href="/product">Sản phẩm</Link>
                 <Link href="/news">Tin tức</Link>
-                <Link href="#">Về chúng tôi</Link>
+                <Link href="/about">Về chúng tôi</Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -105,24 +102,24 @@ export default function Header() {
             <Image
               src="/images/logo.png"
               alt="Logo"
-              width={140}
-              height={140}
-              className="object-cover"
+              width={130}
+              height={130}
+              className="object-contain"
             />
           </Link>
         </div>
 
+        {/* Ô tìm kiếm */}
         <div className="hidden lg:flex flex-1 max-w-xl mx-8">
-          <div className="flex w-full border border-green-500 rounded-md overflow-hidden">
+          <div className="flex w-full border border-blue-400 dark:border-blue-600 rounded-md overflow-hidden">
             <Input
               type="text"
-              id="textsearch"
-              placeholder="Nhập nội dung tìm kiếm..."
+              placeholder="Tìm kiếm cá, hồ, phụ kiện..."
               onChange={(e) => setTextSearch(e.target.value)}
-              className="rounded-none border-0 focus:ring-0 h-12 px-4 text-base flex-1 text-gray-900"
+              className="rounded-none border-0 focus:ring-0 h-12 px-4 text-base flex-1 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800"
             />
             <Button
-              className="rounded-l-none bg-green-600 hover:bg-green-700 h-12 w-14 px-4"
+              className="rounded-l-none bg-blue-600 hover:bg-blue-700 h-12 w-14 px-4 text-white"
               onClick={() => searchProduct()}
             >
               <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -136,7 +133,7 @@ export default function Header() {
               <DropdownMenuTrigger asChild className="cursor-pointer">
                 <Link
                   href="#"
-                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                  className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   <User className="h-5 w-5" />
                   <span className="hidden lg:inline font-medium">
@@ -147,58 +144,55 @@ export default function Header() {
 
               <DropdownMenuContent
                 align="end"
-                className="w-52 bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-100 shadow-lg rounded-xl p-2 text-sm font-medium"
+                className="w-52 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 shadow-lg rounded-xl p-2 text-sm font-medium"
               >
                 {!user ? (
                   <>
-                    <DropdownMenuItem
-                      asChild
-                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400 transition"
-                    >
-                      <Link href="/login" className="flex items-center gap-2">
-                        <UserCircle2 className="h-4 w-4 text-green-600" />
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/login"
+                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
+                      >
+                        <UserCircle2 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
                         Đăng nhập
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      asChild
-                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400  transition"
-                    >
+                    <DropdownMenuItem asChild>
                       <Link
                         href="/register"
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
                       >
-                        <ShoppingBag className="h-4 w-4 text-green-600" />
+                        <ShoppingBag className="h-4 w-4 text-blue-500 dark:text-blue-400" />
                         Đăng ký
                       </Link>
                     </DropdownMenuItem>
                   </>
                 ) : (
                   <>
-                    <DropdownMenuItem
-                      asChild
-                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400  transition"
-                    >
-                      <Link href="/profile" className="flex items-center gap-2">
-                        <UserCircle2 className="h-4 w-4 text-green-600" />
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/profile"
+                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
+                      >
+                        <UserCircle2 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
                         Thông tin cá nhân
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      asChild
-                      className="cursor-pointer rounded-md dark:hover:bg-green-800 focus:bg-green-600/20 focus:text-green-400 transition"
-                    >
-                      <Link href="/orders" className="flex items-center gap-2">
-                        <ShoppingBag className="h-4 w-4 text-green-600" />
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/orders"
+                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
+                      >
+                        <ShoppingBag className="h-4 w-4 text-blue-500 dark:text-blue-400" />
                         Đơn hàng của bạn
                       </Link>
                     </DropdownMenuItem>
 
-                    <DropdownMenuSeparator className="my-1 border-gray-300 dark:border-gray-700" />
+                    <DropdownMenuSeparator className="my-1 border-gray-300 dark:border-gray-600" />
 
                     <DropdownMenuItem
                       onClick={logout}
-                      className="cursor-pointer rounded-md dark:hover:bg-red-800/20 focus:bg-red-600/20 focus:text-red-400 transition flex items-center gap-2"
+                      className="flex items-center gap-2 text-red-600 hover:text-red-700"
                     >
                       <LogOut className="h-4 w-4" />
                       Đăng xuất
@@ -210,31 +204,35 @@ export default function Header() {
           )}
 
           <Link href="/cart" className="relative">
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-5 w-5 text-gray-700 dark:text-gray-200" />
             {cart.length > 0 && (
-              <span className="absolute -top-2 left-3 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="absolute -top-2 left-3 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                 {cart.length}
               </span>
             )}
           </Link>
 
-          <div className="hidden lg:block text-sm text-gray-400">
-            <Phone className="inline h-4 w-4 mr-1" /> +123 (456) (7890)
+          <div className="hidden lg:block text-sm text-gray-700 dark:text-gray-300">
+            <Phone className="inline h-4 w-4 mr-1" /> +84 123 456 789
           </div>
+
           <ModeToggle />
         </div>
       </div>
 
-      <nav className="hidden lg:flex container mx-auto justify-center gap-12 py-4 text-lg font-medium">
-        <Link href="/" className="hover:text-green-400">
+      <nav className="hidden lg:flex container mx-auto justify-center gap-12 py-4 text-lg font-medium text-gray-700 dark:text-gray-200 transition-colors">
+        <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400">
           Trang chủ
         </Link>
-        <Link href="/introduce" className="hover:text-green-400">
+        <Link
+          href="/introduce"
+          className="hover:text-blue-600 dark:hover:text-blue-400"
+        >
           Giới thiệu
         </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <span className="flex items-center gap-2 cursor-pointer text-gray-100 hover:text-green-400 transition-colors">
+            <span className="flex items-center gap-2 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
               Sản phẩm
               <FontAwesomeIcon icon={faChevronDown} className="ml-1 w-4 h-4" />
             </span>
@@ -244,14 +242,13 @@ export default function Header() {
             <DropdownMenuContent
               align="start"
               sideOffset={8}
-              className="mt-2 min-w-[180px]rounded-xl border border-slate-700/40 bg-gray-900/95 backdrop-blur-md text-gray-100 shadow-lg shadow-black/30 animate-in fade-in-10 slide-in-from-top-2
-          "
+              className="mt-2 min-w-[180px] rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100/95 dark:bg-gray-800/95 backdrop-blur-md text-gray-800 dark:text-gray-200 shadow-lg"
             >
               {category.map((item, index) => (
                 <DropdownMenuItem
                   key={index}
                   onClick={() => handleClick(item.id)}
-                  className="cursor-pointer flex items-center justify-between px-3 py-2.5 text-sm rounded-md transition-all duration-200 hover:bg-green-600/20 hover:text-green-400 focus:bg-green-600/20 focus:text-green-400"
+                  className="cursor-pointer px-3 py-2.5 text-sm rounded-md hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   <span>{item.name}</span>
                 </DropdownMenuItem>
@@ -259,10 +256,16 @@ export default function Header() {
             </DropdownMenuContent>
           )}
         </DropdownMenu>
-        <Link href="/news" className="hover:text-green-400">
+        <Link
+          href="/news"
+          className="hover:text-blue-600 dark:hover:text-blue-400"
+        >
           Tin tức
         </Link>
-        <Link href="/about" className="hover:text-green-400">
+        <Link
+          href="/about"
+          className="hover:text-blue-600 dark:hover:text-blue-400"
+        >
           Về chúng tôi
         </Link>
       </nav>

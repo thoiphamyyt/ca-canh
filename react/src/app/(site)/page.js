@@ -6,6 +6,7 @@ import Sale from "../../layout/user/Sale";
 import { useRouter } from "next/navigation";
 import { useIdleLogout } from "hooks/useIdleLogout";
 import ArticleList from "../../layout/user/ArticleList";
+import FeaturedProductsList from "../../layout/user/FeaturedProductsList";
 
 export default function HomePage() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function HomePage() {
       <Hero />
       <Product />
       <ArticleList />
-      <Sale />
+      <FeaturedProductsList title="Sản phẩm nổi bật" />
     </section>
   );
 }

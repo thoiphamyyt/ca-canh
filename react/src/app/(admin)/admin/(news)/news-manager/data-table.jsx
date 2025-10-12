@@ -31,7 +31,7 @@ export function DataTable({ columns, isReload = false }) {
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       pagination: {
-        pageSize: 10, // mặc định 15 dòng
+        pageSize: 10,
       },
     },
   });
@@ -41,7 +41,7 @@ export function DataTable({ columns, isReload = false }) {
       setLoading(true);
       try {
         const data = await fetchNews({});
-        setNews(data);
+        setNews(data.data ?? []);
       } catch (error) {
         console.error("Failed to fetch News:", error);
       } finally {

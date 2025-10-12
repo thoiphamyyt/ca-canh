@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-
+import { Star } from "lucide-react";
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
@@ -41,4 +41,20 @@ export function formatDate(date, format = "dd/MM/yyyy") {
     /dd|d|MM|M|yyyy|yy|HH|H|mm|m|ss|s/g,
     (matched) => map[matched]
   );
+}
+export function renderStars(rating = 0) {
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    stars.push(
+      <Star
+        key={i}
+        className={`h-4 w-4 ${
+          i <= rating
+            ? "fill-yellow-400 text-yellow-400"
+            : "text-slate-300 dark:text-slate-600"
+        }`}
+      />
+    );
+  }
+  return stars;
 }

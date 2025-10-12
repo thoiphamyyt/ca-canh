@@ -19,7 +19,7 @@ const fetchNews = async (params = {}) => {
 
     const data = await res.json();
 
-    return data && data.success ? data.data : [];
+    return data ?? null;
   } catch (error) {
     console.error("Error fetching news:", error);
     return [];
