@@ -21,7 +21,11 @@ class ProductController extends Controller
         if (!empty($formData['id_category'])) {
             $query->where('id_category', $formData['id_category']);
         }
-        $query->orderBy('products.created_at', 'desc');
+        if (!empty($formData['sortField']) && $formData['sortOrder']) {
+            $query->orderBy('products.' . $formData['sortField'], $formData['sortOrder']);
+        } else {
+            $query->orderBy('products.created_at', 'desc');
+        }
 
         if (!empty($formData['limit'])) {
             $perPage = $request->get('limit', $formData['limit']);
@@ -71,6 +75,7 @@ class ProductController extends Controller
                 'quantity' => 'required|string',
                 'price' => 'required|string',
                 'description' => 'nullable|string',
+                'describe' => 'nullable|string',
                 'images' => 'nullable|array',
                 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
             ]);
@@ -98,6 +103,7 @@ class ProductController extends Controller
                 'price' => $formData['price'] ?? null,
                 'old_price' => $formData['old_price'] !== "undefined" ? $formData['old_price'] : 0,
                 'description' => $formData['description'] ?? null,
+                'describe' => $formData['describe'] ?? null,
                 'images' => $listImage ?? null,
             ]);
 
@@ -116,6 +122,7 @@ class ProductController extends Controller
                 'quantity' => 'required|string',
                 'price' => 'required|string',
                 'description' => 'nullable|string',
+                'describe' => 'nullable|string',
                 'images' => 'nullable|array',
                 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
             ]);
@@ -164,6 +171,9 @@ class ProductController extends Controller
             }
             if (isset($formData['description'])) {
                 $product->description = $formData['description'];
+            }
+            if (isset($formData['describe'])) {
+                $product->describe = $formData['describe'];
             }
             $product->save();
 

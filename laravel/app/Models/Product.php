@@ -18,6 +18,7 @@ class Product extends Model
         'description',
         'images',
         'id_category',
+        'describe'
     ];
 
 
