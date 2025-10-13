@@ -164,7 +164,7 @@ export default function CartPage() {
                 <TableCell colSpan={4} className="text-right font-bold text-xl">
                   Tổng cộng:
                 </TableCell>
-                <TableCell className="text-right text-green-600 font-bold text-3xl">
+                <TableCell className="text-right text-cyan-600 font-bold text-3xl">
                   {formatVND(total)}
                 </TableCell>
                 <TableCell></TableCell>
@@ -175,7 +175,7 @@ export default function CartPage() {
           <div className="flex justify-end mt-6 space-x-2">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-green-600 to-lime-500 px-8 py-4 text-lg rounded-lg shadow-md"
+              className="bg-gradient-to-r from-sky-600 to-cyan-500 px-8 py-4 text-lg rounded-lg shadow-md"
               onClick={handleCheckout}
             >
               Thanh toán
@@ -183,7 +183,7 @@ export default function CartPage() {
             <Link href="/">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-sky-600 to-cyan-500 px-8 py-4 text-lg rounded-lg shadow-md"
+                className="bg-gradient-to-r from-amber-400 to-yellow-300 px-8 py-4 text-lg rounded-lg shadow-md"
               >
                 Mua tiếp
               </Button>

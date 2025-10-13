@@ -36,10 +36,20 @@ import { useCart } from "@/context/cartContext";
 export default function Header() {
   const { user, loading, logout } = useUser();
   const [category, setCategory] = useState([]);
+  const [isSticky, setIsSticky] = useState(false);
   const [textSearch, setTextSearch] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const { cart } = useCart();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 120) setIsSticky(true);
+      else setIsSticky(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     async function loadCategory() {
@@ -53,13 +63,6 @@ export default function Header() {
     loadCategory();
   }, []);
 
-  const handleClick = (category) => {
-    const params = new URLSearchParams(searchParams);
-    if (category === "all") params.delete("category");
-    else params.set("category", category);
-    router.push("/product?" + params.toString());
-  };
-
   const searchProduct = () => {
     const params = new URLSearchParams(searchParams);
     if (textSearch.trim() === "") params.delete("product");
@@ -68,159 +71,166 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-md transition-colors duration-300">
-      <div className="h-[50px] w-full bg-black flex justify-between items-center px-4 text-white">
-        <div className="font-semibold tracking-wide text-sky-500">
-          CaCanh - Trà Vinh
-        </div>
-        <Button className="bg-orange-500 hover:bg-orange-400 text-white dark:text-white">
-          Mua hàng
-        </Button>
-      </div>
-
-      <div className="container mx-auto flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700 py-3">
-        <div className="flex items-center gap-4">
-          <Sheet>
-            <SheetTrigger className="lg:hidden text-gray-700 dark:text-gray-200">
-              <Menu className="h-6 w-6" />
-            </SheetTrigger>
-            <SheetContent
-              side="left"
-              className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >
-              <nav className="flex flex-col gap-4">
-                <Link href="/">Trang chủ</Link>
-                <Link href="/introduce">Giới thiệu</Link>
-                <Link href="/product">Sản phẩm</Link>
-                <Link href="/news">Tin tức</Link>
-                <Link href="/about">Về chúng tôi</Link>
-              </nav>
-            </SheetContent>
-          </Sheet>
-
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/logo.png"
-              alt="Logo"
-              width={130}
-              height={130}
-              className="object-contain"
-            />
-          </Link>
-        </div>
-
-        {/* Ô tìm kiếm */}
-        <div className="hidden lg:flex flex-1 max-w-xl mx-8">
-          <div className="flex w-full border border-blue-400 dark:border-blue-600 rounded-md overflow-hidden">
-            <Input
-              type="text"
-              placeholder="Tìm kiếm cá, hồ, phụ kiện..."
-              onChange={(e) => setTextSearch(e.target.value)}
-              className="rounded-none border-0 focus:ring-0 h-12 px-4 text-base flex-1 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800"
-            />
-            <Button
-              className="rounded-l-none bg-blue-600 hover:bg-blue-700 h-12 w-14 px-4 text-white"
-              onClick={() => searchProduct()}
-            >
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+    <>
+      <header className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-md transition-colors duration-300">
+        <div className="h-[60px] w-full bg-black flex justify-between items-center px-4 text-white">
+          <div className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-sky-500 to-blue-700 bg-clip-text text-transparent select-none">
+            CaCanh <span className="text-white/80">- Trà Vinh</span>
+          </div>
+          <Link href={"/product"}>
+            <Button className="bg-orange-500 hover:bg-orange-400 text-white dark:text-white">
+              Mua hàng
             </Button>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 text-base">
-          {!loading && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild className="cursor-pointer">
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  <User className="h-5 w-5" />
-                  <span className="hidden lg:inline font-medium">
-                    {user ? user.userName : "Tài khoản"}
-                  </span>
-                </Link>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent
-                align="end"
-                className="w-52 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 shadow-lg rounded-xl p-2 text-sm font-medium"
-              >
-                {!user ? (
-                  <>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/login"
-                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
-                      >
-                        <UserCircle2 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
-                        Đăng nhập
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/register"
-                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
-                      >
-                        <ShoppingBag className="h-4 w-4 text-blue-500 dark:text-blue-400" />
-                        Đăng ký
-                      </Link>
-                    </DropdownMenuItem>
-                  </>
-                ) : (
-                  <>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
-                      >
-                        <UserCircle2 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
-                        Thông tin cá nhân
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/orders"
-                        className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
-                      >
-                        <ShoppingBag className="h-4 w-4 text-blue-500 dark:text-blue-400" />
-                        Đơn hàng của bạn
-                      </Link>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuSeparator className="my-1 border-gray-300 dark:border-gray-600" />
-
-                    <DropdownMenuItem
-                      onClick={logout}
-                      className="flex items-center gap-2 text-red-600 hover:text-red-700"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Đăng xuất
-                    </DropdownMenuItem>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-
-          <Link href="/cart" className="relative">
-            <ShoppingCart className="h-5 w-5 text-gray-700 dark:text-gray-200" />
-            {cart.length > 0 && (
-              <span className="absolute -top-2 left-3 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                {cart.length}
-              </span>
-            )}
           </Link>
+        </div>
 
-          <div className="hidden lg:block text-sm text-gray-700 dark:text-gray-300">
-            <Phone className="inline h-4 w-4 mr-1" /> +84 123 456 789
+        <div className="container mx-auto flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700 py-3">
+          <div className="flex items-center gap-4">
+            <Sheet>
+              <SheetTrigger className="lg:hidden text-gray-700 dark:text-gray-200">
+                <Menu className="h-6 w-6" />
+              </SheetTrigger>
+              <SheetContent
+                side="left"
+                className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+              >
+                <nav className="flex flex-col gap-4">
+                  <Link href="/">Trang chủ</Link>
+                  <Link href="/introduce">Giới thiệu</Link>
+                  <Link href="/product">Sản phẩm</Link>
+                  <Link href="/news">Tin tức</Link>
+                  <Link href="/about">Về chúng tôi</Link>
+                </nav>
+              </SheetContent>
+            </Sheet>
+
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                width={130}
+                height={130}
+                className="object-contain"
+              />
+            </Link>
           </div>
 
-          <ModeToggle />
-        </div>
-      </div>
+          <div className="hidden lg:flex flex-1 max-w-xl mx-8">
+            <div className="flex w-full border border-blue-400 dark:border-blue-600 rounded-md overflow-hidden">
+              <Input
+                type="text"
+                placeholder="Tìm kiếm cá, hồ, phụ kiện..."
+                onChange={(e) => setTextSearch(e.target.value)}
+                className="rounded-none border-0 focus:ring-0 h-12 px-4 text-base flex-1 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800"
+              />
+              <Button
+                className="rounded-l-none bg-blue-600 hover:bg-blue-700 h-12 w-14 px-4 text-white"
+                onClick={() => searchProduct()}
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </Button>
+            </div>
+          </div>
 
-      <nav className="hidden lg:flex container mx-auto justify-center gap-12 py-4 text-lg font-medium text-gray-700 dark:text-gray-200 transition-colors">
+          <div className="flex items-center gap-4 text-base">
+            {!loading && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className="cursor-pointer">
+                  <Link
+                    href="#"
+                    className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    <User className="h-5 w-5" />
+                    <span className="hidden lg:inline font-medium">
+                      {user ? user.userName : "Tài khoản"}
+                    </span>
+                  </Link>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  align="end"
+                  className="w-52 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 shadow-lg rounded-xl p-2 text-sm font-medium"
+                >
+                  {!user ? (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/login"
+                          className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                        >
+                          <UserCircle2 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+                          Đăng nhập
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/register"
+                          className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
+                        >
+                          <ShoppingBag className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+                          Đăng ký
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/profile"
+                          className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                        >
+                          <UserCircle2 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+                          Thông tin cá nhân
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/orders"
+                          className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                        >
+                          <ShoppingBag className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+                          Đơn hàng của bạn
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuSeparator className="my-1 border-gray-300 dark:border-gray-600" />
+
+                      <DropdownMenuItem
+                        onClick={logout}
+                        className="flex items-center gap-2 text-red-600 hover:text-red-700 cursor-pointer"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Đăng xuất
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            <Link href="/cart" className="relative">
+              <ShoppingCart className="h-5 w-5 text-gray-700 dark:text-gray-200" />
+              {cart.length > 0 && (
+                <span className="absolute -top-2 left-3 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {cart.length}
+                </span>
+              )}
+            </Link>
+
+            <div className="hidden lg:block text-sm text-gray-700 dark:text-gray-300">
+              <Phone className="inline h-4 w-4 mr-1" /> +84 123 456 789
+            </div>
+
+            <ModeToggle />
+          </div>
+        </div>
+      </header>
+      <nav
+        className={`hidden lg:flex w-full justify-center gap-12 py-4 text-lg font-medium text-gray-700 dark:text-gray-200
+    bg-white/90 dark:bg-gray-900/90 backdrop-blur-md transition-all duration-500 ease-in-out z-50
+    ${isSticky ? "fixed top-0 translate-y-0 shadow-md" : "relative"}
+  `}
+      >
         <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400">
           Trang chủ
         </Link>
@@ -230,6 +240,7 @@ export default function Header() {
         >
           Giới thiệu
         </Link>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <span className="flex items-center gap-2 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -247,7 +258,6 @@ export default function Header() {
               {category.map((item, index) => (
                 <DropdownMenuItem
                   key={index}
-                  onClick={() => handleClick(item.id)}
                   className="cursor-pointer px-3 py-2.5 text-sm rounded-md hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   <span>{item.name}</span>
@@ -256,6 +266,7 @@ export default function Header() {
             </DropdownMenuContent>
           )}
         </DropdownMenu>
+
         <Link
           href="/news"
           className="hover:text-blue-600 dark:hover:text-blue-400"
@@ -269,6 +280,6 @@ export default function Header() {
           Về chúng tôi
         </Link>
       </nav>
-    </header>
+    </>
   );
 }

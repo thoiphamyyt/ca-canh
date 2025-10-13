@@ -54,7 +54,7 @@ export default function CartSidebar() {
             className="fixed top-0 right-0 w-80 h-full shadow-lg p-4 overflow-y-auto z-50 bg-gray-100 dark:bg-gray-900"
           >
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-2xl font-semibold text-green-900 dark:text-green-500">
+              <h3 className="text-2xl font-semibold text-sky-900 dark:text-sky-500">
                 Giỏ hàng
               </h3>
               <button onClick={() => setIsOpen(false)}>✕</button>
@@ -118,7 +118,7 @@ export default function CartSidebar() {
             )}
 
             <Link href="/cart">
-              <Button className="w-full mt-6 bg-gradient-to-r from-green-600 to-lime-500 text-white hover:opacity-90">
+              <Button className="w-full mt-6 bg-gradient-to-r from-sky-600 to-cyan-500 text-white hover:opacity-90">
                 Thanh toán →
               </Button>
             </Link>

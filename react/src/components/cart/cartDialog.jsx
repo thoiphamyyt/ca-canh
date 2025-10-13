@@ -39,7 +39,7 @@ export default function CartDialog({ dataProduct, trigger }) {
 
       <DialogContent className="max-w-2xl rounded-2xl shadow-xl p-6">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-green-700 dark:text-green-400">
+          <DialogTitle className="text-2xl font-semibold text-sky-700 dark:text-sky-400">
             🛒 Giỏ hàng của bạn
           </DialogTitle>
         </DialogHeader>
