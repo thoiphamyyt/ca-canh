@@ -17,6 +17,7 @@ import {
   TableIcon,
   UserCircleIcon,
 } from "@/icons/index";
+import { useTheme } from "next-themes";
 
 const navItems = [
   {
@@ -269,6 +270,11 @@ const AppSidebar = () => {
     }
   }, [openSubmenu]);
 
+  const { theme } = useTheme();
+
+  const logoSrc =
+    theme === "dark" ? "/images/logo-dark.png" : "/images/logo.png";
+
   return (
     <aside
       className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
@@ -291,7 +297,7 @@ const AppSidebar = () => {
       >
         <Link href="/" className="text-white">
           <Image
-            src={"/images/logo.png"}
+            src={logoSrc}
             alt="Logo"
             width={150}
             height={100}

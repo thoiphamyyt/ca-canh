@@ -69,7 +69,6 @@ export async function middleware(req) {
   return NextResponse.next();
 }
 
-// Áp dụng cho tất cả các route (trừ /_next, static...)
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

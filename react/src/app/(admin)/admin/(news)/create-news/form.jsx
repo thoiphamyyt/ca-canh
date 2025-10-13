@@ -288,7 +288,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                           options={listStatus}
                           placeholder="Chọn trạng thái"
                           className="dark:bg-dark-900"
-                          onChange={(option) => field.onChange(option?.value)} // lấy value
+                          onChange={(option) => field.onChange(option?.value)}
                           {...field}
                         />
                       </FormControl>

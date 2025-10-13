@@ -168,9 +168,16 @@ export default function ProductDetail() {
             </TabsList>
 
             <TabsContent value="description" className="mt-4">
-              <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-                {dataDetail.description}
-              </p>
+              <div className="leading-relaxed text-gray-600 dark:text-gray-300">
+                {dataDetail.description &&
+                typeof dataDetail.description === "string" ? (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: dataDetail.description }}
+                  />
+                ) : (
+                  dataDetail.description || dataDetail.describe
+                )}
+              </div>
             </TabsContent>
 
             <TabsContent value="reviews" className="mt-4">

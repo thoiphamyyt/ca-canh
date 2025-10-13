@@ -12,7 +12,6 @@ import Link from "next/link";
 export default function FeaturedProductsList({ title = "Sản phẩm nổi bật" }) {
   const [page, setPage] = useState(1);
   const [perPage] = useState(8);
-  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [products, setProduct] = useState([]);
 
@@ -23,10 +22,10 @@ export default function FeaturedProductsList({ title = "Sản phẩm nổi bật
         const data = await fetchProduct({
           page,
           limit: perPage,
-          setRating: true,
+          sortField: "rating",
+          sortOrder: "desc",
         });
         setProduct(data.data || []);
-        setTotal(data.total || 0);
       } catch (error) {
         console.error("Failed to fetch product:", error);
       } finally {

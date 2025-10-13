@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/layout/user/Header";
+import Header from "@/layout/user/header/Header";
 import Footer from "@/layout/user/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import UserProvider from "@/context/userContext";

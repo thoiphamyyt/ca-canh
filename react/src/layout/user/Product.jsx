@@ -148,7 +148,7 @@ export default function ProductList() {
                     </p>
 
                     <p className="mt-1 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
-                      {item.description}
+                      {item.describe || item.description}
                     </p>
                   </div>
                 </Card>

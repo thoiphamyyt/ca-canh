@@ -1,7 +1,7 @@
 "use client";
 import { fetchProduct } from "@/lib/fetchProduct";
 import { useEffect, useState } from "react";
-import { Star, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Card } from "@/components/ui/card";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatVND } from "@/lib/utils";
 import CartDialog from "@/components/cart/cartDialog";
+import { renderStars } from "@/lib/utils";
 
 export default function ProductRelated({ id_category }) {
   const [product, setProduct] = useState(null);
@@ -82,16 +83,7 @@ export default function ProductRelated({ id_category }) {
                       </p>
 
                       <div className="flex justify-center text-yellow-400">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.floor(item.rating)
-                                ? "fill-yellow-400"
-                                : ""
-                            }`}
-                          />
-                        ))}
+                        {renderStars(Math.round(item.rating || 0))}
                       </div>
 
                       <h4 className="mt-2 font-semibold text-gray-900 dark:text-white">
@@ -110,7 +102,7 @@ export default function ProductRelated({ id_category }) {
                       </p>
 
                       <p className="mt-1 text-base line-clamp-3 text-gray-700 dark:text-gray-300">
-                        {item.description}
+                        {item.describe || item.description}
                       </p>
                     </div>
                   </Card>

@@ -3,6 +3,9 @@ import "./globals.css";
 export const metadata = {
   title: "Cá cảnh",
   description: "Chào mừng bạn đến với trang web cá cảnh",
+  icons: {
+    icon: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({ children }) {

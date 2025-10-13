@@ -24,6 +24,7 @@ import Select from "@/components/form/Select";
 import { fetchCategory } from "@/lib/fetchProduct";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import TipTap from "@/components/tiptap/Tiptap";
 
 export default function FormCreateProduct({
   isUpdate = false,
@@ -66,6 +67,7 @@ export default function FormCreateProduct({
       .min(1, { message: "Số lượng phải > 0." }),
     description: z.string().optional(),
     images: z.any().optional(),
+    describe: z.string().optional(),
   });
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -75,6 +77,7 @@ export default function FormCreateProduct({
       quantity: "",
       price: "",
       old_price: "",
+      describe: "",
       description: "",
       id_category: "",
       images: [],
@@ -84,12 +87,11 @@ export default function FormCreateProduct({
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
 
-    // convert sang object URL để preview
     const newImages = files.map((file) => ({
       id: Date.now() + Math.random(),
       name: file.name,
       url: URL.createObjectURL(file),
-      file: file, // giữ file gốc để gửi API
+      file: file,
     }));
     setImages((prev) => [...prev, ...newImages]);
 
@@ -109,7 +111,7 @@ export default function FormCreateProduct({
   };
 
   useEffect(() => {
-    async function loadCategory(params) {
+    async function loadCategory() {
       try {
         const data = await fetchCategory();
         setCategory(
@@ -153,6 +155,7 @@ export default function FormCreateProduct({
           price: product.price || "",
           old_price: product.old_price || "",
           description: product.description || "",
+          describe: product.describe || "",
           id_category: product.id_category?.toString() || "",
           images: [],
         });
@@ -193,6 +196,7 @@ export default function FormCreateProduct({
     formData.append("quantity", values.quantity);
     formData.append("old_price", values.old_price);
     formData.append("price", values.price);
+    formData.append("describe", values.describe);
     formData.append("description", values.description);
     formData.append("id_category", values.id_category);
     if (values.images && values.images.length > 0) {
@@ -242,6 +246,7 @@ export default function FormCreateProduct({
             price: "",
             old_price: "",
             description: "",
+            describe: "",
             id_category: "",
             images: [],
           });
@@ -336,8 +341,6 @@ export default function FormCreateProduct({
                     </FormItem>
                   )}
                 />
-              </div>
-              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="id_category"
@@ -356,14 +359,29 @@ export default function FormCreateProduct({
                     </FormItem>
                   )}
                 />
+              </div>
+              <div className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="describe"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Mô tả ngắn </Label>
+                      <FormControl>
+                        <TextArea rows={6} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Mô tả sản phẩm </Label>
+                      <Label>Nội dung</Label>
                       <FormControl>
-                        <TextArea rows={6} {...field} />
+                        <TipTap value={field.value} onChange={field.onChange} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
