@@ -38,7 +38,10 @@ export default function Navbar({ category, isSticky }) {
             className="mt-2 min-w-[180px] rounded-xl border bg-gray-100/95 dark:bg-gray-800/95"
           >
             {category.map((item, index) => (
-              <DropdownMenuItem key={index}>
+              <DropdownMenuItem
+                key={index}
+                className="cursor-pointer hover:text-blue-600"
+              >
                 <span>{item.name}</span>
               </DropdownMenuItem>
             ))}

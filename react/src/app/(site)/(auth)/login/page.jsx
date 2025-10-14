@@ -16,12 +16,21 @@ export default function LoginPage() {
         <CardContent className="p-6">
           <h1 className="text-2xl font-bold mb-6 text-center">Đăng nhập</h1>
           <FormLogin />
+
           <p className="text-sm text-center mt-4">
             Bạn chưa có tài khoản?{" "}
             <Link href="/register" className="text-blue-600 hover:underline">
               Đăng ký ngay
             </Link>
           </p>
+          <div className="text-right mt-3">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-sky-600 hover:underline"
+            >
+              Quên mật khẩu?
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

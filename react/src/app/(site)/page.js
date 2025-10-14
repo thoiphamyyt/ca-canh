@@ -3,6 +3,7 @@ import Product from "../../layout/user/Product";
 import ArticleList from "../../layout/user/ArticleList";
 import FeaturedProductsList from "../../layout/user/FeaturedProductsList";
 import IdleLogoutWrapper from "./IdleLogoutWrapper";
+import ShopPolicyPreview from "../../layout/user/ShopPolicyPreview";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <Product />
       <FeaturedProductsList title="Sản phẩm nổi bật" />
       <ArticleList />
+      <ShopPolicyPreview />
     </section>
   );
 }

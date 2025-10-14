@@ -18,7 +18,7 @@ export default function ProductList() {
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState(1);
-  const [perPage] = useState(8);
+  const [perPage] = useState(12);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -132,7 +132,7 @@ export default function ProductList() {
                       {renderStars(Math.round(item.rating || 0))}
                     </div>
 
-                    <h4 className="mt-2 font-semibold text-gray-900 dark:text-white">
+                    <h4 className="mt-2 font-semibold text-sky-900 dark:text-white">
                       {item.product}
                     </h4>
 
@@ -147,9 +147,19 @@ export default function ProductList() {
                       )}
                     </p>
 
-                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
-                      {item.describe || item.description}
-                    </p>
+                    <div className="mt-1 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
+                      {item.describe ? (
+                        <div>{item.describe}</div>
+                      ) : typeof item.description === "string" ? (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: item.description,
+                          }}
+                        />
+                      ) : (
+                        item.description
+                      )}
+                    </div>
                   </div>
                 </Card>
               ))}
