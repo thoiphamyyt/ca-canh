@@ -13,7 +13,7 @@ export default function FooterAbout() {
         Liên hệ
       </p>
       <ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-400">
-        <li>📍 Ấp Tân Thành Tây, xã Tân Hòa, Tỉnh Vĩnh Long</li>
+        <li>📍 Ấp Tân Thành Tây, Xã Tân Hòa, Tỉnh Vĩnh Long</li>
         <li>✉️ cacanhTV@gmail.com</li>
         <li>📞 +84 123 456 789</li>
       </ul>

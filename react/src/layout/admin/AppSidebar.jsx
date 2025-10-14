@@ -5,28 +5,30 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/sidebarContext";
 import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-} from "@/icons/index";
+  Home,
+  Package,
+  Users,
+  Newspaper,
+  ShoppingCart,
+  FileText,
+  PieChart,
+  LayoutGrid,
+  Box,
+  Plug,
+  ChevronDown,
+  MoreHorizontal,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 
 const navItems = [
   {
-    icon: <GridIcon />,
+    icon: <Home />,
     name: "Trang chủ",
+    path: "/admin",
   },
   {
     name: "Quản lý sản phẩm",
-    icon: <ListIcon />,
+    icon: <Package />,
     subItems: [
       { name: "Danh mục", path: "/admin/category-manager", pro: false },
       { name: "Sản phẩm", path: "/admin/product-manager", pro: false },
@@ -34,41 +36,41 @@ const navItems = [
   },
   {
     name: "Quản lý khách hàng",
-    icon: <UserCircleIcon />,
+    icon: <Users />,
     path: "/admin/customer-manager",
   },
   {
-    icon: <CalenderIcon />,
+    icon: <Newspaper />,
     name: "Quản lý bản tin",
     path: "/admin/news-manager",
   },
   {
-    icon: <CalenderIcon />,
+    icon: <ShoppingCart />,
     name: "Quản lý đơn hàng",
     path: "/admin/orders-manager",
   },
   {
-    name: "Pages",
-    icon: <PageIcon />,
+    name: "Trang hệ thống",
+    icon: <FileText />,
     subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
+      { name: "Trang trống", path: "/blank", pro: false },
+      { name: "Lỗi 404", path: "/error-404", pro: false },
     ],
   },
 ];
 
 const othersItems = [
   {
-    icon: <PieChartIcon />,
-    name: "Charts",
+    icon: <PieChart />,
+    name: "Biểu đồ",
     subItems: [
       { name: "Line Chart", path: "/line-chart", pro: false },
       { name: "Bar Chart", path: "/bar-chart", pro: false },
     ],
   },
   {
-    icon: <BoxCubeIcon />,
-    name: "UI Elements",
+    icon: <Box />,
+    name: "Thành phần UI",
     subItems: [
       { name: "Alerts", path: "/alerts", pro: false },
       { name: "Avatar", path: "/avatars", pro: false },
@@ -79,18 +81,19 @@ const othersItems = [
     ],
   },
   {
-    icon: <PlugInIcon />,
-    name: "Authentication",
+    icon: <Plug />,
+    name: "Xác thực",
     subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
+      { name: "Đăng nhập", path: "/signin", pro: false },
+      { name: "Đăng ký", path: "/signup", pro: false },
     ],
   },
 ];
 
-const AppSidebar = () => {
+export default function AppSidebar() {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [subMenuHeight, setSubMenuHeight] = useState({});
@@ -99,16 +102,11 @@ const AppSidebar = () => {
   const isActive = useCallback((path) => path === pathname, [pathname]);
 
   const handleSubmenuToggle = (index, menuType) => {
-    setOpenSubmenu((prevOpenSubmenu) => {
-      if (
-        prevOpenSubmenu &&
-        prevOpenSubmenu.type === menuType &&
-        prevOpenSubmenu.index === index
-      ) {
-        return null;
-      }
-      return { type: menuType, index };
-    });
+    setOpenSubmenu((prev) =>
+      prev && prev.type === menuType && prev.index === index
+        ? null
+        : { type: menuType, index }
+    );
   };
 
   const renderMenuItems = (items, menuType) => (
@@ -118,7 +116,7 @@ const AppSidebar = () => {
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
-              className={`menu-item group  ${
+              className={`menu-item group ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
                   ? "menu-item-active"
                   : "menu-item-inactive"
@@ -141,8 +139,8 @@ const AppSidebar = () => {
                 <span className="menu-item-text">{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
-                  className={`ml-auto w-5 h-5 transition-transform duration-200  ${
+                <ChevronDown
+                  className={`ml-auto w-5 h-5 transition-transform duration-200 ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
                       ? "rotate-180 text-brand-500"
@@ -174,6 +172,7 @@ const AppSidebar = () => {
               </Link>
             )
           )}
+
           {nav.subItems && (isExpanded || isHovered || isMobileOpen) && (
             <div
               ref={(el) => {
@@ -201,26 +200,10 @@ const AppSidebar = () => {
                       {subItem.name}
                       <span className="flex items-center gap-1 ml-auto">
                         {subItem.new && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge `}
-                          >
-                            new
-                          </span>
+                          <span className="menu-dropdown-badge">new</span>
                         )}
                         {subItem.pro && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge `}
-                          >
-                            pro
-                          </span>
+                          <span className="menu-dropdown-badge">pro</span>
                         )}
                       </span>
                     </Link>
@@ -235,45 +218,40 @@ const AppSidebar = () => {
   );
 
   useEffect(() => {
-    let submenuMatched = false;
-    ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
+    let matched = false;
+    ["main", "others"].forEach((type) => {
+      const items = type === "main" ? navItems : othersItems;
       items.forEach((nav, index) => {
-        if (nav.subItems) {
-          nav.subItems.forEach((subItem) => {
-            if (isActive(subItem.path)) {
-              setOpenSubmenu({
-                type: menuType,
-                index,
-              });
-              submenuMatched = true;
-            }
-          });
+        if (nav.subItems?.some((s) => isActive(s.path))) {
+          setOpenSubmenu({ type, index });
+          matched = true;
         }
       });
     });
-
-    if (!submenuMatched) {
-      setOpenSubmenu(null);
-    }
+    if (!matched) setOpenSubmenu(null);
   }, [pathname, isActive]);
 
   useEffect(() => {
-    if (openSubmenu !== null) {
+    if (openSubmenu) {
       const key = `${openSubmenu.type}-${openSubmenu.index}`;
-      if (subMenuRefs.current[key]) {
-        setSubMenuHeight((prevHeights) => ({
-          ...prevHeights,
-          [key]: subMenuRefs.current[key]?.scrollHeight || 0,
+      const el = subMenuRefs.current[key];
+      if (el) {
+        setSubMenuHeight((prev) => ({
+          ...prev,
+          [key]: el.scrollHeight || 0,
         }));
       }
     }
   }, [openSubmenu]);
 
-  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const logoSrc =
-    theme === "dark" ? "/images/logo-dark.png" : "/images/logo.png";
+    mounted && theme === "dark" ? "/images/logo-dark.png" : "/images/logo.png";
 
   return (
     <aside
@@ -319,7 +297,7 @@ const AppSidebar = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Menu"
                 ) : (
-                  <HorizontaLDots />
+                  <MoreHorizontal />
                 )}
               </h2>
               {renderMenuItems(navItems, "main")}
@@ -334,9 +312,9 @@ const AppSidebar = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
+                  "Khác"
                 ) : (
-                  <HorizontaLDots />
+                  <MoreHorizontal />
                 )}
               </h2>
               {renderMenuItems(othersItems, "others")}
@@ -346,6 +324,4 @@ const AppSidebar = () => {
       </div>
     </aside>
   );
-};
-
-export default AppSidebar;
+}

@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { postProductReview } from "@/lib/callApi";
 import { useUser } from "@/context/userContext";
 import { useRouter } from "next/navigation";
-import { formatDate } from "@/lib/utils";
+import { formatDate, renderStars } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
 export default function ReviewProduct({ idProduct }) {
@@ -154,15 +154,7 @@ export default function ReviewProduct({ idProduct }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < review.rating ? "text-yellow-500" : "text-gray-300"
-                      }`}
-                      fill={i < review.rating ? "currentColor" : "none"}
-                    />
-                  ))}
+                  {renderStars(Math.round(review.rating || 0))}{" "}
                 </div>
               </div>
 

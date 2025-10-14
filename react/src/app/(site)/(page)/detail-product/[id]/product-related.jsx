@@ -101,9 +101,19 @@ export default function ProductRelated({ id_category }) {
                         )}
                       </p>
 
-                      <p className="mt-1 text-base line-clamp-3 text-gray-700 dark:text-gray-300">
-                        {item.describe || item.description}
-                      </p>
+                      <div className="mt-1 text-base line-clamp-3 text-gray-700 dark:text-gray-300">
+                        {item.describe ? (
+                          <div>{item.describe}</div>
+                        ) : typeof item.description === "string" ? (
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: item.description,
+                            }}
+                          />
+                        ) : (
+                          item.description
+                        )}
+                      </div>
                     </div>
                   </Card>
                 </div>

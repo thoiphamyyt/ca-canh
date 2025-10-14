@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-export default function Navbar({ category, isSticky }) {
+export default function Navbar({ category, isSticky, onSelect }) {
   return (
     <nav
       className={`hidden lg:flex w-full justify-center gap-12 py-4 text-lg font-medium
@@ -40,6 +40,7 @@ export default function Navbar({ category, isSticky }) {
             {category.map((item, index) => (
               <DropdownMenuItem
                 key={index}
+                onClick={() => onSelect(item.id)}
                 className="cursor-pointer hover:text-blue-600"
               >
                 <span>{item.name}</span>

@@ -30,11 +30,13 @@ export const columns = (onOpenDialog) => [
     cell: ({ row }) => {
       const status = row.getValue("status");
       const borderColor =
-        status == "pending"
+        status == "completed"
           ? "border-green-500 text-green-700"
           : status === "draft"
           ? "border-gray-400 text-gray-600"
-          : "border-orange-400 text-orange-600";
+          : status === "pending"
+          ? "border-orange-400 text-orange-600"
+          : "border-blue-400 text-blue-600";
 
       return (
         <div className="flex justify-center">
