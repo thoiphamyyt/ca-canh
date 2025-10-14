@@ -60,6 +60,7 @@ const fetchCategory = async (params = {}) => {
     if (!res.ok) {
       throw new Error("Failed to fetch category");
     }
+    console.log("fetchCategory called at:", new Date().toISOString());
 
     const data = await res.json();
     return data && data.success ? data.data : null;
