@@ -54,6 +54,8 @@ Route::prefix('ca-canh')->middleware(['auth:api', 'checkRole:admin'])->group(fun
 Route::prefix('ca-canh')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink']);
+    Route::post('/reset-password', [AuthController::class, 'reset']);
 
     //Product 
     Route::get('products', [ProductController::class, 'getAll']);
@@ -65,8 +67,6 @@ Route::prefix('ca-canh')->group(function () {
 
     Route::get('products/{id}/reviews', [ProductReviewController::class, 'getAll']);
     Route::post('/products/{id}/reviews', [ProductReviewController::class, 'store'])->middleware('auth:api');
-
-
 
     Route::post('save-store', [OrderController::class, 'store'])->middleware('auth:api');
     Route::get('orders', [OrderController::class, 'getOrders'])->middleware('auth:api');
