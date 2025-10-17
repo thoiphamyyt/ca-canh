@@ -42,7 +42,7 @@ export default function LayoutProduct() {
           description: "Xóa sản phẩm thành công!",
           variant: "success",
         });
-        setIsReload(!isReload); // trigger reload data table
+        setIsReload(!isReload);
       }
     } catch (error) {
       toast({
@@ -62,7 +62,6 @@ export default function LayoutProduct() {
         urlCreate="/admin/create-product"
       >
         <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-        {/* <BasicTableOne /> */}
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

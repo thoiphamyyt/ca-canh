@@ -38,7 +38,7 @@ export function DataTable({ columns, isReload = false }) {
   });
 
   useEffect(() => {
-    async function loadProduct() {
+    async function loadOrder() {
       setLoading(true);
       try {
         const data = await fetchOrderManager({});
@@ -49,7 +49,7 @@ export function DataTable({ columns, isReload = false }) {
         setLoading(false);
       }
     }
-    loadProduct();
+    loadOrder();
   }, [isReload]);
 
   return (

@@ -1,6 +1,10 @@
+// "use client";
+
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Star } from "lucide-react";
+import { Badge } from "../components/ui/badge";
+import { listStatusOrder } from "./contants";
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
@@ -12,8 +16,11 @@ export function formatVND(amount) {
     currency: "VND",
   }).format(amount);
 }
+export function formatNumberVi(amount) {
+  if (amount === null || amount === undefined) return "";
+  return new Intl.NumberFormat("vi-VN").format(amount);
+}
 export function formatDate(date, format = "dd/MM/yyyy") {
-  // Nếu là string hoặc số thì convert sang Date
   if (!(date instanceof Date)) {
     date = new Date(date);
   }
@@ -57,4 +64,24 @@ export function renderStars(rating = 0) {
     );
   }
   return stars;
+}
+export function getStatusOrder(status) {
+  const borderColor =
+    status == "completed"
+      ? "border-green-500 text-green-700"
+      : status === "draft"
+      ? "border-gray-400 text-gray-600"
+      : status === "pending"
+      ? "border-orange-400 text-orange-600"
+      : "border-blue-400 text-blue-600";
+
+  return (
+    <div className="flex justify-center">
+      <Badge className={`border ${borderColor} bg-transparent`}>
+        {listStatusOrder.find((x) => x.value == status)
+          ? listStatusOrder.find((x) => x.value == status).label
+          : ""}{" "}
+      </Badge>
+    </div>
+  );
 }

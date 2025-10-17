@@ -216,6 +216,40 @@ const postProductReview = async (productId, payload) => {
   }
 };
 
+const statisticalCustomer = async () => {
+  try {
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/statistical-customer`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching:", error);
+    return null;
+  }
+};
+
+const statisticalMonth = async () => {
+  try {
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/statistical-month`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching:", error);
+    return null;
+  }
+};
+
 export {
   fetchNews,
   detailNews,
@@ -226,4 +260,6 @@ export {
   changeStatusOrders,
   fetchProductReviews,
   postProductReview,
+  statisticalCustomer,
+  statisticalMonth,
 };

@@ -1,8 +1,17 @@
-export default function AdminPage() {
+import React from "react";
+import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
+import EcommerceClient from "@/components/ecommerce/EcommerceClient";
+
+export const metadata = {
+  title:
+    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
+  description: "This is Next.js Home for TailAdmin Dashboard Template",
+};
+
+export default function Ecommerce() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      <p>Chào mừng bạn đến với trang admin.</p>
-    </div>
+    <>
+      <EcommerceClient />
+    </>
   );
 }
