@@ -12,7 +12,7 @@ class ProductReviewController extends Controller
 {
     public function getAll(Request $request, $id)
     {
-        $producReview = ProductReview::with(['user:id,name'])->where('product_id', $id)
+        $producReview = ProductReview::with(['user:id,name,avatar'])->where('product_id', $id)
             ->get();
         if ($producReview) {
             return response()->json([

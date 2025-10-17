@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductReviewController;
+use App\Http\Controllers\StatisticalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,9 @@ Route::prefix('ca-canh')->middleware(['auth:api', 'checkRole:admin'])->group(fun
     Route::get('/orders-manager', [OrderController::class, 'getAll']);
     Route::get('/orders-detail/{id}', [OrderController::class, 'detail']);
     Route::post('/orders-change-status/{id}', [OrderController::class, 'updateStatus']);
+
+    Route::get('/statistical-customer', [StatisticalController::class, 'statisticalCustomer']);
+    Route::get('/statistical-month', [StatisticalController::class, 'monthlyTarget']);
 });
 Route::prefix('ca-canh')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
