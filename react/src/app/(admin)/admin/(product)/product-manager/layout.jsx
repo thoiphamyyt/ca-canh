@@ -3,20 +3,38 @@ import ComponentCard from "@/components/common/ComponentCard";
 import { columns } from "./column";
 import { DataTable } from "./data-table";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AlertConfirm from "@/components/shadcn/alertConfirm";
 import { useToast } from "@/hooks/use-toast";
+import SearchCommon from "@/components/common/SearchCommon";
+import { fetchCategory } from "@/lib/fetchProduct";
 
 export default function LayoutProduct() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isReload, setIsReload] = useState(false);
+  const [textSearch, setTextSearch] = useState("");
+  const [selected, setSelectedCategory] = useState("");
+  const [categories, setCategory] = useState("");
   const { toast } = useToast();
 
   const handleOpenDialog = (product) => {
     setSelectedProduct(product);
     setIsOpenDialog(true);
   };
+
+  useEffect(() => {
+    async function loadCategory() {
+      try {
+        const data = await fetchCategory({});
+        setCategory(data ?? []);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+      }
+    }
+    loadCategory();
+  }, []);
 
   const handleDelete = async () => {
     if (!selectedProduct) return;
@@ -61,7 +79,28 @@ export default function LayoutProduct() {
         actionCreate={true}
         urlCreate="/admin/create-product"
       >
-        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
+        <SearchCommon
+          onSearch={(params) => {
+            setTextSearch(params.textSearch);
+            setSelectedCategory(params.selectValue);
+          }}
+          placeholder="Tìm kiếm sản phẩm..."
+          selectPlaceholder="Chọn danh mục sản phẩm..."
+          isSelect={true}
+          listSelect={
+            categories
+              ? categories.map((item) => {
+                  return { value: item.id, label: item.name };
+                })
+              : []
+          }
+        />
+        <DataTable
+          columns={columns(handleOpenDialog)}
+          isReload={isReload}
+          textSearch={textSearch}
+          category={selected}
+        />
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

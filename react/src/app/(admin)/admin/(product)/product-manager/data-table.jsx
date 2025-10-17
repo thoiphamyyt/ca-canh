@@ -22,7 +22,12 @@ import { DataTablePagination } from "@/components/common/DataTablePagination";
 import { useState, useEffect } from "react";
 import { fetchProduct } from "@/lib/fetchProduct";
 
-export function DataTable({ columns, isReload = false }) {
+export function DataTable({
+  columns,
+  isReload = false,
+  textSearch = "",
+  category = "",
+}) {
   const [loading, setLoading] = useState(true);
   const [data, setProduct] = useState([]);
   const table = useReactTable({
@@ -41,7 +46,10 @@ export function DataTable({ columns, isReload = false }) {
     async function loadProduct() {
       setLoading(true);
       try {
-        const data = await fetchProduct({});
+        const data = await fetchProduct({
+          product: textSearch,
+          id_category: category,
+        });
         setProduct(data.data ?? []);
       } catch (error) {
         console.error("Failed to fetch product:", error);
@@ -50,7 +58,7 @@ export function DataTable({ columns, isReload = false }) {
       }
     }
     loadProduct();
-  }, [isReload]);
+  }, [isReload, textSearch, category]);
 
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">

@@ -19,7 +19,7 @@ const ComponentCard = ({
         </h3>
         {actionCreate && (
           <Link href={urlCreate}>
-            <button className="px-3 py-1 rounded-md bg-green-600 hover:bg-green-900">
+            <button className="px-3 py-1 rounded-md bg-sky-600 hover:bg-sky-900">
               Thêm mới
             </button>
           </Link>
