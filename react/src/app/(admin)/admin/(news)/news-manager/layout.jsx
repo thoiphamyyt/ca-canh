@@ -7,11 +7,15 @@ import { useState } from "react";
 import AlertConfirm from "@/components/shadcn/alertConfirm";
 import { useToast } from "@/hooks/use-toast";
 import config from "@/config";
+import SearchCommon from "@/components/common/SearchCommon";
+import { listStatusNew } from "@/lib/contants";
 
 export default function LayoutNews() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [selectedNews, setSelectedNews] = useState(null);
   const [isReload, setIsReload] = useState(false);
+  const [textSearch, setTextSearch] = useState("");
+  const [selected, setSelectedStatus] = useState("");
   const { toast } = useToast();
 
   const handleOpenDialog = (news) => {
@@ -61,9 +65,26 @@ export default function LayoutNews() {
         title="Danh sách bản tin"
         actionCreate={true}
         urlCreate="/admin/create-news"
+        className="flex-1 flex flex-col h-[calc(100vh-115px)] overflow-hidden"
       >
-        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-        {/* <BasicTableOne /> */}
+        <SearchCommon
+          onSearch={(params) => {
+            setTextSearch(params.textSearch);
+            setSelectedStatus(params.selectValue);
+          }}
+          placeholder="Tìm kiếm tên bài viết..."
+          selectPlaceholder="Chọn trạng thái..."
+          isSelect={true}
+          listSelect={[{ value: "", label: "Tất cả" }, ...listStatusNew]}
+        />
+        <div className="flex-1 overflow-hidden">
+          <DataTable
+            columns={columns(handleOpenDialog)}
+            isReload={isReload}
+            status={selected}
+            title={textSearch}
+          />
+        </div>
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

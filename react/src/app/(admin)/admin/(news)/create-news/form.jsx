@@ -24,6 +24,7 @@ import { Progress } from "@/components/ui/progress";
 import TipTap from "@/components/tiptap/Tiptap";
 import TextArea from "@/components/form/form-elements/TextArea";
 import { Button } from "@/components/ui/button";
+import { listStatusNew } from "@/lib/contants";
 
 export default function FormCreateNews({ isUpdate = false, newsId = null }) {
   const { toast } = useToast();
@@ -32,10 +33,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
   const [loadingData, setLoadingData] = useState(isUpdate ? true : false);
   const [progress, setProgress] = useState(0);
   const [imageRemoved, setImageRemoved] = useState([]);
-  const listStatus = [
-    { value: "draft", label: "Nháp" },
-    { value: "published", label: "Đăng tải" },
-  ];
+
   const formSchema = z.object({
     title: z.string().min(1, { message: "Tiêu đề không được trống." }),
     status: z
@@ -285,7 +283,7 @@ export default function FormCreateNews({ isUpdate = false, newsId = null }) {
                       <Label>Trạng thái</Label>
                       <FormControl>
                         <Select
-                          options={listStatus}
+                          options={listStatusNew}
                           placeholder="Chọn trạng thái"
                           className="dark:bg-dark-900"
                           onChange={(option) => field.onChange(option?.value)}

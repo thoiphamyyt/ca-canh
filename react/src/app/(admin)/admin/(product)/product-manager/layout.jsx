@@ -78,6 +78,7 @@ export default function LayoutProduct() {
         title="Danh sách sản phẩm"
         actionCreate={true}
         urlCreate="/admin/create-product"
+        className="flex-1 flex flex-col h-[calc(100vh-115px)] overflow-hidden"
       >
         <SearchCommon
           onSearch={(params) => {
@@ -89,18 +90,23 @@ export default function LayoutProduct() {
           isSelect={true}
           listSelect={
             categories
-              ? categories.map((item) => {
-                  return { value: item.id, label: item.name };
-                })
+              ? [
+                  { value: "", label: "Tất cả" },
+                  ...categories.map((item) => {
+                    return { value: item.id, label: item.name };
+                  }),
+                ]
               : []
           }
         />
-        <DataTable
-          columns={columns(handleOpenDialog)}
-          isReload={isReload}
-          textSearch={textSearch}
-          category={selected}
-        />
+        <div className="flex-1 overflow-hidden">
+          <DataTable
+            columns={columns(handleOpenDialog)}
+            isReload={isReload}
+            textSearch={textSearch}
+            category={selected}
+          />
+        </div>
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

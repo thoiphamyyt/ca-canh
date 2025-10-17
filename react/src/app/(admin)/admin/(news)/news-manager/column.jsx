@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+import { listStatusNew } from "@/lib/contants";
 export const columns = (onOpenDialog) => [
   {
     accessorKey: "stt",
@@ -26,7 +27,11 @@ export const columns = (onOpenDialog) => [
           : "destructive";
       return (
         <div className="flex justify-center">
-          <Badge variant={variant}>{status}</Badge>
+          <Badge variant={variant}>
+            {listStatusNew.find((x) => x.value == status)
+              ? listStatusNew.find((x) => x.value == status).label
+              : ""}
+          </Badge>
         </div>
       );
     },

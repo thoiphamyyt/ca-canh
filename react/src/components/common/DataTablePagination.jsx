@@ -12,7 +12,7 @@ import { ChevronFirst, ChevronLast } from "lucide-react";
 
 export function DataTablePagination({ table }) {
   return (
-    <div className="flex items-center justify-end space-x-2 py-4 mr-3">
+    <div className="flex items-center justify-end space-x-2 py-4 mr-3 h-[120px]">
       <Button
         variant="outline"
         size="sm"

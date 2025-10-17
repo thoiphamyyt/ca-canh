@@ -11,6 +11,10 @@ const listStatusOrder = [
   { value: "completed", label: "Đã giao hàng" },
   { value: "cancelled", label: "Đã hủy" },
 ];
+const listStatusNew = [
+  { value: "draft", label: "Nháp" },
+  { value: "published", label: "Đăng tải" },
+];
 
 export {
   url_image,
@@ -19,4 +23,5 @@ export {
   title,
   description,
   listStatusOrder,
+  listStatusNew,
 };
