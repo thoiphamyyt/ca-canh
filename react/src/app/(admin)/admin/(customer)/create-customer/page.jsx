@@ -1,6 +1,5 @@
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import Form from "./form";
-// import DropzoneComponent from "@/components/form/form-elements/DropZone";
 import React from "react";
 import { title, description } from "@/lib/contants";
 

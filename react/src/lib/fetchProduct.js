@@ -50,13 +50,17 @@ const fetchDetailProduct = async (id) => {
 
 const fetchCategory = async (params = {}) => {
   try {
-    const res = await fetch(`${config.NEXT_PUBLIC_API}/api/ca-canh/category`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-      params: params,
-    });
+    const queryString = new URLSearchParams(params).toString();
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/category?${queryString}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        params: params,
+      }
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch category");
     }

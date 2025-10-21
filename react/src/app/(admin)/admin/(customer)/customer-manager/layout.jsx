@@ -6,12 +6,14 @@ import React from "react";
 import { useState } from "react";
 import AlertConfirm from "@/components/shadcn/alertConfirm";
 import { useToast } from "@/hooks/use-toast";
+import SearchCommon from "@/components/common/SearchCommon";
 
 export default function LayoutCustomer() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const { toast } = useToast();
+  const [textSearch, setTextSearch] = useState("");
 
   const handleOpenDialog = (customer) => {
     setSelectedCustomer(customer);
@@ -60,9 +62,21 @@ export default function LayoutCustomer() {
         title="Danh sách khách hàng"
         actionCreate={true}
         urlCreate="/admin/create-customer"
+        className="flex-1 flex flex-col h-[calc(100vh-115px)] overflow-hidden"
       >
-        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-        {/* <BasicTableOne /> */}
+        <SearchCommon
+          onSearch={(params) => {
+            setTextSearch(params.textSearch);
+          }}
+          placeholder="Tìm kiếm họ tên, tên đăng nhập..."
+        />
+        <div className="flex-1 overflow-hidden">
+          <DataTable
+            columns={columns(handleOpenDialog)}
+            isReload={isReload}
+            textSearch={textSearch}
+          />
+        </div>
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

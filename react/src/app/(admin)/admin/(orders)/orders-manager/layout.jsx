@@ -6,11 +6,15 @@ import React from "react";
 import { useState } from "react";
 import AlertConfirm from "@/components/shadcn/alertConfirm";
 import { useToast } from "@/hooks/use-toast";
+import SearchCommon from "@/components/common/SearchCommon";
+import { listStatusOrder } from "@/lib/contants";
 
 export default function LayoutOrders() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState(null);
   const [isReload, setIsReload] = useState(false);
+  const [textSearch, setTextSearch] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
   const { toast } = useToast();
 
   const handleOpenDialog = (orders) => {
@@ -60,9 +64,26 @@ export default function LayoutOrders() {
         title="Danh sách đơn hàng"
         actionCreate={true}
         urlCreate="/admin/create-orders"
+        className="flex-1 flex flex-col h-[calc(100vh-115px)] overflow-hidden"
       >
-        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-        {/* <BasicTableOne /> */}
+        <SearchCommon
+          onSearch={(params) => {
+            setTextSearch(params.textSearch);
+            setSelectedStatus(params.selectValue);
+          }}
+          placeholder="Tìm kiếm mã đơn hàng..."
+          selectPlaceholder="Chọn trạng thái..."
+          isSelect={true}
+          listSelect={[{ value: "", label: "Tất cả" }, ...listStatusOrder]}
+        />
+        <div className="flex-1 overflow-hidden">
+          <DataTable
+            columns={columns(handleOpenDialog)}
+            isReload={isReload}
+            textSearch={textSearch}
+            status={selectedStatus}
+          />
+        </div>
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

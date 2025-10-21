@@ -6,12 +6,14 @@ import React from "react";
 import { useState } from "react";
 import AlertConfirm from "@/components/shadcn/alertConfirm";
 import { useToast } from "@/hooks/use-toast";
+import SearchCommon from "@/components/common/SearchCommon";
 
 export default function LayoutProduct() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const { toast } = useToast();
+  const [textSearch, setTextSearch] = useState("");
 
   const handleOpenDialog = (category) => {
     setSelectedCategory(category);
@@ -60,9 +62,22 @@ export default function LayoutProduct() {
         title="Danh mục sản phẩm"
         actionCreate={true}
         urlCreate="/admin/create-category"
+        className="flex-1 flex flex-col h-[calc(100vh-115px)] overflow-hidden"
       >
-        <DataTable columns={columns(handleOpenDialog)} isReload={isReload} />
-        {/* <BasicTableOne /> */}
+        <SearchCommon
+          onSearch={(params) => {
+            setTextSearch(params.textSearch);
+          }}
+          placeholder="Tìm kiếm tên bài viết..."
+          selectPlaceholder="Chọn trạng thái..."
+        />
+        <div className="flex-1 overflow-hidden">
+          <DataTable
+            columns={columns(handleOpenDialog)}
+            isReload={isReload}
+            textSearch={textSearch}
+          />
+        </div>
       </ComponentCard>
       <AlertConfirm
         open={isOpenDialog}

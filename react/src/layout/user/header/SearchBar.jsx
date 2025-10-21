@@ -19,7 +19,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="flex w-full border border-blue-400 dark:border-blue-600 rounded-md overflow-hidden">
+    <div className="flex w-full border border-sky-400 dark:border-sky-600 rounded-md overflow-hidden">
       <Input
         type="text"
         placeholder="Tìm kiếm cá, hồ, phụ kiện..."
@@ -27,7 +27,7 @@ export default function SearchBar() {
         className="rounded-none border-0 focus:ring-0 h-12 px-4 text-base flex-1 bg-white dark:bg-gray-800"
       />
       <Button
-        className="rounded-l-none bg-blue-600 hover:bg-blue-700 h-12 w-14"
+        className="rounded-l-none bg-sky-600 hover:bg-sky-700 h-12 w-14"
         onClick={searchProduct}
       >
         <FontAwesomeIcon icon={faMagnifyingGlass} />

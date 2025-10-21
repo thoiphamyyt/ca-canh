@@ -55,7 +55,7 @@ export default function UserProfile() {
       ) : (
         <Card className="w-full max-w-md md:max-w-2xl shadow-2xl rounded-2xl overflow-hidden">
           <CardHeader className="flex flex-col items-center text-center space-y-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
-            {!user.avatar ? (
+            {!user?.avatar ? (
               <UserCircle2 className="w-28 h-28 text-white/80" />
             ) : (
               <Image

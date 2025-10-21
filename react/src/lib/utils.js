@@ -85,3 +85,34 @@ export function getStatusOrder(status) {
     </div>
   );
 }
+
+export function renderStatusBadge(status) {
+  switch (status) {
+    case "pending":
+      return (
+        <Badge className="bg-yellow-100 text-yellow-800 border border-yellow-300 dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700">
+          ⏳ Chờ xử lý
+        </Badge>
+      );
+    case "processing":
+      return (
+        <Badge className="bg-blue-100 text-blue-800 border border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700">
+          🔄 Đang xử lý
+        </Badge>
+      );
+    case "completed":
+      return (
+        <Badge className="bg-green-100 text-green-800 border border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700">
+          ✅ Hoàn thành
+        </Badge>
+      );
+    case "cancelled":
+      return (
+        <Badge className="bg-red-100 text-red-800 border border-red-300 dark:bg-red-900 dark:text-red-200 dark:border-red-700">
+          ❌ Hủy
+        </Badge>
+      );
+    default:
+      return <Badge>{status}</Badge>;
+  }
+}

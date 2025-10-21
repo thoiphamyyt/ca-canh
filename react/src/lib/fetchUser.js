@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import config from "@/config";
 const fetchUser = async () => {
-  if (typeof window === "undefined") return null; // tránh chạy ở server
+  if (typeof window === "undefined") return null;
 
   try {
     const res = await fetch(`${config.NEXT_PUBLIC_API}/api/user`, {
@@ -26,10 +26,11 @@ const fetchUser = async () => {
   }
 };
 
-const fetchCustomer = async () => {
+const fetchCustomer = async (params = {}) => {
   try {
+    const queryString = new URLSearchParams(params).toString();
     const res = await fetch(
-      `${config.NEXT_PUBLIC_API}/api/ca-canh/list-customer`,
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/list-customer?${queryString}`,
       {
         method: "GET",
         credentials: "include",
