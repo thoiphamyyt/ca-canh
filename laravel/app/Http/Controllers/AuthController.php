@@ -14,6 +14,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    public function index() {}
     public function register(Request $request)
     {
         $formData = $request->all();

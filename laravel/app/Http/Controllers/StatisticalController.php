@@ -18,7 +18,7 @@ class StatisticalController extends Controller
         $orderMonth = 0;
         $customerStats = DB::table('users')
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-            ->whereYear('created_at', $currentYear)
+            ->whereYear('created_at', $currentYear)->where('role', 'user')
             ->groupBy('month')
             ->orderBy('month')
             ->get();

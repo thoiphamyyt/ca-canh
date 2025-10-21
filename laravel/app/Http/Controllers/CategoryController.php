@@ -11,15 +11,26 @@ use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        // $category = Category::orderBy('name', 'asc')->get();
-        $category = Category::withCount('products')->get();
-        if (empty($category)) {
-            return response()->json(['success' => false, 'message' => 'no data']);
-        } else {
-            return response()->json(['success' => true, 'data' => $category]);
+        $formData = $request->all();
+        $query = Category::withCount('products');
+        if (!empty($formData['name'])) {
+            $query->where('name', 'like', '%' . $formData['name'] . '%');
         }
+        $categories = $query->get();
+
+        if (!$categories) {
+            return response()->json([
+                'success' => false,
+                'message' => 'no data'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $categories
+        ]);
     }
 
     public function getDetail($id)

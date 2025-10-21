@@ -19,13 +19,23 @@ services:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: ca_canh_laravel
             MYSQL_USER: thoipham
-            # root
             MYSQL_PASSWORD: cacanh@123
-            # your_root_password
         ports:
-            - "3308:3306"
+            - "3307:3306"
+        command:
+            [
+                "--default-authentication-plugin=mysql_native_password",
+                "--skip-ssl",
+                "--require_secure_transport=OFF",
+            ]
         volumes:
             - db_data:/var/lib/mysql
+            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
     nginx:
         image: nginx:alpine

@@ -11,9 +11,20 @@ use Exception;
 
 class CustomerController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $data = User::all();
+        $formData = $request->all();
+        $query = User::query();
+
+        if (!empty($formData['textSearch'])) {
+            $search = $formData['textSearch'];
+            $query->where(function ($q) use ($search) {
+                $q->where('userName', 'like', '%' . $search . '%')
+                    ->orWhere('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $data = $query->get();
         return response()->json([
             'success' => true,
             'message' => 'Lấy danh sách khách hàng thành công',

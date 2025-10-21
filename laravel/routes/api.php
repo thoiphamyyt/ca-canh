@@ -51,6 +51,8 @@ Route::prefix('ca-canh')->middleware(['auth:api', 'checkRole:admin'])->group(fun
     Route::get('/orders-manager', [OrderController::class, 'getAll']);
     Route::get('/orders-detail/{id}', [OrderController::class, 'detail']);
     Route::post('/orders-change-status/{id}', [OrderController::class, 'updateStatus']);
+    Route::get('/orders/{id}/export-pdf', [OrderController::class, 'exportPDF']);
+
 
     Route::get('/statistical-customer', [StatisticalController::class, 'statisticalCustomer']);
     Route::get('/statistical-month', [StatisticalController::class, 'monthlyTarget']);

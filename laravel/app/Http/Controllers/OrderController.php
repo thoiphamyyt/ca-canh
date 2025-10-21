@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Common;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -68,9 +69,23 @@ class OrderController extends Controller
             ], 500);
         }
     }
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $orders = Order::with(['items.product', 'user'])->get();
+        $formData = $request->all();
+        $query = Order::with(['items.product', 'user']);
+        if (!empty($formData['status'])) {
+            $query->where('status', $formData['status']);
+        }
+
+        if (!empty($formData['textSearch'])) {
+            $search = $formData['textSearch'];
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', '%' . $search . '%')
+                    ->orWhere('shipping_address', 'like', '%' . $search . '%');
+            });
+        }
+
+        $orders = $query->get();
         if ($orders) {
             return response()->json([
                 'data' => $orders,
@@ -122,5 +137,16 @@ class OrderController extends Controller
             'message' => 'Trạng thái đơn hàng đã được cập nhật',
             'order' => $order
         ]);
+    }
+
+    public function exportPDF($id)
+    {
+        $order = Order::with(['items.product', 'user'])->findOrFail($id);
+        $order['amount_in_words'] = Common::convert_number_to_words($order->total_amount);
+
+        $pdf = Pdf::loadView('pdf.order', compact('order'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->stream("hoa-don-{$order->id}.pdf");
     }
 }
