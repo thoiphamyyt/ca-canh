@@ -134,19 +134,19 @@ export default function AdminOrderDetail({ idOrder }) {
             </Select>
 
             <Button
-              onClick={handleChangeStatus}
-              disabled={updating}
-              className="ml-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white dark:from-blue-600 dark:to-indigo-700 dark:hover:from-blue-700 dark:hover:to-indigo-800"
-            >
-              {updating ? "Đang cập nhật..." : "Cập nhật"}
-            </Button>
-
-            <Button
               onClick={handleExportPDF}
               disabled={exporting}
               className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white"
             >
               {exporting ? "Đang xuất..." : "Xuất hóa đơn PDF"}
+            </Button>
+
+            <Button
+              onClick={handleChangeStatus}
+              disabled={updating}
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white dark:from-blue-600 dark:to-indigo-700 dark:hover:from-blue-700 dark:hover:to-indigo-800"
+            >
+              {updating ? "Đang cập nhật..." : "Cập nhật"}
             </Button>
 
             <Link href="/admin/orders-manager">
