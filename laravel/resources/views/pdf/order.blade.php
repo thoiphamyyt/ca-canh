@@ -84,19 +84,17 @@
         }
 
         .sign {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .sign div {
+            width: 100%;
+            margin: 40px 0;
             text-align: center;
-            width: 45%;
+            border: none;
         }
 
-        .sign p {
-            margin-top: 60px;
-            font-style: italic;
+        .sign td {
+            width: 50%;
+            vertical-align: top;
+            padding-top: 40px;
+            border: none;
         }
 
         .qr {
@@ -108,7 +106,7 @@
 
 <body>
 
-    < class="header">
+    <div class="header">
         <div class="logo"><img src="{{ public_path('images/logo.png') }}" width="120" /> </div>
         <div class="company-info" style="text-align: right;">
             <strong>Shop Cá cảnh Trà Vinh</strong><br>
@@ -116,77 +114,79 @@
             Hotline: 0123 456 789<br>
             Email: cacanhTV@gmail.vn
         </div>
-        </div>
+    </div>
 
-        <h2 class="invoice-title">HÓA ĐƠN BÁN HÀNG</h2>
+    <h2 class="invoice-title">HÓA ĐƠN BÁN HÀNG</h2>
 
-        <div class="info">
-            <p><strong>Mã đơn hàng:</strong> #{{ $order->id }}</p>
-            <p><strong>Ngày đặt:</strong> {{ \Carbon\Carbon::parse($order->order_date)->format('d/m/Y H:i') }}</p>
-            <p><strong>Khách hàng:</strong> {{ $order->user->name ?? 'N/A' }}</p>
-            <p><strong>Địa chỉ giao hàng:</strong> {{ $order->shipping_address ?? 'N/A' }}</p>
-            <p><strong>Phương thức thanh toán:</strong> {{ ucfirst($order->payment_method ?? 'N/A') }}</p>
-            <p><strong>Trạng thái:</strong>
-                @php
-                $statusLabels = [
-                'pending' => 'Chờ xử lý',
-                'processing' => 'Đang xử lý',
-                'completed' => 'Hoàn thành',
-                'cancelled' => 'Đã hủy',
-                ];
-                @endphp
-                {{ $statusLabels[$order->status] ?? $order->status }}
-            </p>
-        </div>
+    <div class="info">
+        <p><strong>Mã đơn hàng:</strong> #{{ $order->id }}</p>
+        <p><strong>Ngày đặt:</strong> {{ \Carbon\Carbon::parse($order->order_date)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</p>
+        <p><strong>Khách hàng:</strong> {{ $order->user->name ?? 'N/A' }}</p>
+        <p><strong>Địa chỉ giao hàng:</strong> {{ $order->shipping_address ?? 'N/A' }}</p>
+        <p><strong>Phương thức thanh toán:</strong> {{ ucfirst($order->payment_method ?? 'N/A') }}</p>
+        <p><strong>Trạng thái:</strong>
+            @php
+            $statusLabels = [
+            'pending' => 'Chờ xử lý',
+            'processing' => 'Đang xử lý',
+            'completed' => 'Hoàn thành',
+            'cancelled' => 'Đã hủy',
+            ];
+            @endphp
+            {{ $statusLabels[$order->status] ?? $order->status }}
+        </p>
+    </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 5%">#</th>
-                    <th style="width: 45%">Sản phẩm</th>
-                    <th style="width: 15%">Số lượng</th>
-                    <th style="width: 15%">Đơn giá (VNĐ)</th>
-                    <th style="width: 20%">Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order->items as $index => $item)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $item->product->name ?? 'Sản phẩm' }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>{{ number_format($item->product->price ?? 0, 0, ',', '.') }}</td>
-                    <td>{{ number_format(($item->quantity * ($item->product->price ?? 0)), 0, ',', '.') }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4" style="text-align: right;">Tổng cộng</td>
-                    <td>{{ number_format($order->total_amount, 0, ',', '.') }} VNĐ</td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="text-align: right;">Bằng chữ</td>
-                    <td>{{$order->amount_in_words}}</td>
-                </tr>
-            </tfoot>
-        </table>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%; text-align: center">STT</th>
+                <th style="width: 45%; text-align: center">Sản phẩm</th>
+                <th style="width: 15%; text-align: center">Số lượng</th>
+                <th style="width: 15%; text-align: center">Đơn giá (VNĐ)</th>
+                <th style="width: 20%; text-align: center">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($order->items as $index => $item)
+            <tr>
+                <td style="text-align: center">{{ $index + 1 }}</td>
+                <td>{{ $item->product->product ?? 'Sản phẩm' }}</td>
+                <td style="text-align: center">{{ $item->quantity }}</td>
+                <td style="text-align: center">{{ number_format($item->product->price ?? 0, 0, ',', '.') }}</td>
+                <td style="text-align: center">{{ number_format(($item->quantity * ($item->product->price ?? 0)), 0, ',', '.') }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" style="text-align: right;">Tổng cộng</td>
+                <td>{{ number_format($order->total_amount, 0, ',', '.') }} VNĐ</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: right;">Bằng chữ</td>
+                <td>{{$order->amount_in_words}}</td>
+            </tr>
+        </tfoot>
+    </table>
 
-        <div class="sign">
-            <div>
-                <strong>Khách hàng</strong>
+    <table class="sign">
+        <tr>
+            <td>
+                <strong>Khách hàng</strong><br>
                 <p>(Ký và ghi rõ họ tên)</p>
-            </div>
-            <div>
-                <strong>Nhân viên bán hàng</strong>
+            </td>
+            <td>
+                <strong>Nhân viên bán hàng</strong><br>
                 <p>(Ký và ghi rõ họ tên)</p>
-            </div>
-        </div>
+            </td>
+        </tr>
+    </table>
 
-        <div class="footer">
-            Cảm ơn quý khách đã mua hàng tại <strong>CaCanhTV</strong> 💙<br>
-            Hóa đơn được tạo tự động vào {{ now()->format('H:i d/m/Y') }}.
-        </div>
+    <div class="footer">
+        Cảm ơn quý khách đã mua hàng tại <strong>CaCanhTV</strong><br>
+        Hóa đơn được tạo tự động vào {{ now('Asia/Ho_Chi_Minh')->format('H:i d/m/Y') }}.
+    </div>
 
 </body>
 
