@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\NewsController;
@@ -56,6 +57,11 @@ Route::prefix('ca-canh')->middleware(['auth:api', 'checkRole:admin'])->group(fun
 
     Route::get('/statistical-customer', [StatisticalController::class, 'statisticalCustomer']);
     Route::get('/statistical-month', [StatisticalController::class, 'monthlyTarget']);
+
+    Route::get('/contacts', [ContactController::class, 'index']);
+    Route::get('/contacts/{id}', [ContactController::class, 'detail']);
+    Route::post('/contacts/{id}/status', [ContactController::class, 'updateStatus']);
+    Route::delete('/contacts/{id}', [ContactController::class, 'delete']);
 });
 Route::prefix('ca-canh')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
@@ -76,4 +82,6 @@ Route::prefix('ca-canh')->group(function () {
 
     Route::post('save-store', [OrderController::class, 'store'])->middleware('auth:api');
     Route::get('orders', [OrderController::class, 'getOrders'])->middleware('auth:api');
+
+    Route::post('/contact', [ContactController::class, 'store']);
 });
