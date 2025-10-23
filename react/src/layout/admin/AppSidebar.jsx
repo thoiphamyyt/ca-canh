@@ -12,10 +12,10 @@ import {
   ShoppingCart,
   FileText,
   PieChart,
-  LayoutGrid,
   Box,
   Plug,
   ChevronDown,
+  Contact,
   MoreHorizontal,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -48,6 +48,11 @@ const navItems = [
     icon: <ShoppingCart />,
     name: "Quản lý đơn hàng",
     path: "/admin/orders-manager",
+  },
+  {
+    icon: <Contact />,
+    name: "Thông tin liên hệ",
+    path: "/admin/contacts-manager",
   },
   {
     name: "Trang hệ thống",

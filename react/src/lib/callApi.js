@@ -250,6 +250,34 @@ const statisticalMonth = async () => {
   }
 };
 
+const fetchContacts = async (params = {}) => {
+  try {
+    const queryString = new URLSearchParams(params).toString();
+    const res = await fetch(
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/contacts?${queryString}`,
+      {
+        method: "GET",
+        credentials: "include",
+
+        headers: {
+          Accept: "application/json",
+        },
+        params: params,
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch contacts");
+    }
+
+    const data = await res.json();
+
+    return data ?? null;
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    return [];
+  }
+};
+
 export {
   fetchNews,
   detailNews,
@@ -262,4 +290,5 @@ export {
   postProductReview,
   statisticalCustomer,
   statisticalMonth,
+  fetchContacts,
 };

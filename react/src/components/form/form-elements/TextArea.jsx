@@ -4,6 +4,7 @@ const TextArea = ({
   placeholder = "Enter your message", // Default placeholder
   rows = 3, // Default number of rows
   value = "", // Default value
+  name = "", // Name attribute
   onChange, // Callback for changes
   className = "", // Additional custom styles
   disabled = false, // Disabled state
@@ -32,6 +33,7 @@ const TextArea = ({
         placeholder={placeholder}
         rows={rows}
         value={value}
+        name={name}
         onChange={handleChange}
         disabled={disabled}
         className={textareaClasses}

@@ -16,6 +16,12 @@ const listStatusNew = [
   { value: "published", label: "Đăng tải" },
 ];
 
+const listStatusContacts = [
+  { value: "new", label: "Mới tạo" },
+  { value: "read", label: "Đã xem" },
+  { value: "replied", label: "Đã liên hệ" },
+];
+
 export {
   url_image,
   link_image_default,
@@ -24,4 +30,5 @@ export {
   description,
   listStatusOrder,
   listStatusNew,
+  listStatusContacts,
 };
