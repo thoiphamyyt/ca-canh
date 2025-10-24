@@ -55,7 +55,7 @@ const navItems = [
     path: "/admin/contacts-manager",
   },
   {
-    name: "Trang hệ thống",
+    name: "Quản lý hệ thống",
     icon: <FileText />,
     subItems: [
       { name: "Trang trống", path: "/blank", pro: false },
@@ -308,7 +308,7 @@ export default function AppSidebar() {
               {renderMenuItems(navItems, "main")}
             </div>
 
-            <div>
+            {/* <div>
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
                   !isExpanded && !isHovered
@@ -323,7 +323,7 @@ export default function AppSidebar() {
                 )}
               </h2>
               {renderMenuItems(othersItems, "others")}
-            </div>
+            </div> */}
           </div>
         </nav>
       </div>

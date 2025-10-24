@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const ChartTab = () => {
-  // Khởi tạo state với giá trị mặc định "optionOne"
   const [selected, setSelected] = useState("optionOne");
 
   const getButtonClass = (option) =>
@@ -17,7 +16,7 @@ const ChartTab = () => {
           "optionOne"
         )}`}
       >
-        Monthly
+        Tháng
       </button>
 
       <button
@@ -26,16 +25,7 @@ const ChartTab = () => {
           "optionTwo"
         )}`}
       >
-        Quarterly
-      </button>
-
-      <button
-        onClick={() => setSelected("optionThree")}
-        className={`px-3 py-2 font-medium w-full rounded-md text-theme-sm hover:text-gray-900 dark:hover:text-white ${getButtonClass(
-          "optionThree"
-        )}`}
-      >
-        Annually
+        Năm
       </button>
     </div>
   );

@@ -19,7 +19,6 @@ export default function ItemList() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // responsive slidesToShow
   const getSlidesToShow = () =>
     typeof window !== "undefined" && window.innerWidth >= 768 ? 3 : 1;
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());

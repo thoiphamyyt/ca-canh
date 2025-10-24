@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { formatVND, renderStars } from "@/lib/utils";
 import { fetchProduct } from "@/lib/fetchProduct";
 import Link from "next/link";
+import CartDialog from "@/components/cart/cartDialog";
 
 export default function FeaturedProductsList({ title = "Sản phẩm nổi bật" }) {
   const [page, setPage] = useState(1);
@@ -97,7 +98,7 @@ export default function FeaturedProductsList({ title = "Sản phẩm nổi bật
                     <div className="absolute top-3 left-3">
                       <Badge
                         variant="secondary"
-                        className="bg-white/80 dark:bg-sky-900/70 dark:text-sky-200 backdrop-blur-sm"
+                        className="bg-white/80 dark:bg-sky-900/70 dark:text-sky-100 backdrop-blur-sm"
                       >
                         {item.category_name ?? "Khác"}
                       </Badge>
@@ -120,16 +121,26 @@ export default function FeaturedProductsList({ title = "Sản phẩm nổi bật
                     </div>
 
                     <div className="flex items-center gap-2 mt-3">
-                      <Button className="flex-1 bg-sky-600 hover:bg-sky-700 text-white dark:bg-sky-500 dark:hover:bg-sky-400 transition-colors">
-                        Thêm vào giỏ
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-sky-500 text-sky-600 hover:bg-sky-50 dark:border-sky-400 dark:text-sky-300 dark:hover:bg-sky-900/40"
-                      >
-                        Xem chi tiết
-                      </Button>
+                      <CartDialog
+                        dataProduct={item}
+                        trigger={
+                          <Button
+                            size="sm"
+                            className="flex-1 bg-sky-600 hover:bg-sky-700 text-white dark:bg-sky-500 dark:hover:bg-sky-400 transition-colors"
+                          >
+                            Thêm vào giỏ
+                          </Button>
+                        }
+                      />
+                      <Link href={`/detail-product/${item.id}`}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-sky-500 text-sky-600 hover:bg-sky-50 dark:border-sky-400 dark:text-sky-300 dark:hover:bg-sky-900/40"
+                        >
+                          Xem chi tiết
+                        </Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>

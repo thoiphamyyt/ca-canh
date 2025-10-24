@@ -121,9 +121,9 @@ export default function StatisticsChart({ data }) {
             Thống kê số lượng đơn hàng được giao trong năm
           </p>
         </div>
-        <div className="flex items-start w-full gap-3 sm:justify-end">
+        {/* <div className="flex items-start w-full gap-3 sm:justify-end">
           <ChartTab />
-        </div>
+        </div> */}
       </div>
 
       <div className="max-w-full overflow-x-auto custom-scrollbar">

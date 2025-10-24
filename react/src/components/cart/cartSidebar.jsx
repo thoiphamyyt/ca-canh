@@ -118,7 +118,10 @@ export default function CartSidebar() {
             )}
 
             <Link href="/cart">
-              <Button className="w-full mt-6 bg-gradient-to-r from-sky-600 to-cyan-500 text-white hover:opacity-90">
+              <Button
+                className="w-full mt-6 bg-gradient-to-r from-sky-600 to-cyan-500 text-white hover:opacity-90"
+                onClick={() => setIsOpen(false)}
+              >
                 Thanh toán →
               </Button>
             </Link>
