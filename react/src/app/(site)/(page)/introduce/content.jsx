@@ -133,9 +133,19 @@ export default function Content() {
               <h3 className="text-xl font-semibold line-clamp-1 dark:text-white text-sky-800">
                 {product.product}
               </h3>
-              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">
-                {product.description}
-              </p>
+              <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">
+                {product.describe ? (
+                  <div>{product.describe}</div>
+                ) : typeof product.description === "string" ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: product.description,
+                    }}
+                  />
+                ) : (
+                  product.description
+                )}
+              </div>
 
               <div className="mt-4 flex items-center justify-between">
                 <div>

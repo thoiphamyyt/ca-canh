@@ -43,13 +43,13 @@ export default function ListProduct() {
     <section className="container mx-auto px-6 py-12">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-3xl font-bold dark:text-white text-sky-800">
-          Cá cảnh nổi bật
+          Sản phẩm nổi bật
         </h2>
         <div className="hidden sm:flex items-center gap-4">
           <Input
             value={textSearch}
             onChange={(e) => setTextSearch(e.target.value)}
-            placeholder="Tìm cá, ví dụ: Betta"
+            placeholder="Tìm kiếm sản phẩm..."
             className="w-64 dark:bg-slate-800"
           />
           <Button variant="outline" onClick={handleSearch}>
