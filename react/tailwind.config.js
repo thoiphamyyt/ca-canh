@@ -20,9 +20,18 @@ module.exports = {
             transform: "translateY(0)",
           },
         },
+        swing: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "10%": { transform: "rotate(10deg)" },
+          "20%": { transform: "rotate(-8deg)" },
+          "30%": { transform: "rotate(6deg)" },
+          "40%": { transform: "rotate(-4deg)" },
+          "50%": { transform: "rotate(2deg)" },
+        },
       },
       animation: {
         "fall-down": "fall-down 0.5s ease-out forwards",
+        swing: "swing 2s ease-in-out infinite",
       },
       borderRadius: {
         lg: "var(--radius)",

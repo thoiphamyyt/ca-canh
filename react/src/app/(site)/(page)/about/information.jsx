@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { phone } from "@/lib/contants";
 export default function Information() {
   return (
     <aside className="space-y-8">
@@ -19,11 +20,11 @@ export default function Information() {
           </div>
           <div className="flex items-start gap-3">
             <Phone className="h-5 w-5 text-sky-600 dark:text-sky-400 mt-1" />
-            <p className="text-sm">(+84) 987 654 321</p>
+            <p className="text-sm">{phone}</p>
           </div>
           <div className="flex items-start gap-3">
             <Mail className="h-5 w-5 text-sky-600 dark:text-sky-400 mt-1" />
-            <p className="text-sm">cacanhtravinh@gmail.com</p>
+            <p className="text-sm">cacanhtv@gmail.com</p>
           </div>
           <div className="flex gap-2 pt-2">
             <Button className="w-full bg-sky-600 hover:bg-sky-500 text-white shadow-md">

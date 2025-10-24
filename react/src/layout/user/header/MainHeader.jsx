@@ -9,6 +9,7 @@ import SearchBar from "./SearchBar";
 import MobileMenu from "./MobileMenu";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { phone } from "@/lib/contants";
 
 export default function MainHeader() {
   const { cart } = useCart();
@@ -48,7 +49,7 @@ export default function MainHeader() {
         </Link>
 
         <div className="hidden lg:block text-sm">
-          <Phone className="inline h-4 w-4 mr-1" /> +84 123 456 789
+          <Phone className="inline h-4 w-4 mr-1" /> {phone}
         </div>
 
         <ModeToggle />

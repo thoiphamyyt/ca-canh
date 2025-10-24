@@ -2,6 +2,7 @@ const url_image = "/storge/public/";
 const link_image_default = "/images/image-default.png";
 const link_public_api = process.env.NEXT_PUBLIC_API || "http://localhost:8000/";
 const title = "Website Cá Cảnh";
+const phone = "+84 123 456 789";
 const description =
   "Website bán cá cảnh, cá kiểng, cá rồng, cá la hán, cá thủy sinh cùng các phụ kiện cá cảnh.";
 const listStatusOrder = [
@@ -27,6 +28,7 @@ export {
   link_image_default,
   link_public_api,
   title,
+  phone,
   description,
   listStatusOrder,
   listStatusNew,

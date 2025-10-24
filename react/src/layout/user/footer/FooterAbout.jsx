@@ -1,3 +1,5 @@
+import { phone } from "@/lib/contants";
+
 export default function FooterAbout() {
   return (
     <div>
@@ -15,7 +17,7 @@ export default function FooterAbout() {
       <ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-400">
         <li>📍 Ấp Tân Thành Tây, Xã Tân Hòa, Tỉnh Vĩnh Long</li>
         <li>✉️ cacanhTV@gmail.com</li>
-        <li>📞 +84 123 456 789</li>
+        <li>📞 {phone}</li>
       </ul>
     </div>
   );

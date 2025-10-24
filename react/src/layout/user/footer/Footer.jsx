@@ -8,6 +8,8 @@ import FooterLinks from "./FooterLinks";
 import FooterCategories from "./FooterCategories";
 import FooterSocial from "./FooterSocial";
 import ScrollToTopButton from "./ScrollToTopButton";
+import { MessageCircle, PhoneCall } from "lucide-react";
+import { phone } from "@/lib/contants";
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
@@ -57,7 +59,31 @@ export default function Footer() {
         </span>
         . All rights reserved.
       </div>
-
+      <div className="fixed bottom-[80px] right-6 flex flex-col gap-3 z-50">
+        <a
+          href={`https://zalo.me/${phone.replace(/\s+/g, "")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white p-2 rounded-full shadow-lg transition-transform hover:scale-110 animate-swing"
+          title="Chat qua Zalo"
+        >
+          <img src="/images/zalo.png" alt="Zalo" className="w-8 h-8" />
+        </a>
+        <a
+          href="https://m.me/100003880469096"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white p-2
+          rounded-full shadow-lg transition-transform hover:scale-110 animate-swing delay-200"
+          title="Chat qua Messenger"
+        >
+          <img
+            src="/images/messenger.png"
+            alt="Messenger"
+            className="w-8 h-8"
+          />
+        </a>
+      </div>
       {visible && <ScrollToTopButton />}
     </footer>
   );
