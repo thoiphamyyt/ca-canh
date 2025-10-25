@@ -8,7 +8,6 @@ import FooterLinks from "./FooterLinks";
 import FooterCategories from "./FooterCategories";
 import FooterSocial from "./FooterSocial";
 import ScrollToTopButton from "./ScrollToTopButton";
-import { MessageCircle, PhoneCall } from "lucide-react";
 import { phone } from "@/lib/contants";
 
 export default function Footer() {

@@ -17,13 +17,13 @@ export default function Cart() {
   );
 
   return (
-    <section className="container mx-auto px-6 py-12">
-      <h2 className="text-3xl font-bold mb-6 text-sky-800 dark:text-white">
+    <section className="container mx-auto px-4 sm:px-6 py-12">
+      <h2 className="text-3xl font-bold mb-6 text-sky-800 dark:text-white text-center sm:text-left">
         Giỏ hàng của bạn
       </h2>
 
       {loadingCart ? (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="md:col-span-2 shadow-md border-slate-700">
             <CardHeader className="font-semibold text-lg">
               <Skeleton className="h-6 w-48" />
@@ -32,9 +32,9 @@ export default function Cart() {
               {[...Array(3)].map((_, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between py-4 border-b border-slate-200 dark:border-slate-700"
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 border-b border-slate-200 dark:border-slate-700"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 mb-2 sm:mb-0">
                     <Skeleton className="h-[50px] w-[50px] rounded-lg" />
                     <div className="space-y-2">
                       <Skeleton className="h-4 w-40" />
@@ -71,13 +71,14 @@ export default function Cart() {
           </Card>
         </div>
       ) : cart.length === 0 ? (
-        <Card className="p-6 text-center dark:bg-slate-800 ">
+        <Card className="p-6 text-center dark:bg-slate-800">
           <p className="text-slate-600 dark:text-slate-400">
             🛒 Chưa có sản phẩm nào trong giỏ hàng.
           </p>
         </Card>
       ) : (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Danh sách sản phẩm */}
           <Card className="md:col-span-2 shadow-md dark:bg-slate-800">
             <CardHeader className="font-semibold text-lg">
               Sản phẩm đã chọn ({cart.length})
@@ -86,7 +87,7 @@ export default function Cart() {
               {cart.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between py-4"
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2"
                 >
                   <div className="flex items-center gap-4">
                     <Image
@@ -109,7 +110,7 @@ export default function Cart() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-4 sm:gap-6 mt-2 sm:mt-0">
                     <span className="font-semibold text-sky-700 dark:text-sky-400">
                       {formatVND(item.price)}
                     </span>

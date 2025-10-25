@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ArrowLeftToLine, ArrowRightToLine } from "lucide-react";
 
 export default function PaginationPage({ totalPages, page, setPage }) {
   return (
@@ -11,7 +12,7 @@ export default function PaginationPage({ totalPages, page, setPage }) {
             variant="outline"
             className="border-gray-300 dark:border-gray-700 hover:bg-green-50 dark:hover:bg-emerald-900/20"
           >
-            Quay về
+            <ArrowLeftToLine />
           </Button>
           {Array.from({ length: totalPages }).map((_, i) => (
             <Button
@@ -33,7 +34,7 @@ export default function PaginationPage({ totalPages, page, setPage }) {
             variant="outline"
             className="border-gray-300 dark:border-gray-700 hover:bg-green-50 dark:hover:bg-emerald-900/20"
           >
-            Xem tiếp
+            <ArrowRightToLine />
           </Button>
         </div>
       )}
