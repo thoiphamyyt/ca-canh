@@ -15,11 +15,8 @@ services:
         image: mysql:8.0
         container_name: mysql-laravel
         restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: ca_canh_laravel
-            MYSQL_USER: thoipham
-            MYSQL_PASSWORD: cacanh@123
+        env_file:
+            - .env
         ports:
             - "3307:3306"
         command:
