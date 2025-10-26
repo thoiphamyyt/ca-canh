@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/layout/user/header/Header";
 import Footer from "@/layout/user/footer/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
