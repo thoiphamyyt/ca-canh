@@ -22,7 +22,7 @@ class AuthController extends Controller
             'userName' => 'required|string|min:6',
             'name' => 'required|string|max:255',
             'email' => 'nullable|string|email',
-            'phone' => 'nullable|numeric|digits_between:10,11',
+            'phone' => 'required|numeric|digits_between:10,11',
             'password' => 'required|string|min:6',
         ]);
         if ($valid->fails()) {

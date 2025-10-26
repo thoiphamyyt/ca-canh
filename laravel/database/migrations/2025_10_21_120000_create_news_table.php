@@ -18,8 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->json('images')->nullable();
             $table->enum('status', ['draft', 'published', 'archived'])
-                ->default('draft')
-                ->change();
+                ->default('draft');
             $table->timestamp('published_at')->nullable();
             $table->string('link')->nullable();
             $table->text('description')->nullable();
