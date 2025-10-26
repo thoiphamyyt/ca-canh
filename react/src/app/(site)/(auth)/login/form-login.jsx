@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@/context/userContext";
 import { useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
+import { LogIn } from "lucide-react";
 
 export default function FormLogin() {
   const { setUser } = useUser();
@@ -141,7 +142,10 @@ export default function FormLogin() {
                 Đang xử lý...
               </>
             ) : (
-              "Đăng nhập"
+              <>
+                <LogIn />
+                <span>Đăng nhập</span>
+              </>
             )}
           </Button>
         </form>

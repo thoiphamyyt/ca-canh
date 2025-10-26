@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { useToast } from "@/hooks/use-toast";
+import { CheckCircle } from "lucide-react";
 
 export default function FormRegister() {
   const router = useRouter();
@@ -52,7 +53,7 @@ export default function FormRegister() {
         }),
       phone: z
         .string()
-        .optional()
+        .min(1, { message: "Điện thoại không được để trống." })
         .refine((val) => !val || phoneRegex.test(val), {
           message: "Số điện thoại không đúng định dạng.",
         }),
@@ -234,7 +235,10 @@ export default function FormRegister() {
               Đang xử lý...
             </>
           ) : (
-            "Đăng ký"
+            <>
+              <CheckCircle />
+              <span>Đăng ký</span>
+            </>
           )}
         </Button>
       </form>
