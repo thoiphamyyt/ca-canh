@@ -26,25 +26,30 @@ export default function ProductList() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    async function loadProduct() {
-      setLoading(true);
-      try {
-        const data = await fetchProduct({
-          id_category: category ?? "",
-          product: product ?? "",
-          page,
-          limit: perPage,
-        });
-        setProduct(data.data ?? []);
-        setTotal(data.total ?? 0);
-      } catch (error) {
-        console.error("Failed to fetch product:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
+    setPage(1);
+  }, [category]);
+
+  useEffect(() => {
     loadProduct();
   }, [category, product, page]);
+
+  async function loadProduct() {
+    setLoading(true);
+    try {
+      const data = await fetchProduct({
+        id_category: category ?? "",
+        product: product ?? "",
+        page,
+        limit: perPage,
+      });
+      setProduct(data.data ?? []);
+      setTotal(data.total ?? 0);
+    } catch (error) {
+      console.error("Failed to fetch product:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const totalPages = Math.ceil(total / perPage);
 
