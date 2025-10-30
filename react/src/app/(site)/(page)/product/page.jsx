@@ -49,8 +49,8 @@ export default function ProductList() {
   const totalPages = Math.ceil(total / perPage);
 
   return (
-    <section className="container mx-auto py-12 px-4 md:px-6 bg-gray-50 dark:bg-gray-950 transition-colors duration-500">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <section className="py-12 px-4 md:px-6 bg-gray-50 dark:bg-gray-950 transition-colors duration-500">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 container mx-auto">
         <MenuLeft
           onCategoryChange={(id) => {
             setIdCategory(id);
@@ -87,6 +87,14 @@ export default function ProductList() {
           </div>
         ) : products && products.length ? (
           <div className="md:col-span-3">
+            {product && (
+              <h2 className="text-sky-700 dark:text-sky-300 mb-4">
+                Có {total} sản phẩm cho từ khóa tìm kiếm:{" "}
+                <span className="text-emerald-600 dark:text-emerald-400">
+                  “{product}”
+                </span>
+              </h2>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
               {products.map((item) => (
                 <Card

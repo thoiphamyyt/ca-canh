@@ -25,6 +25,11 @@ export default function SearchBar() {
         placeholder="Tìm kiếm cá, hồ, phụ kiện..."
         onChange={(e) => setTextSearch(e.target.value)}
         className="rounded-none border-0 focus:ring-0 h-12 px-4 text-base flex-1 bg-white dark:bg-gray-800"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            searchProduct();
+          }
+        }}
       />
       <Button
         className="rounded-l-none bg-sky-600 hover:bg-sky-700 h-12 w-14"

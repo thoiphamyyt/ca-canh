@@ -49,10 +49,19 @@ export default function ListProduct() {
           <Input
             value={textSearch}
             onChange={(e) => setTextSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
             placeholder="Tìm kiếm sản phẩm..."
             className="w-64 dark:bg-slate-800"
           />
-          <Button variant="outline" onClick={handleSearch}>
+          <Button
+            variant="outline"
+            className="bg-sky-500"
+            onClick={handleSearch}
+          >
             Tìm kiếm
           </Button>
         </div>
