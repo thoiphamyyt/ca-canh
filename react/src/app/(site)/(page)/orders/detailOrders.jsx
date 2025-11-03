@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDate, formatVND } from "@/lib/utils";
 import { listStatusOrder } from "@/lib/contants";
+import Link from "next/link";
 
 export default function OrderDetailDialog({ order }) {
   const [open, setOpen] = useState(false);
@@ -66,34 +67,34 @@ export default function OrderDetailDialog({ order }) {
           <h3 className="font-semibold mb-3 text-lg">Sản phẩm</h3>
           <div className="divide-y rounded-lg border">
             {order.items?.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center gap-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
-                <img
-                  src={
-                    item.product?.images_url?.[0] ??
-                    "/images/product/product-default.png"
-                  }
-                  alt={item.product?.product}
-                  className="w-16 h-16 object-cover rounded"
-                />
-                <div className="flex-1">
-                  <p className="font-medium">{item.product?.product}</p>
-                  <p className="text-sm text-gray-500 line-clamp-1">
-                    {item.product?.description}
-                  </p>
-                  <p className="text-sm text-gray-700 mt-1">
-                    SL: <span className="font-semibold">{item.quantity}</span> ×{" "}
-                    <span className="text-green-600 font-semibold">
-                      {formatVND(item.price)}
-                    </span>
-                  </p>
+              <Link href={`detail-product/${item.product.id}`} key={item.id}>
+                <div className="flex items-center gap-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <img
+                    src={
+                      item.product?.images_url?.[0] ??
+                      "/images/product/product-default.png"
+                    }
+                    alt={item.product?.product}
+                    className="w-16 h-16 object-cover rounded"
+                  />
+                  <div className="flex-1">
+                    <p className="font-medium">{item.product?.product}</p>
+                    <p className="text-sm text-gray-500 line-clamp-1">
+                      {item.product?.describe || item.product?.description}
+                    </p>
+                    <p className="text-sm text-gray-700 mt-1">
+                      SL: <span className="font-semibold">{item.quantity}</span>{" "}
+                      ×{" "}
+                      <span className="text-green-600 font-semibold">
+                        {formatVND(item.price)}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="text-right font-bold text-green-700">
+                    {formatVND(item.price * item.quantity)}
+                  </div>
                 </div>
-                <div className="text-right font-bold text-green-700">
-                  {formatVND(item.price * item.quantity)}
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

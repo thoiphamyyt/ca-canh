@@ -86,7 +86,7 @@ export function getStatusOrder(status) {
   );
 }
 
-export function renderStatusBadge(status) {
+export function renderStatusBadge(status, customer = false) {
   switch (status) {
     case "pending":
       return (
@@ -97,19 +97,19 @@ export function renderStatusBadge(status) {
     case "processing":
       return (
         <Badge className="bg-blue-100 text-blue-800 border border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700">
-          🔄 Đang xử lý
+          🔄 {customer ? "Đang giao hàng" : "Đang xử lý"}
         </Badge>
       );
     case "completed":
       return (
         <Badge className="bg-green-100 text-green-800 border border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700">
-          ✅ Hoàn thành
+          ✅ {customer ? "Đã giao hàng" : "Hoàn thành"}
         </Badge>
       );
     case "cancelled":
       return (
         <Badge className="bg-red-100 text-red-800 border border-red-300 dark:bg-red-900 dark:text-red-200 dark:border-red-700">
-          ❌ Hủy
+          ❌ {customer ? "Đã hủy" : "Hủy"}
         </Badge>
       );
     default:

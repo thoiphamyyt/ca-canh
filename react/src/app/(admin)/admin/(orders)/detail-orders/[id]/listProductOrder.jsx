@@ -15,9 +15,6 @@ export default function ListProductOrder({ order }) {
         Danh sách sản phẩm
       </h2>
       <Table>
-        <TableCaption className="text-gray-500 dark:text-gray-400">
-          Các sản phẩm trong đơn hàng
-        </TableCaption>
         <TableHeader>
           <TableRow className="bg-gray-100 dark:bg-slate-800">
             <TableHead className="w-[80px] text-gray-700 dark:text-gray-200">

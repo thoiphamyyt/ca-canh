@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatDate, formatVND } from "@/lib/utils";
+import { formatDate, formatVND, renderStatusBadge } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
@@ -55,18 +55,8 @@ export default function OrderHistory() {
             <Card key={order.id} className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="font-bold text-lg">Đơn hàng: #{order.id}</h2>
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    order.status === "delivered"
-                      ? "bg-green-100 text-green-700"
-                      : order.status === "pending"
-                      ? "bg-yellow-100 text-yellow-900"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                >
-                  {listStatusOrder.find((x) => x.value == order.status)
-                    ? listStatusOrder.find((x) => x.value == order.status).label
-                    : ""}
+                <span className="`px-3 py-1 rounded-full text-sm font-medium">
+                  {renderStatusBadge(order.status, true)}
                 </span>
               </div>
               <p className="text-sm text-gray-500 mb-2">
