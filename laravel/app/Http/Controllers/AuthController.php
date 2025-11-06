@@ -26,7 +26,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
         if ($valid->fails()) {
-            return response()->json(['errors' => $valid->errors()], 422);
+            return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
         }
         $getUser = User::where('userName', $formData['userName'])->first();
         if ($getUser) {
@@ -56,7 +56,7 @@ class AuthController extends Controller
         ]);
 
         if ($valid->fails()) {
-            return response()->json(['errors' => $valid->errors()], 422);
+            return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
         }
 
         // Thử xác thực user bằng JWT
@@ -127,7 +127,7 @@ class AuthController extends Controller
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
         if ($valid->fails()) {
-            return response()->json(['errors' => $valid->errors()], 422);
+            return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
         }
 
         if (!$user) {

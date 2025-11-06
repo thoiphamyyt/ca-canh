@@ -49,7 +49,7 @@ class CategoryController extends Controller
                 'name' => 'required|string',
             ]);
             if ($valid->fails()) {
-                return response()->json(['errors' => $valid->errors()], 422);
+                return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
             }
             if ($idUpdate) {
                 $category = Category::find($idUpdate);

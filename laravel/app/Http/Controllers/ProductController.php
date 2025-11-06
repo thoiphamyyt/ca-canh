@@ -127,7 +127,7 @@ class ProductController extends Controller
                 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
             ]);
             if ($valid->fails()) {
-                return response()->json(['errors' => $valid->errors()], 422);
+                return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
             }
             $product = Product::find($id);
             if (!$product) {

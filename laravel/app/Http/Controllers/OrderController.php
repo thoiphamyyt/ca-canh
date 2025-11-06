@@ -108,9 +108,12 @@ class OrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $request->validate([
-            'status' => 'required|in:pending,processing,completed,cancelled',
+        $valid = Validator::make($request->all(), [
+            'status' => 'required|in:pending,processing,shipped,completed,cancelled',
         ]);
+        if ($valid->fails()) {
+            return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
+        }
 
         $order = Order::with(['user', 'items.product'])->findOrFail($id);
         $order->status = $request->status;
