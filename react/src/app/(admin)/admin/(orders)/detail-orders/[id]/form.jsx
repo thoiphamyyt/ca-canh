@@ -127,8 +127,9 @@ export default function AdminOrderDetail({ idOrder }) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="pending">Chờ xử lý</SelectItem>
-                <SelectItem value="processing">Đang xử lý</SelectItem>
-                <SelectItem value="completed">Hoàn thành</SelectItem>
+                <SelectItem value="processing">Xác nhận</SelectItem>
+                <SelectItem value="shipped">Đang giao hàng</SelectItem>
+                <SelectItem value="completed">Giao hàng thành công</SelectItem>
                 <SelectItem value="cancelled">Hủy</SelectItem>
               </SelectContent>
             </Select>
