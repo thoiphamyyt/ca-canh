@@ -62,8 +62,7 @@ export default function LayoutOrders() {
     <div className="space-y-6">
       <ComponentCard
         title="Danh sách đơn hàng"
-        actionCreate={true}
-        urlCreate="/admin/create-orders"
+        actionCreate={false}
         className="flex-1 flex flex-col h-[calc(100vh-115px)] overflow-hidden"
       >
         <SearchCommon
