@@ -11,7 +11,7 @@ const fetchProduct = async (params = {}) => {
           Accept: "application/json",
         },
         params: params,
-      }
+      },
     );
     if (!res.ok) {
       throw new Error("Failed to fetch product");
@@ -25,16 +25,16 @@ const fetchProduct = async (params = {}) => {
   }
 };
 
-const fetchDetailProduct = async (id) => {
+const fetchDetailProduct = async (slug) => {
   try {
     const res = await fetch(
-      `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-product/${id}`,
+      `${config.NEXT_PUBLIC_API}/api/ca-canh/detail-product-by-slug/${slug}`,
       {
         method: "GET",
         headers: {
           Accept: "application/json",
         },
-      }
+      },
     );
     if (!res.ok) {
       throw new Error("Failed to fetch product");
@@ -59,7 +59,7 @@ const fetchCategory = async (params = {}) => {
           Accept: "application/json",
         },
         params: params,
-      }
+      },
     );
     if (!res.ok) {
       throw new Error("Failed to fetch category");

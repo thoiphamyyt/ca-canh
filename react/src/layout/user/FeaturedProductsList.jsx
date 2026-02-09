@@ -132,7 +132,7 @@ export default function FeaturedProductsList({ title = "Sản phẩm nổi bật
                           </Button>
                         }
                       />
-                      <Link href={`/detail-product/${item.id}`}>
+                      <Link href={`/detail-product/${item.slug}`}>
                         <Button
                           variant="outline"
                           size="sm"

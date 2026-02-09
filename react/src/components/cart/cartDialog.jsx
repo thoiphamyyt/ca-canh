@@ -98,7 +98,7 @@ export default function CartDialog({ dataProduct, trigger }) {
         </div>
 
         <div className="flex justify-end gap-3 mt-6">
-          <Link href={`/detail-product/${dataProduct.id}`}>
+          <Link href={`/detail-product/${dataProduct.slug}`}>
             <Button
               variant="outline"
               className="rounded-xl dark:bg-sky-700 dark:hover:bg-sky-900"

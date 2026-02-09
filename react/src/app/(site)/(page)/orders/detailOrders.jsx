@@ -53,8 +53,8 @@ export default function OrderDetailDialog({ order }) {
                 order.status === "completed"
                   ? "text-green-600"
                   : order.status === "pending"
-                  ? "text-yellow-600"
-                  : "text-red-600"
+                    ? "text-yellow-600"
+                    : "text-red-600"
               }`}
             >
               {listStatusOrder.find((x) => x.value == order.status)?.label ??
@@ -67,7 +67,7 @@ export default function OrderDetailDialog({ order }) {
           <h3 className="font-semibold mb-3 text-lg">Sản phẩm</h3>
           <div className="divide-y rounded-lg border">
             {order.items?.map((item) => (
-              <Link href={`detail-product/${item.product.id}`} key={item.id}>
+              <Link href={`detail-product/${item.product.slug}`} key={item.id}>
                 <div className="flex items-center gap-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
                   <img
                     src={

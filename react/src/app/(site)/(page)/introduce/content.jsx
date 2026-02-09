@@ -167,7 +167,7 @@ export default function Content() {
                     dataProduct={product}
                   />
 
-                  <Link href={`/detail-product/${product.id}`}>
+                  <Link href={`/detail-product/${product.slug}`}>
                     <Button
                       variant="outline"
                       size="sm"

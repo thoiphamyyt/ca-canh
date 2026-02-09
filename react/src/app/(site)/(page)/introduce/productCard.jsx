@@ -99,7 +99,7 @@ export default function ProductCard({ product, addToCart }) {
               </Button>
             }
           />
-          <Link href={`/detail-product/${product.id}`}>
+          <Link href={`/detail-product/${product.slug}`}>
             <Button
               className="
                 bg-gradient-to-r from-sky-500 to-cyan-400 

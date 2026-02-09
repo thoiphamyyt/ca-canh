@@ -122,7 +122,7 @@ export default function ProductList() {
 
                     <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                       <CartDialog dataProduct={item} />
-                      <Link href={`/detail-product/${item.id}`}>
+                      <Link href={`/detail-product/${item.slug}`}>
                         <button className="p-3 rounded-full shadow-md bg-sky-500 hover:bg-sky-600 dark:bg-sky-700 dark:hover:bg-sky-600 text-white transition">
                           <Eye className="w-5 h-5" />
                         </button>
