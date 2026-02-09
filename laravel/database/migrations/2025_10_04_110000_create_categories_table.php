@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');                 // tên danh mục
             $table->text('description')->nullable(); // mô tả danh mục
+            $table->text('slug')->nullable(); // mô tả danh mục
             $table->timestamps();
         });
     }

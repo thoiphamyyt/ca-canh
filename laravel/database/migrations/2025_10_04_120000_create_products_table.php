@@ -24,6 +24,7 @@ return new class extends Migration
             $table->json('images')->nullable(); // lưu array JSON
             $table->unsignedBigInteger('id_category')->nullable(); // nếu bạn dùng category
             $table->text('describe')->nullable(); // mô tả dài
+            $table->text('slug')->nullable(); // mô tả dài
             $table->timestamps();
         });
     }
