@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Common;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Exception;
@@ -58,6 +59,7 @@ class CategoryController extends Controller
                 }
                 if (isset($formData['name'])) {
                     $category->name = $formData['name'];
+                    $category->slug = Common::slugify($formData['name']);
                 }
                 if (isset($formData['description'])) {
                     $category->description = $formData['description'];
@@ -68,6 +70,7 @@ class CategoryController extends Controller
             } else {
                 $category = Category::create([
                     'name' => $formData['name'],
+                    'slug' => Common::slugify($formData['name']),
                     'description' => $formData['description'] ?? null,
                 ]);
                 return response()->json(['message' => 'Thêm loại sản phẩm thành công', 'category' => $category, 'success' => true], 201);

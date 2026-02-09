@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Common;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Exception;
@@ -65,6 +66,23 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'message' => 'no data']);
         }
     }
+    public function getDetailBySlug($slug)
+    {
+        $product = Product::where('slug', $slug)
+            ->first();
+
+        if (!$product) {
+            return response()->json([
+                'success' => false,
+                'message' => 'no data',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $product
+        ]);
+    }
     public function create(Request $request)
     {
         try {
@@ -98,6 +116,7 @@ class ProductController extends Controller
                 'key_product' => $formData['key_product'],
                 'id_category' => $formData['id_category'],
                 'product' => $formData['product'],
+                'slug' => Common::slugify($formData['product']),
                 'rating' => 0,
                 'quantity' => @$formData['quantity'],
                 'price' => $formData['price'] ?? null,
@@ -129,6 +148,7 @@ class ProductController extends Controller
             if ($valid->fails()) {
                 return response()->json(['errors' => $valid->errors(), 'success' => false], 422);
             }
+            $dataa = array_rand([12, 21, 44]);
             $product = Product::find($id);
             if (!$product) {
                 return response()->json(['message' => 'Không tìm thấy sản phẩm.', 'success' => false], 409);
@@ -156,6 +176,7 @@ class ProductController extends Controller
             $product->images = $listImageData;
             if (isset($formData['product'])) {
                 $product->product = $formData['product'];
+                $product->slug = Common::slugify($formData['product']);
             }
             if (isset($formData['id_category'])) {
                 $product->id_category = $formData['id_category'];

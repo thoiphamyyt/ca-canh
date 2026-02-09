@@ -72,6 +72,7 @@ Route::prefix('ca-canh')->group(function () {
     //Product 
     Route::get('products', [ProductController::class, 'getAll']);
     Route::get('detail-product/{id}', [ProductController::class, 'getDetail']);
+    Route::get('detail-product-by-slug/{slug}', [ProductController::class, 'getDetailBySlug']);
     Route::get('category', [CategoryController::class, 'getAll']);
 
     Route::get('news', [NewsController::class, 'getAll']);

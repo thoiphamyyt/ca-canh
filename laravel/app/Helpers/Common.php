@@ -100,4 +100,30 @@ class Common
 
         return $final;
     }
+    public static function slugify($str)
+    {
+        $str = mb_strtolower($str, 'UTF-8');
+
+        $unicode = [
+            'a' => 'á|à|ả|ã|ạ|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ',
+            'd' => 'đ',
+            'e' => 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
+            'i' => 'í|ì|ỉ|ĩ|ị',
+            'o' => 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
+            'u' => 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
+            'y' => 'ý|ỳ|ỷ|ỹ|ỵ'
+        ];
+
+        foreach ($unicode as $non => $accent) {
+            $str = preg_replace("/($accent)/i", $non, $str);
+        }
+
+        // Xóa ký tự đặc biệt
+        $str = preg_replace('/[^a-z0-9\s-]/', '', $str);
+
+        // Đổi khoảng trắng thành dấu -
+        $str = preg_replace('/\s+/', '-', trim($str));
+
+        return $str;
+    }
 }
